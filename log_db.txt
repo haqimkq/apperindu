@@ -1,0 +1,3 @@
+tblpengguna_new id autoincrement dan status_aktif
+tblkecamatan id autoincrement
+tblkelutahan id autoincrement

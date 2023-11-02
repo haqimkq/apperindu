@@ -1,0 +1,49 @@
+admin
+admin0974
+
+validusaha
+123
+Validusaha123!
+
+
+bidangjasausaha
+Bidangjasausaha1!
+
+sekretaris
+Sekretaris123!
+
+usaha1
+Usaha123!
+
+usaha2
+Usaha123!
+
+
+opkepala
+Opkepala1!
+
+
+Nasri@sand1
+
+1 masuk online
+2 ditolak
+3 masuk apperindu
+
+132,133,134,135,136,137,138,139,140,148,149
+
+
+
+124,5,147,6,7,8,128,129,125,127,126,130,132,133,135,136,137,138,139,140,141,142,143,143,144,148,149
+
+DELETE FROM tblizinpendaftaran  WHERE tblpemohon_id NOT IN (SELECT tblpemohon_id FROM tblpemohon );
+
+
+DELETE FROM tblkendaliproses WHERE tblkendaliproses.tblizinpendaftaran_id NOT IN (SELECT tblizinpendaftaran_id FROM tblizinpendaftaran);
+
+
+proses dari tim teknis kesehatan
+link dokumen digital
+
+
+
+

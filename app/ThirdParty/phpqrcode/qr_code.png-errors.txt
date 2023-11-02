@@ -1,0 +1,1 @@
+2023-07-16 12:09:07: imagepng(/opt/lampp/htdocs/ptsp//assets/images/qr_code.png): failed to open stream: Permission denied
