@@ -215,8 +215,7 @@ class Tte extends BaseController
         // tte
         $path = unsign($res);
 
-        // $passphrase = $this->request->getPost('passphrase');
-        $passphrase = 'Nasri@sand1';
+        $passphrase = $this->request->getPost('passphrase');
         $peng = $this->model_pengaturan->get_row();
         $nik = $peng['nik_kadis'];
         $res_tte = $this->model_doc->tte($id_pendaftaran, $path,  $res, $nik, $passphrase);

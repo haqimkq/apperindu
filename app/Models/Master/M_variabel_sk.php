@@ -15,10 +15,13 @@ class M_variabel_sk extends Model
     protected $request;
     protected $db;
     protected $dt;
-    protected $allowedFilter  = [];
+    protected $allowedFilter  = [
+        'tblskizin_tabelvariabel_isrekom'
+    ];
 
     protected $allowedFields  = [
         'tblskizin_tabelsk',
+        'tblskizin_tabelvariabel_isrekom'
     ];
 
     public function __construct(RequestInterface $request)

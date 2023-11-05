@@ -367,9 +367,6 @@ class Template_sk extends BaseController
             }
         }
 
-
-
-
         $output =  word_dir('testing.docx');
         $template = 'doc/template/' . $row['tblskizin_sktemplate'];
 

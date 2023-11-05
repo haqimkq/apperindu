@@ -70,7 +70,7 @@ $routes->get('dev', 'Master\Dev::index');
 $routes->get('dev/pengguna_new', 'Master\Dev::pengguna_new');
 
 
-
+$routes->get('tte_rekomendasi', 'Master\Tte_rekomendasi::index');
 
 
 $routes->get('template_sk', 'Master\Template_sk::index');
@@ -78,13 +78,18 @@ $routes->get('template_sk/form_page', 'Master\Template_sk::form_page');
 $routes->get('template_sk/form_page/(:any)', 'Master\Template_sk::form_page/$1');
 $routes->get('template_sk/testing/(:any)', 'Master\Template_sk::testing/$1');
 
+$routes->get('template_rekomendasi', 'Master\Template_rekomendasi::index');
+$routes->get('template_rekomendasi/form_page', 'Master\Template_rekomendasi::form_page');
+$routes->get('template_rekomendasi/form_page/(:any)', 'Master\Template_rekomendasi::form_page/$1');
+$routes->get('template_rekomendasi/testing/(:any)', 'Master\Template_rekomendasi::testing/$1');
+
 
 $routes->get('variabel_sk', 'Master\Variabel_sk::index');
 $routes->get('variabel_sk/form_page', 'Master\Variabel_sk::form_page');
 $routes->get('variabel_sk/update/(:any)', 'Master\Variabel_sk::update/$1');
 
 
-$routes->get('template_rekomendasi', 'Template_rekomendasi::index');
+
 
 $routes->get('verify/verify_by_qr', 'Verify::verify_by_qr');
 $routes->get('pengaturan/form_page', 'Pengaturan::form_page');

@@ -10,7 +10,7 @@ use Config\Services;
 
 class Variabel_sk extends BaseController
 {
-    private $page = 'Tabel SK';
+    private $page = 'Tabel / Variabel';
     private $url = 'variabel_sk';
     private $path = 'Master/variabel_sk';
 
@@ -56,7 +56,7 @@ class Variabel_sk extends BaseController
             <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="#" onclick="info(\'' . $l[$this->primaryKey] . '\')">Detail tabel</a>
                 </li>
-                <li><a class="dropdown-item" href="#" onclick="update(\'' . $l[$this->primaryKey] . '\',\'' . $l['tblskizin_tabelsk'] . '\')">Edit tabel</a>
+                <li><a class="dropdown-item" href="#" onclick="update(\'' . $l[$this->primaryKey] . '\',\'' . $l['tblskizin_tabelsk'] . '\',\'' . $l['tblskizin_tabelvariabel_isrekom'] . '\')">Edit tabel</a>
                 </li>
                 <li><a class="dropdown-item" href="#" onclick="hapus(\'' . $l[$this->primaryKey] . '\',\'' . $l['tblskizin_tabelsk'] . '\')">Hapus tabel</a>
                 </li>
@@ -64,8 +64,7 @@ class Variabel_sk extends BaseController
             </div>';
 
             $row[] = '<div class="text-wrap">' . $l['tblskizin_tabelsk'] . '</div>';
-            $row[] = $this->terpakai($l['tblskizin_tabelsk']);
-            $row[] = $this->terpakai_untuk($l['tblskizin_tabelsk']);
+            $row[] = is_rekom($l['tblskizin_tabelvariabel_isrekom']);
             $data[] = $row;
         }
 
@@ -117,7 +116,8 @@ class Variabel_sk extends BaseController
     {
 
         $rules = [
-            'nama_tabel' => 'required'
+            'nama_tabel' => 'required',
+            'tblskizin_tabelvariabel_isrekom' => 'required'
         ];
 
         if (!$this->validate($rules)) {
@@ -172,6 +172,7 @@ class Variabel_sk extends BaseController
         }
 
         $d['tblskizin_tabelsk'] = $nama_tabel;
+        $d['tblskizin_tabelvariabel_isrekom'] = $this->request->getPost('tblskizin_tabelvariabel_isrekom');
         $in = $this->model->save($d);
 
         if (!$in) {
@@ -190,7 +191,8 @@ class Variabel_sk extends BaseController
 
         $rules = [
             'id' => 'required',
-            'tabel_lama' => 'required',
+            'table_lama' => 'required',
+            'table' => 'required',
 
         ];
 
@@ -204,37 +206,36 @@ class Variabel_sk extends BaseController
         $table = $this->request->getPost('table');
         $table_lama = $this->request->getPost('table_lama');
 
+        if ($table != $table_lama) {
+            $sqlQuery = "RENAME TABLE $table_lama TO $table";
+
+            $db = \Config\Database::connect();
+            $db->query($sqlQuery);
+            $db->transStart();
+
+            // Lakukan perubahan skema di sini
+
+            $db->transComplete();
+
+            if ($db->transStatus() === false) {
+                // Jika transaksi gagal
+                $res = array('status' => false, 'msg' => failed());
+                return $this->response->setJSON($res);
+            }
+        }
 
 
+        $d['tblskizin_tabelsk'] = $table;
+        $d['tblskizin_tabelvariabel_isrekom'] = $this->request->getPost('tblskizin_tabelvariabel_isrekom');
+        $u =  $this->model->update($id, $d);
 
-        $sqlQuery = "RENAME TABLE $table_lama TO $table";
-
-        $db = \Config\Database::connect();
-        $db->query($sqlQuery);
-        $db->transStart();
-
-        // Lakukan perubahan skema di sini
-
-        $db->transComplete();
-
-        if ($db->transStatus() === false) {
-            // Jika transaksi gagal
-            $res = array('status' => false, 'msg' => failed());
+        if ($u) {
+            $res = array('status' => true, 'msg' => success_update());
             return $this->response->setJSON($res);
         }
 
-        $d = $this->model->delete($id);
 
-        if ($d) {
-            session()->setFlashdata('success', success_delete());
-        } else {
-            session()->setFlashdata('error', failed());
-        }
-
-
-        $res = array('status' => true, 'msg' => success_delete());
-        return $this->response->setJSON($res);
-        $res = array('status' => true, 'msg' => success_update(), 'id' => $id);
+        $res = array('status' => false, 'msg' => failed());
         return $this->response->setJSON($res);
     }
 

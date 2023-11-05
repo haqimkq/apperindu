@@ -188,7 +188,7 @@
         <div class="modal-content">
             <form action="" method="POST" class="form-update-table">
                 <input type="hidden" name="id" id="id-table-update">
-                <input type="hidden" class="form-control  table-update" name="table_lama" required>
+                <input type="hidden" class="form-control table-update" name="table_lama" required>
                 <?= csrf_field() ?>
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Edit Tabel</h5>
@@ -202,6 +202,17 @@
                                 <label for="" class="mb-1">Nama Tabel</label>
                                 <input type="text" class="form-control  table-update" name="table" required>
                             </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="form-group">
+                                <label for="" class="mb-1">Jenis</label>
+                                <select name="tblskizin_tabelvariabel_isrekom" id="is_rekom" class="form-control">
+                                    <option value="">Pilih</option>
+                                    <option value="F">Surat Keterangan</option>
+                                    <option value="T">Rekomendasi</option>
+                                </select>
+                            </div>
+
                         </div>
                     </div>
                 </div>

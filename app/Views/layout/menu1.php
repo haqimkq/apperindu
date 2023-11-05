@@ -72,31 +72,33 @@
 </li>
 
 
-<!-- <li class="<?= $url == 'template_sk' ? 'mm-active' : '' ?>">
-    <a href="<?= site_url() ?>template_sk">
-        <div class="parent-icon"><i class="fadeIn animated bx bx-book-content"></i></div>
-        <div class="menu-title">Template</div>
-    </a>
-
-</li> -->
 
 <li>
     <a href="javascript:;" class="has-arrow">
         <div class="parent-icon"><i class="fadeIn animated bx bx-book-content"></i></div>
-        <div class="menu-title">Template & Tabel SK</div>
+        <div class="menu-title">Template</div>
     </a>
     <ul>
         <li class="<?= $url == 'template_sk' ? 'mm-active' : '' ?>">
-            <a href="<?= site_url() ?>template_sk"><i class="bi bi-circle"></i>Template</a>
+            <a href="<?= site_url() ?>template_sk"><i class="bi bi-circle"></i>Surat Keterangan</a>
         </li>
-        <li class="<?= $url == 'variabel_sk' ? 'mm-active' : '' ?>">
-            <a href="<?= site_url() ?>variabel_sk"><i class="bi bi-circle"></i>Tabel</a>
+        <li class="<?= $url == 'template_rekomendasi' ? 'mm-active' : '' ?>">
+            <a href="<?= site_url() ?>template_rekomendasi"><i class="bi bi-circle"></i>Rekomendasi</a>
         </li>
 
 
 
     </ul>
 </li>
+
+<li class="<?= $url == 'variabel_sk' ? 'mm-active' : '' ?>">
+    <a href="<?= site_url('variabel_sk') ?>">
+        <div class="parent-icon"><i class="fadeIn animated bx bx-table""></i></div>
+        <div class=" menu-title">Tabel / Variabel</div>
+    </a>
+
+</li>
+
 
 <li class="<?= $url == 'verify' ? 'mm-active' : '' ?>">
     <a href="<?= site_url('verify/dokumen') ?>">
@@ -120,6 +122,9 @@
             <a href="<?= site_url() ?>pengaturan/token"><i class="bi bi-circle"></i>Token</a>
         </li>
 
+        <li class="<?= $url == 'tte_rekomendasi' ? 'mm-active' : '' ?>">
+            <a href="<?= site_url() ?>tte_rekomendasi"><i class="bi bi-circle"></i>TTE Rekomendasi</a>
+        </li>
 
 
     </ul>

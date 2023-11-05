@@ -8,12 +8,15 @@ $(document).ready(function() {
 });
 
 
+$('.filter-select').change(function() {
+    datatable(false);
+
+});
 
 function datatable(bool) {
 
     let data = {
-        tblizin_id: $('#id_izin').val(),
-        tblizinpermohonan_id: $('#id_permohonan').val(),
+        'tblskizin_tabelvariabel_isrekom': $('#tblskizin_tabelvariabel_isrekom').val(),
         '<?= csrf_token() ?>': '<?= csrf_hash() ?>'
     }
 
@@ -117,11 +120,13 @@ function hapus(id, table) {
 
 }
 
-function update(id, table) {
+function update(id, table, rekom) {
+
     $('.form-update-table').trigger('reset');
     $('#form-update-table-modal').modal('show');
     $('#id-table-update').val(id);
     $('.table-update').val(table);
+    $('#is_rekom').val(rekom);
 
 
 
@@ -136,18 +141,18 @@ $('.form-update-table').submit(function(event) {
 
 
     $.ajax({
-        url: '<?php echo site_url($path . '/update_table') ?>', // Ganti dengan URL endpoint pengunggahan file dan data POST di server Anda
+        url: '<?php echo site_url($path . '/form_update') ?>', // Ganti dengan URL endpoint pengunggahan file dan data POST di server Anda
         type: 'POST',
         data: formData,
         contentType: false,
         processData: false,
         beforeSend: function() {
             // Menampilkan elemen loading
-            loading_button2(true);
+            loading_button(true);
         },
         success: function(response) {
 
-            loading_button2(false);
+            loading_button(false);
 
             if (response.status) {
                 success(response.msg);
@@ -161,7 +166,7 @@ $('.form-update-table').submit(function(event) {
 
         },
         error: function(xhr, status, error) {
-            loading_button2(false);
+            loading_button(false);
             error('Terjadi kesalahan');
             $('#form-update-table-modal').modal('hide');
         }

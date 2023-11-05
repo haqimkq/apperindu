@@ -21,88 +21,78 @@ class M_doc extends Model
     }
 
 
-    // public function word2pdf($file, $path)
+    public function word2pdf($file, $path)
+    {
+
+
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'http://103.165.243.16:8080/word2pdf/api/convert-to-pdf.php',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+
+            CURLOPT_POSTFIELDS => array('sendimage' => new \CURLFILE($file)),
+        ));
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+
+        $res = json_decode($response);
+
+
+
+        if ($res->status) {
+            $url = 'http://103.165.243.16:8080/word2pdf/upload/' . $res->filename;
+            $file_name = basename($url);
+            file_put_contents($path . $file_name, file_get_contents($url));
+            return  $res->filename;
+        }
+
+        return false;
+    }
+
+
+    // public function word2pdf($inputDoc, $outputPdf)
     // {
 
+    //     if (!file_exists($inputDoc)) {
+    //         $response = [
+    //             'status' => false,
+    //             'message' => "Berkas tidak ditemukan",
+    //             'filename' => '',
+    //         ];
+    //         return $response;
+    //     }
 
-    //     $curl = curl_init();
-
-    //     curl_setopt_array($curl, array(
-    //         CURLOPT_URL => 'http://103.165.243.16:8080/word2pdf/api/convert-to-pdf.php',
-    //         CURLOPT_RETURNTRANSFER => true,
-    //         CURLOPT_ENCODING => '',
-    //         CURLOPT_MAXREDIRS => 10,
-    //         CURLOPT_TIMEOUT => 0,
-    //         CURLOPT_FOLLOWLOCATION => true,
-    //         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-    //         CURLOPT_CUSTOMREQUEST => 'POST',
-
-    //         CURLOPT_POSTFIELDS => array('sendimage' => new \CURLFILE($file)),
-    //     ));
-
-    //     $response = curl_exec($curl);
-
-    //     curl_close($curl);
-
-    //     $res = json_decode($response);
+    //     $os = strtoupper(substr(PHP_OS, 0, 3));
+    //     if ($os === 'WIN') {
+    //         $command = '"C:\Program Files\LibreOffice\program\soffice.exe" --headless --convert-to pdf --outdir "' . $outputPdf . '" "' . $inputDoc . '"';
+    //     } elseif ($os === 'LIN') {
+    //         $command = 'libreoffice --headless --convert-to pdf --outdir ' . $outputPdf . ' ' . $inputDoc;
+    //     } else {
+    //         $response = [
+    //             'status' => false,
+    //             'msg' => "Sistem operasi tidak didukung",
+    //             'outputPdf' => '',
+    //         ];
+    //         return $response;
+    //     }
+    //     exec($command, $output, $returnCode);
 
 
-
-    //     if ($res->status) {
-    //         $url = 'http://103.165.243.16:8080/word2pdf/upload/' . $res->filename;
-    //         $file_name = basename($url);
-    //         file_put_contents($path . $file_name, file_get_contents($url));
-    //         return  $res->filename;
+    //     if ($returnCode === 0) {
+    //         return basename($inputDoc, '.docx') . '.pdf';
     //     }
 
     //     return false;
     // }
-
-
-    public function word2pdf($inputDoc, $outputPdf)
-    {
-
-        if (!file_exists($inputDoc)) {
-            $response = [
-                'status' => false,
-                'message' => "Berkas tidak ditemukan",
-                'filename' => '',
-            ];
-            return $response;
-        }
-
-        $os = strtoupper(substr(PHP_OS, 0, 3)); // Mendapatkan tiga karakter pertama dari PHP_OS dalam huruf besar
-        if ($os === 'WIN') {
-            $command = '"C:\Program Files\LibreOffice\program\soffice.exe" --headless --convert-to pdf --outdir "' . $outputPdf . '" "' . $inputDoc . '"';
-        } elseif ($os === 'LIN') {
-            $command = 'libreoffice --headless --convert-to pdf --outdir ' . $outputPdf . ' ' . $inputDoc;
-        } else {
-            $response = [
-                'status' => false,
-                'msg' => "Sistem operasi tidak didukung",
-                'outputPdf' => '',
-            ];
-            return $response;
-        }
-        exec($command, $output, $returnCode);
-
-
-        if ($returnCode === 0) {
-            $status = true;
-            $msg = "Konversi berhasil";
-        } else {
-            $status = false;
-            $msg = "Konversi gagal: " . implode("\n", $output);
-        }
-
-        $response = [
-            'status' => $status,
-            'msg' => $msg,
-            'filename' => basename($inputDoc, '.docx') . '.pdf'
-        ];
-
-        return $response['filename'];
-    }
 
     public function get_img($imagePath, $size = array())
     {

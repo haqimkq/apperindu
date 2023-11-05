@@ -1,6 +1,6 @@
 <?php
 
-
+use PhpParser\Node\Stmt\Return_;
 
 function status_aktif($str)
 {
@@ -74,6 +74,15 @@ function status_kendali_berkas($str)
     }
 
     return 'Sudah diproses';
+}
+
+function is_rekom($str)
+{
+    if ($str == 'T') {
+        return 'Rekomendasi';
+    }
+
+    return 'Surat Keterangan';
 }
 
 function success_add()
@@ -451,7 +460,7 @@ function singkatan_aplikasi()
 function replace_variable($var)
 {
     $var = str_replace('_', ' ', $var); // Mengganti garis bawah dengan spasi
-    $var = ucwords($var); // Mengonversi huruf pertama setiap kata menjadi huruf besar
+    $var = strtoupper($var); // Mengonversi huruf pertama setiap kata menjadi huruf besar
 
-    return $var;
+    return 'CTH: ' . $var;
 }

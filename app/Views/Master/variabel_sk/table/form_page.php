@@ -38,6 +38,19 @@
                                     <input type="text" class="form-control" name="nama_tabel" id="nama_tabel" required>
                                 </div>
                             </div>
+
+                            <div class="col-md-4 mb-3">
+                                <div class="form-group">
+                                    <label for="" class="mb-1">Jenis</label>
+                                    <select name="tblskizin_tabelvariabel_isrekom" id="tblskizin_tabelvariabel_isrekom"
+                                        class="form-control filter-select">
+                                        <option value="">Pilih</option>
+                                        <option value="F">Surat Keterangan</option>
+                                        <option value="T">Rekomendasi</option>
+                                    </select>
+                                </div>
+
+                            </div>
                         </div>
 
                         <div class="box-table">

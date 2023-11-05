@@ -14,24 +14,45 @@
         </div>
         <div class="ms-auto">
             <a class="btn btn-primary" href="<?= site_url($url . '/form_page') ?>">Tambah</a>
-            <div class="btn-group">
-                <button type="button" class="btn btn-outline-primary">Export</button>
-                <button type="button"
-                    class="btn btn-outline-primary split-bg-primary dropdown-toggle dropdown-toggle-split"
-                    data-bs-toggle="dropdown"> <span class="visually-hidden">Toggle Dropdown</span>
-                </button>
-                <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-end">
-                    <a class="dropdown-item" href="javascript:;">PDF</a>
-                    <a class="dropdown-item" href="javascript:;">Exel</a>
 
-                </div>
-            </div>
-            <button class="btn btn-outline-primary">Import</button>
 
         </div>
     </div>
+    <h6 class="mb-0 text-uppercase">Filter</h6>
+    <hr />
+    <div class="card mb-5">
+        <div class="card-body">
+            <form action="">
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <div class="form-group">
+                            <label for="" class="mb-1">Jenis</label>
+                            <select name="tblskizin_tabelvariabel_isrekom" id="tblskizin_tabelvariabel_isrekom"
+                                class="form-control filter-select">
+                                <option value="">Pilih</option>
+                                <option value="F">Surat Keterangan</option>
+                                <option value="T">Rekomendasi</option>
+                            </select>
+                        </div>
 
-    <h6 class="mb-0 text-uppercase">Tabel Data <?= $page ?></h6>
+                    </div>
+
+
+                </div>
+
+
+            </form>
+
+
+        </div>
+        <div class="card-footer">
+            <div class="float-end">
+                <button class="btn btn-outline-primary" onclick="reset_filter()">Reset</button>
+            </div>
+
+        </div>
+    </div>
+    <h6 class="mb-0 text-uppercase">Data <?= $page ?></h6>
     <hr />
     <div class="row">
 
@@ -48,9 +69,7 @@
                                                 <th width="10">No.</th>
                                                 <th width="30">Opsi</th>
                                                 <th>Nama Tabel</th>
-                                                <th>Tabel Terpakai</th>
-                                                <th>Terpakai untuk </th>
-
+                                                <th>Jenis</th>
                                             </tr>
                                         </thead>
                                         <tbody></tbody>

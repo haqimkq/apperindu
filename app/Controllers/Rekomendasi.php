@@ -339,21 +339,19 @@ class Rekomendasi extends BaseController
 
 
         $nik = '6301032910860002';
-        $passphrase = 'Nasri@sand1';
+        $passphrase = $this->request->getPost('passphrase');
         $res_tte = $this->model_doc->tte($id_pendaftaran, $path, $res, $nik, $passphrase);
 
         $res_tte_decode = json_decode($res_tte, true);
 
 
         // validasi tte 
-
         if (isset($res_tte_decode['error'])) {
             $res = array('status' => false, 'msg' => $res_tte_decode['error']);
             return $this->response->setJSON($res);
         }
 
         // ketika berhasil
-
         file_put_contents(sign('rekomendasi_' . $id_pendaftaran . '.pdf'), $res_tte);
 
         // insert proses berkas

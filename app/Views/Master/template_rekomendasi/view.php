@@ -13,21 +13,8 @@
             </nav>
         </div>
         <div class="ms-auto">
-            <button class="btn btn-primary" onclick="tambah()">Tambah</button>
-            <div class="btn-group">
-                <button type="button" class="btn btn-outline-primary">Export</button>
-                <button type="button"
-                    class="btn btn-outline-primary split-bg-primary dropdown-toggle dropdown-toggle-split"
-                    data-bs-toggle="dropdown"> <span class="visually-hidden">Toggle Dropdown</span>
-                </button>
-                <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-end">
-                    <a class="dropdown-item" href="javascript:;">PDF</a>
-                    <a class="dropdown-item" href="javascript:;">Exel</a>
-                    <!-- <a class="dropdown-item" href="javascript:;">Something else here</a> -->
-                    <!-- <div class="dropdown-divider"></div> <a class="dropdown-item" href="javascript:;">Separated link</a> -->
-                </div>
-            </div>
-            <button class="btn btn-outline-primary">Import</button>
+            <a class="btn btn-primary" href="<?= site_url($url . '/form_page') ?>">Tambah</a>
+
 
         </div>
     </div>
@@ -36,26 +23,29 @@
     <hr />
     <div class="card mb-5">
         <div class="card-body">
-            <form action="">
+            <form action="" class="form-filter">
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-4 mb-3">
                         <div class="form-group">
                             <label for="" class="mb-1">Nama Izin</label>
-                            <select name="id_izin" id="a" class="form-control filter-select">
+                            <select name="id_izin" id="id_izin" class="form-control filter-select">
                                 <option value="">Pilih</option>
-                                <option value="">A</option>
-                                <option value="">B</option>
+                                <?php foreach ($izin as $r) : ?>
+                                <option value="<?= $r['tblizin_id'] ?>"><?= $r['tblizin_nama'] ?></option>
+                                <?php endforeach ?>
                             </select>
                         </div>
 
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4 mb-3">
                         <div class="form-group">
                             <label for="" class="mb-1">Nama Permohonan</label>
-                            <select name="id_izin" id="b" class="form-control filter-select">
+                            <select name="id_permohonan" id="id_permohonan" class="form-control filter-select">
                                 <option value="">Pilih</option>
-                                <option value="">A</option>
-                                <option value="">B</option>
+                                <?php foreach ($permohonan as $r) : ?>
+                                <option value="<?= $r['tblizinpermohonan_id'] ?>"><?= $r['tblizinpermohonan_nama'] ?>
+                                </option>
+                                <?php endforeach ?>
                             </select>
                         </div>
 
@@ -70,7 +60,7 @@
         </div>
         <div class="card-footer">
             <div class="float-end">
-                <button class="btn btn-outline-primary">Reset</button>
+                <button class="btn btn-outline-primary" onclick="reset_filter()"> Reset</button>
             </div>
 
         </div>
@@ -87,62 +77,33 @@
                                 <thead>
                                     <tr>
                                         <th>No.</th>
-                                        <th>
-                                            <input type="checkbox">
-                                        </th>
+
                                         <th>Opsi</th>
                                         <th>Nama Izin</th>
                                         <th>Nama Permohonan</th>
-
+                                        <th>Template Rekomendasi</th>
+                                        <th>Tabel Rekomendasi</th>
 
 
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>1.</td>
-                                        <td><input type="checkbox"></td>
-                                        <td>
-
-                                            <div class="btn-group">
-                                                <button type="submit"
-                                                    class="btn  btn-sm btn-outline-primary">Hapus</button>
-                                                <button type="submit"
-                                                    class="btn btn-sm btn-outline-primary">Edit</button>
-                                            </div>
-                                        </td>
-                                        <td>Izin Usaha Pertambangan Batuan</td>
-                                        <td> Izin Usaha Pertambangan (IUP) Eksplorasi Batuan</td>
-                                    </tr>
-                                </tbody>
+                                <tbody></tbody>
 
                             </table>
                         </div>
 
                     </div>
-                    <div class="col-md-4 mt-5">
-                        <div class="form-group">
-                            <label class="form-label">Opsi Sekaligus</label>
-                            <select name="opsi" id="opsi" class="form-control">
-                                <option value="">Pilih</option>
-                                <option value="">Aktifkan</option>
-                                <option value="">Non Aktifkan</option>
-                                <option value="">Hapus</option>
-                            </select>
-                        </div>
 
-                    </div>
                 </div>
             </form>
         </div>
     </div>
-    <!-- modal -->
-    <?= $this->include($url . '/form'); ?>
+
 </main>
 
 
 <?= $this->endSection('content'); ?>
 
 <?= $this->section('js'); ?>
-<?= $this->include($url . '/js'); ?>
+<?= $this->include($path . '/js'); ?>
 <?= $this->endSection('js'); ?>
