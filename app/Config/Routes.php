@@ -98,7 +98,7 @@ $routes->get('pengaturan/form_page', 'Pengaturan::form_page');
 // api
 $routes->post('login_jwt', 'Api\LoginJwt::index');
 $routes->post('login_api', 'Api\Login::index', ['filter' => 'auth_api']);
-$routes->post('pendaftaran_by_nomor', 'Api\Pendaftaran::index', ['filter' => 'auth_api']);
+$routes->post('pendaftaran_by_nomor', 'Api\Permohonan::index', ['filter' => 'auth_api']);
 
 $routes->post('get_token', 'Login::get_token');
 $routes->get('perizinan/daftar_izin', 'Api\Perizinan::daftar_izin', ['filter' => 'auth_api']);

@@ -247,11 +247,23 @@ class Tte extends BaseController
             return $this->response->setJSON($res);
         }
 
-        $pesan = 'Berkas perizinan sudah di tanda tangani, dokumen digital bisa dilihat di menu riwayat permohonan';
-        $nomor = $r['tblizinpendaftaran_telponpemohon'];
 
-        if ($nomor) {
-            $this->model_doc->send_wa($pesan, $nomor, $peng['token_wa']);
+        $number = $r['tblizinpendaftaran_telponpemohon'];
+
+        if ($number) {
+            $row = $this->model_pengaturan->get_row();
+            $variable['nama_pemohon'] = $r['tblizinpendaftaran_namapemohon'];
+            $variable['tgl_permohonan'] = tanggal($r['tblizinpendaftaran_tgljam']);
+            $variable['nama_usaha'] = $r['tblizinpendaftaran_usaha'];
+            $variable['alamat_usaha'] = $r['tblizinpendaftaran_lokasiizin'];
+            $variable['alamat_pemohon'] = $r['tblizinpendaftaran_almtpemohon'];
+            $variable['npwp'] = $r['tblizinpendaftaran_npwp'];
+            $variable['nik'] = $r['tblizinpendaftaran_idpemohon'];
+            $variable['no_pendaftaran'] = $r['tblizinpendaftaran_nomor'];
+            $variable['link_dokumen_digital'] =  base_url('permohonan/dokumen/' . $this->model_doc->encrypt($r['tblizinpendaftaran_id'], key_secret()));
+            $msg = $this->model_pengaturan->replaceTemplateVariables($row['redaksi_tte'], $variable);
+
+            $this->model_doc->send_wa($msg, $number, $row['token_wa']);
         }
 
 

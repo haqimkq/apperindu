@@ -222,8 +222,20 @@ class Pendaftaran_online extends BaseController
             $row = $this->model->get_by_id($id);
             $number = $row['tblizinpendaftaran_telponpemohon'];
             if ($number) {
-                $msg = "Kami memohon maaf, berkas yang Anda unggah telah ditolak dengan alasan berikut:  \r\n\r\n$alasan  \r\n\r\nUntuk melakukan perbaikan, silahkan kunjungi halaman daftar permohonan, lalu klik 'opsi' kemudian 'detail', dan pada bagian riwayat berkas klik 'perbaiki'";
+
                 $r = $this->model_pengaturan->get_row();
+                $variable['nama_pemohon'] = $row['tblizinpendaftaran_namapemohon'];
+                $variable['tgl_permohonan'] = tanggal($row['tblizinpendaftaran_tgljam']);
+                $variable['nama_usaha'] = $row['tblizinpendaftaran_usaha'];
+                $variable['alamat_usaha'] = $row['tblizinpendaftaran_lokasiizin'];
+                $variable['alamat_pemohon'] = $row['tblizinpendaftaran_almtpemohon'];
+                $variable['npwp'] = $row['tblizinpendaftaran_npwp'];
+                $variable['nik'] = $row['tblizinpendaftaran_idpemohon'];
+                $variable['no_pendaftaran'] = $row['tblizinpendaftaran_nomor'];
+                $variable['alasan'] = $alasan;
+                $msg = $this->model_pengaturan->replaceTemplateVariables($r['redaksi_ditolak'], $variable);
+
+
                 $this->model_doc->send_wa($msg, $number, $r['token_wa']);
             }
 
@@ -249,6 +261,17 @@ class Pendaftaran_online extends BaseController
             $number = $row['tblizinpendaftaran_telponpemohon'];
             if ($number) {
                 $r = $this->model_pengaturan->get_row();
+                $variable['nama_pemohon'] = $row['tblizinpendaftaran_namapemohon'];
+                $variable['tgl_permohonan'] = tanggal($row['tblizinpendaftaran_tgljam']);
+                $variable['nama_usaha'] = $row['tblizinpendaftaran_usaha'];
+                $variable['alamat_usaha'] = $row['tblizinpendaftaran_lokasiizin'];
+                $variable['alamat_pemohon'] = $row['tblizinpendaftaran_almtpemohon'];
+                $variable['npwp'] = $row['tblizinpendaftaran_npwp'];
+                $variable['nik'] = $row['tblizinpendaftaran_idpemohon'];
+                $variable['no_pendaftaran'] = $row['tblizinpendaftaran_nomor'];
+                $msg = $this->model_pengaturan->replaceTemplateVariables($r['redaksi_diterima'], $variable);
+
+
                 $this->model_doc->send_wa($msg, $number, $r['token_wa']);
             }
 

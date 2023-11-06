@@ -101,8 +101,8 @@ class Permohonan extends ResourceController
         $response = [
             'status' => true,
             'msg' => 'Data ditemukan',
-            'pendaftaran' => $row,
-            'log' => $rows
+            'data' => array('pendaftaran' => $row, 'log' => $rows),
+
         ];
 
         return $this->response->setJSON($response);
@@ -174,6 +174,8 @@ class Permohonan extends ResourceController
 
         return $this->response->setJSON($response);
     }
+
+
 
     public function get_by_id_pemohon()
     {

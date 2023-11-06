@@ -129,3 +129,23 @@
 
     </ul>
 </li>
+
+<li>
+    <a href="javascript:;" class="has-arrow">
+        <div class="parent-icon"><i class="bi bi-whatsapp"></i></div>
+        <div class="menu-title">Redaksi Notif WA</div>
+    </a>
+    <ul>
+        <li class="<?= $url == 'redaksi_wa/ditolak' ? 'mm-active' : '' ?>">
+            <a href="<?= site_url() ?>redaksi_wa/ditolak"><i class="bi bi-circle"></i>Ditolak</a>
+        </li>
+        <li class="<?= $url == 'redaksi_wa/diterima' ? 'mm-active' : '' ?>">
+            <a href="<?= site_url() ?>redaksi_wa/diterima"><i class="bi bi-circle"></i>Diterima</a>
+        </li>
+        <li class="<?= $url == 'redaksi_wa/sudah_tte' ? 'mm-active' : '' ?>">
+            <a href=" <?= site_url() ?>redaksi_wa/sudah_tte"><i class="bi bi-circle"></i>Ditanda Tangani</a>
+        </li>
+
+
+    </ul>
+</li>

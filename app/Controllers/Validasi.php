@@ -101,6 +101,11 @@ class Validasi extends BaseController
                 $opsi .= '<li><a class="dropdown-item"  href="' . site_url('cetak_sk/form_page/' . $l['tblizinpendaftaran_id']) . '">Cetak SK</a>
             </li>';
             }
+
+            if (in_array(session()->blok_sistem_id, get_blok_sistem_type_4())) {
+                $opsi .= '<li><a class="dropdown-item"  href="' . site_url('rekomendasi/form_page/' . $l['tblizinpendaftaran_id']) . '">Cetak Rekomendasi</a>
+                </li>';
+            }
             $opsi .= '<li><a class="dropdown-item"  href="' . site_url('kendali_berkas/form_page/' . $l[$this->primaryKey]) . '">Kirim</a>
             </li>';
             $opsi .= '<li><a class="dropdown-item"  href="#" onclick="log(\'' . $l['tblizinpendaftaran_id'] . '\')">Log Berkas</a>

@@ -133,8 +133,8 @@ class Perizinan extends ResourceController
         }
 
         $id = $this->request->getVar('tblizinpermohonan_id');
-        $id_pemohon = $this->request->getVar('tblpemohon_id');
-        $rows = $this->persyaratan($id, $id_pemohon);
+
+        $rows = $this->model_persyaratan->get_persyaratan_by_id_permohonan($id)->get()->getResultArray();
 
 
         if (!$rows) {
