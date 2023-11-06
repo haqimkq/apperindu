@@ -231,7 +231,7 @@ class M_kendali_proses extends Model
         }
 
         if (session()->blok_sistem_id == 7) {
-            return   ['7', '10', '18', '19', '28', '29', '30', '33', '16'];
+            return   ['7', '10', '18', '19', '28', '29', '30', '33', '16', 79];
         }
 
         if (session()->blok_sistem_id == 8) {

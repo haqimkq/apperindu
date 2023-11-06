@@ -65,7 +65,7 @@ function update(id) {
     $('#id-update').val(id);
 
 
-    var input = ['tblizin_nama', 'tblizin_isaktif'];
+    var input = ['nama', 'nik', 'nip', 'pangkat', 'tblkendalibloksistem_id'];
 
     $.ajax({
         data: {

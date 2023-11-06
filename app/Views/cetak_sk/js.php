@@ -201,9 +201,9 @@ $('.form').submit(function(event) {
         error: function() {
             // Menyembunyikan elemen loading jika terjadi kesalahan
             error('Terjadi kesalahan');
-            setTimeout(function() {
-                history.back()
-            }, 1000);
+            // setTimeout(function() {
+            //     history.back()
+            // }, 1000);
         }
     });
 

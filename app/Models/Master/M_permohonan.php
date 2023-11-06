@@ -116,21 +116,21 @@ class M_permohonan extends Model
     }
 
 
-    public function get_permohonan_where_not_in($id = null, $id_ex = null)
+    public function get_permohonan_where_not_in($id = null, $id_ex = null, $rekom = null)
     {
 
         if ($id) {
             $this->dt->where('tblizin_id', $id);
         }
 
-        $arr = $this->get_kecuali($id_ex);
+        $arr = $this->get_kecuali($id_ex, $rekom);
         $this->dt->whereNotIn('tblizinpermohonan_id', $arr);
 
         return $this->dt->get()->getResultArray();
     }
 
 
-    private function get_kecuali($id = null)
+    private function get_kecuali($id = null, $rekom)
     {
         $db      = \Config\Database::connect();
         $m = $db->table('tblskizin_beta');
@@ -138,6 +138,12 @@ class M_permohonan extends Model
 
         if ($id) {
             $m->where('tblizinpermohonan_id !=', $id);
+        }
+
+        if ($rekom) {
+            $m->where('tblskizin_tabelvariabel_idrekom !=', NULL);
+        } else {
+            $m->where('tblskizin_tabelvariabel_idrekom', NULL);
         }
 
         $arr = array();

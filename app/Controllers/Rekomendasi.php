@@ -12,7 +12,7 @@ use App\Models\M_persyaratan_pemohon;
 use App\Models\Master\M_izin;
 use App\Models\Master\M_permohonan;
 use App\Models\Master\M_template;
-
+use App\Models\Master\M_tte_rekomendasi;
 
 class Rekomendasi extends BaseController
 {
@@ -31,6 +31,7 @@ class Rekomendasi extends BaseController
     protected $model_persyaratan_pemohon;
     protected $model_pemohon;
     protected $model_jwt;
+    protected $model_tte_rekomendasi;
     protected $primaryKey = 'tblizinpendaftaran_id';
 
 
@@ -47,6 +48,7 @@ class Rekomendasi extends BaseController
         $this->model_persyaratan_pemohon = new M_persyaratan_pemohon($this->request);
         $this->model_pemohon = new M_pemohon($this->request);
         $this->model_jwt = new MJwt();
+        $this->model_tte_rekomendasi = new M_tte_rekomendasi($this->request);
     }
 
 
@@ -156,7 +158,7 @@ class Rekomendasi extends BaseController
     {
 
 
-
+        $rekomendasi = $this->model_tte_rekomendasi->get_by_blok_sistem_id();
         $post = $this->request->getPost();
         $r = $this->model_pendaftaran->get_by_id($post['tblizinpendaftaran_id']);
 
@@ -167,14 +169,16 @@ class Rekomendasi extends BaseController
         $variable['alamat_pemohon'] = $r['tblizinpendaftaran_almtpemohon'];
         $variable['izin'] = $r['tblizin_nama'];
         $variable['tblizinpermohonan_id'] = $r['tblizinpermohonan_id'];
+        $variable['npwp'] = $r['tblizinpendaftaran_npwp'];
+        $variable['nik'] = $r['tblizinpendaftaran_idpemohon'];
 
         // variabel tte
         $variable['qr_ttd'] = '';
         $variable['bsre_logo'] = '';
         $variable['TTD'] =  '';
-        $variable['nama_kadis'] = 'dr. Hj. Isna Farida, M.Kes';
-        $variable['pangkat_kadis'] = 'Pembina Tk. I/ IV.b';
-        $variable['nip_kadis'] = '197406122005012016';
+        $variable['nama_kadis'] = $rekomendasi['nama'];
+        $variable['pangkat_kadis'] = $rekomendasi['pangkat'];
+        $variable['nip_kadis'] = $rekomendasi['nip'];
         $variable['footer_ttd'] = footer_tte();
 
         $per = $this->model_persyaratan_pemohon->get_pas_foto($r['tblpemohon_id']);
@@ -252,6 +256,7 @@ class Rekomendasi extends BaseController
     public function tte()
     {
         // id_pendaftaran
+        $rekomendasi = $this->model_tte_rekomendasi->get_by_blok_sistem_id();
         $id_pendaftaran = $this->request->getPost('tblizinpendaftaran_id');
 
         // generate qr code
@@ -273,14 +278,16 @@ class Rekomendasi extends BaseController
         $variable['alamat_pemohon'] = $r['tblizinpendaftaran_almtpemohon'];
         $variable['izin'] = $r['tblizin_nama'];
         $variable['tblizinpermohonan_id'] = $r['tblizinpermohonan_id'];
+        $variable['npwp'] = $r['tblizinpendaftaran_npwp'];
+        $variable['nik'] = $r['tblizinpendaftaran_idpemohon'];
 
         // variabel tte
         $variable['qr_ttd'] = '';
         $variable['bsre_logo'] = '';
         $variable['TTD'] = $qr;
-        $variable['nama_kadis'] = 'dr. Hj. Isna Farida, M.Kes';
-        $variable['pangkat_kadis'] = 'Pembina Tk. I/ IV.b';
-        $variable['nip_kadis'] = '197406122005012016';
+        $variable['nama_kadis'] = $rekomendasi['nama'];
+        $variable['pangkat_kadis'] = $rekomendasi['pangkat'];
+        $variable['nip_kadis'] = $rekomendasi['nip'];
         $variable['footer_ttd'] = footer_tte();
 
         $per = $this->model_persyaratan_pemohon->get_pas_foto($r['tblpemohon_id']);
@@ -338,7 +345,7 @@ class Rekomendasi extends BaseController
 
 
 
-        $nik = '6301032910860002';
+        $nik = $rekomendasi['nik'];
         $passphrase = $this->request->getPost('passphrase');
         $res_tte = $this->model_doc->tte($id_pendaftaran, $path, $res, $nik, $passphrase);
 
@@ -417,7 +424,7 @@ class Rekomendasi extends BaseController
             // insert kendali proses progres
             $d['tblizinpendaftaran_id'] = $id_daftar;
             // 3 adalah Penerbitan Naskah Perizinan
-            $d['tblkendalibloksistemtugas_id'] = 3;
+            $d['tblkendalibloksistemtugas_id'] = 49;
             $d['tblkendaliproses_tglmulai'] = $time;
             $d['tblkendaliproses_tglmulai_sys'] = $time;
             $d['tblkendaliproses_tglselesai'] = $time;
@@ -464,7 +471,7 @@ class Rekomendasi extends BaseController
     private function get_table($id)
     {
         $db = \Config\Database::connect();
-        $m = $db->table('v_template');
+        $m = $db->table('v_template_rekomendasi');
         $m->where('tblizinpermohonan_id', $id);
         $r = $m->get()->getRowArray();
 

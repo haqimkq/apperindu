@@ -64,14 +64,14 @@
                             <div class="col-md-6 col-12 mb-4">
                                 <div class="form-group">
                                     <label for="" class="mb-1">Template (dengan format word rtf)</label>
-                                    <input type="file" class="form-control" name="tblskizin_sktemplate"
-                                        id="tblskizin_sktemplate">
+                                    <input type="file" class="form-control" name="tblskizin_rekomtemplate"
+                                        id="tblskizin_rekomtemplate">
                                 </div>
                             </div>
                             <div class="col-md-6 col-12 mb-4">
                                 <div class="form-group">
                                     <label for="" class="mb-1">Tabel Rekomendasi</label>
-                                    <select name="tblskizin_tabelvariabel_id" id="tblskizin_tabelvariabel_id"
+                                    <select name="tblskizin_tabelvariabel_idrekom" id="tblskizin_tabelvariabel_idrekom"
                                         class="form-control single-select" required>
                                         <option value="">Pilih</option>
                                         <?php foreach ($variabel as $r) : ?>

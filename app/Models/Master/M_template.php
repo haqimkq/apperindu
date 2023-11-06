@@ -133,6 +133,7 @@ class M_template extends Model
 
     public function get_by_id_permohonan($id)
     {
+        $this->where('tblskizin_tabelvariabel_id !=', NULL);
         return $this->where('tblizinpermohonan_id', $id)->first();
     }
 

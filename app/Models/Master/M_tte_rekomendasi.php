@@ -86,8 +86,9 @@ class M_tte_rekomendasi extends Model
     }
 
 
-    public function get_data()
+    public function get_by_blok_sistem_id()
     {
-        return $this->where(['tblizin_isaktif' => 'T'])->findAll();
+        $this->dt->where('blok_sistem_id', session()->blok_sistem_id);
+        return $this->first();
     }
 }

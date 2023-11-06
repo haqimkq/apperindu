@@ -13,7 +13,7 @@ class M_template_rekomendasi extends Model
     protected $primaryKey = 'tblskizin_id';
     protected $table_view = 'v_template_rekomendasi';
     protected $column_order = [];
-    protected $column_search = ['tblizin_nama', 'tblizinpermohonan_nama', 'tblskizin_sktemplate', 'tblskizin_tabelsk'];
+    protected $column_search = ['tblizin_nama', 'tblizinpermohonan_nama', 'tblskizin_tabelsk'];
     protected $order = ['tblskizin_tabelvariabel_idrekom' => 'DESC'];
     protected $request;
     protected $db;
@@ -23,9 +23,8 @@ class M_template_rekomendasi extends Model
     protected $allowedFields  = [
         'tblizin_id',
         'tblizinpermohonan_id',
-        'tblskizin_sktemplate',
-        'tblskizin_tabelvariabel_id',
-        'tblskizin_rekomtemplate'
+        'tblskizin_rekomtemplate',
+        'tblskizin_tabelvariabel_idrekom'
     ];
 
     protected $allowedFilter  = [

@@ -14,20 +14,7 @@
         </div>
         <div class="ms-auto">
             <a class="btn btn-primary" href="<?= site_url($url . '/form_page') ?>">Tambah</a>
-            <div class="btn-group">
-                <button type="button" class="btn btn-outline-primary">Export</button>
-                <button type="button"
-                    class="btn btn-outline-primary split-bg-primary dropdown-toggle dropdown-toggle-split"
-                    data-bs-toggle="dropdown"> <span class="visually-hidden">Toggle Dropdown</span>
-                </button>
-                <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-end">
-                    <a class="dropdown-item" href="javascript:;">PDF</a>
-                    <a class="dropdown-item" href="javascript:;">Exel</a>
-                    <!-- <a class="dropdown-item" href="javascript:;">Something else here</a> -->
-                    <!-- <div class="dropdown-divider"></div> <a class="dropdown-item" href="javascript:;">Separated link</a> -->
-                </div>
-            </div>
-            <button class="btn btn-outline-primary">Import</button>
+
 
         </div>
     </div>

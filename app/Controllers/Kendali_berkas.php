@@ -33,6 +33,7 @@ class Kendali_berkas extends BaseController
         $this->model = new M_kendali_proses($this->request);
         $this->model_izin = new M_izin($this->request);
         $this->model_permohonan = new M_permohonan($this->request);
+        $this->model_kendali_alur  = new M_kendali_alur($this->request);
     }
 
 
@@ -75,6 +76,13 @@ class Kendali_berkas extends BaseController
 
         $r = $this->model->get_by_id($id);
 
+
+        $bs = $this->model_kendali_alur->get_kendali_alur_by_id_permohonan($r['tblizinpermohonan_id'])->get()->getResultArray();
+
+        if (!$bs) {
+            $bs = $this->model_blok_sistem->get_data();
+        }
+
         $data['title'] = 'Data ' . $this->page;
         $data['page'] = 'ROUTING SLIP';
         $data['url'] = $this->url;
@@ -82,7 +90,7 @@ class Kendali_berkas extends BaseController
         $data['request'] = $this->request;
         $data['r'] = $r;
         $data['p'] = $this->model_blok_sistem_tugas->get_by_id_blok_sistem(session()->blok_sistem_id)->get()->getResultArray();
-        $data['bs'] = $this->model_blok_sistem->get_data();
+        $data['bs'] = $bs;
         $data['nb'] = $this->get_next_blok($r['tblizinpermohonan_id']);
 
         return view($this->path . '/form_page', $data);
@@ -212,7 +220,7 @@ class Kendali_berkas extends BaseController
     private function get_next_blok($id)
     {
 
-        $this->model_kendali_alur  = new M_kendali_alur($this->request);
+
         $r =  $this->model_kendali_alur->get_by_permohonan_and_blok_sistem($id);
 
         if (!$r) {

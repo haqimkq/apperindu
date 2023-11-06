@@ -47,6 +47,18 @@
             <td>text</td>
             <td>225</td>
         </tr>
+        <tr>
+            <td>6.</td>
+            <td>nik</td>
+            <td>text</td>
+            <td>16</td>
+        </tr>
+        <tr>
+            <td>7.</td>
+            <td>npwp</td>
+            <td>text</td>
+            <td>15</td>
+        </tr>
     </tbody>
 </table>
 <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">

@@ -108,11 +108,11 @@ class Template_rekomendasi extends BaseController
 
         if ($id) {
 
-            $data['variabel'] = $this->model_variable_sk->findAll();
+            $data['variabel'] = $this->model_variable_sk->where(array('tblskizin_tabelvariabel_isrekom'  => 'T'))->findAll();
             return view($this->path . '/form_update_page', $data);
         }
 
-        $data['variabel'] = $this->model_variable_sk->findAll();
+        $data['variabel'] = $this->model_variable_sk->where(array('tblskizin_tabelvariabel_isrekom'  => 'T'))->findAll();
         return view($this->path . '/form_page', $data);
     }
 
@@ -304,7 +304,7 @@ class Template_rekomendasi extends BaseController
 
         $id = $this->request->getPost('id_izin');
         $id_permohonan = $this->request->getPost('id_permohonan');
-        $rows = $this->model_permohonan->get_permohonan_where_not_in($id, $id_permohonan);
+        $rows = $this->model_permohonan->get_permohonan_where_not_in($id, $id_permohonan, true);
 
 
         if ($rows) {
@@ -336,7 +336,8 @@ class Template_rekomendasi extends BaseController
         $variable['nama_usaha'] = replace_variable('nama_usaha');
         $variable['alamat_usaha'] = replace_variable('alamat_usaha');
         $variable['izin'] = replace_variable('izin');
-
+        $variable['npwp'] = replace_variable('npwp');
+        $variable['nik'] = replace_variable('nik');
 
         // variabel tte
         $variable['pas_foto'] = $pas_foto;

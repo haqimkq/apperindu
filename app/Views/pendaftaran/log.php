@@ -2,15 +2,16 @@
     <div class="col-md-6">
         <table class="table table-borderless">
             <tr>
-                <td>Tanggal Pendaftaran</td>
-                <td>:</td>
-                <td><?= tanggal($r['tblizinpendaftaran_tgljam']) ?></td>
-            </tr>
-            <tr>
                 <td>Nomor Pendaftaran</td>
                 <td>:</td>
                 <td><?= $r['tblizinpendaftaran_nomor'] ?></td>
             </tr>
+            <tr>
+                <td>Tanggal Pendaftaran</td>
+                <td>:</td>
+                <td><?= tanggal($r['tblizinpendaftaran_tgljam']) ?></td>
+            </tr>
+
             <tr>
                 <td>Nomor Identitas</td>
                 <td>:</td>

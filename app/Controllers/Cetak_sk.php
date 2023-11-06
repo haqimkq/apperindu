@@ -167,6 +167,8 @@ class Cetak_sk extends BaseController
         $variable['nama_usaha'] = $r['tblizinpendaftaran_usaha'];
         $variable['alamat_usaha'] = $r['tblizinpendaftaran_lokasiizin'];
         $variable['alamat_pemohon'] = $r['tblizinpendaftaran_almtpemohon'];
+        $variable['npwp'] = $r['tblizinpendaftaran_npwp'];
+        $variable['nik'] = $r['tblizinpendaftaran_idpemohon'];
 
         $variable['tblizinpermohonan_id'] = $r['tblizinpermohonan_id'];
 
@@ -186,20 +188,6 @@ class Cetak_sk extends BaseController
             $dir =  'doc/persyaratan/' . $per['tblpemohonpersyaratan_file'];
             $pas_foto = $this->model_doc->get_img($dir, array('width' => 3, 'height' => 4));
             $variable['pas_foto'] = $pas_foto;
-        } else {
-
-            $pem = $this->model_pemohon->find($r['tblpemohon_id']);
-            $id = $pem['tblpemohon_idonline'];
-            $d = $this->get_pas_foto_by_api($id);
-
-            if ($d) {
-                $dir =  'doc/persyaratan/' . $d;
-                if (!file_exists('doc/persyaratan/' . $d)) {
-                    $dir = path_online() . $d;
-                }
-                $pas_foto = $this->model_doc->get_img($dir, array('width' => 3, 'height' => 4));
-                $variable['pas_foto'] = $pas_foto;
-            }
         }
 
         $tabel_info = $this->get_table_info($variable['tblizinpermohonan_id']);

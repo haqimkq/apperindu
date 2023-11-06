@@ -35,23 +35,26 @@
                             <div class="col-12 mb-3">
                                 <div class="form-group">
                                     <label for="" class="mb-1">Nama</label>
-                                    <input type="text" class="form-control" name="tblpengguna_nama" id="tblpengguna_nama" required>
+                                    <input type="text" class="form-control" name="tblpengguna_nama"
+                                        id="tblpengguna_nama" required>
                                 </div>
                             </div>
                             <div class="col-12 mb-3">
                                 <div class="form-group">
                                     <label for="" class="mb-1">Unit Kerja</label>
-                                    <input type="text" class="form-control" name="tblpengguna_unitkerja" id="tblpengguna_unitkerja">
+                                    <input type="text" class="form-control" name="tblpengguna_unitkerja"
+                                        id="tblpengguna_unitkerja">
                                 </div>
                             </div>
                             <div class="col-12 mb-3">
                                 <div class="form-group">
                                     <label for="" class="mb-1">Blok Sistem</label>
-                                    <select name="tblkendalibloksistem_id" id="tblkendalibloksistem_id" class="form-control single-select" required>
+                                    <select name="tblkendalibloksistem_id" id="tblkendalibloksistem_id"
+                                        class="form-control single-select" required>
                                         <option value="">Pilih</option>
                                         <?php foreach ($blok_sistem as $r) : ?>
-                                            <option value="<?= $r['tblkendalibloksistem_id'] ?>">
-                                                <?= $r['tblkendalibloksistem_nama'] ?></option>
+                                        <option value="<?= $r['tblkendalibloksistem_id'] ?>">
+                                            <?= $r['tblkendalibloksistem_nama'] ?></option>
                                         <?php endforeach ?>
                                     </select>
                                 </div>
@@ -59,9 +62,10 @@
                             <div class="col-12 mb-3">
                                 <div class="form-group">
                                     <label for="" class="mb-1">Status Aktif</label>
-                                    <select name="tblpengguna_isaktif" id="tblpengguna_isaktif" class="form-control" required>
+                                    <select name="tblpengguna_isaktif" id="tblpengguna_isaktif" class="form-control"
+                                        required>
                                         <?php foreach (status_aktif_ar() as $r) : ?>
-                                            <option value="<?= $r['val'] ?>"><?= $r['cap'] ?></option>
+                                        <option value="<?= $r['val'] ?>"><?= $r['cap'] ?></option>
                                         <?php endforeach ?>
                                     </select>
                                 </div>
@@ -77,7 +81,8 @@
                             <div class="col-12 mb-3">
                                 <div class="form-group">
                                     <label for="" class="mb-1">Password</label>
-                                    <input type="text" class="form-control" name="tblpengguna_password" id="tblpengguna_password" required>
+                                    <input type="password" class="form-control" name="tblpengguna_password"
+                                        id="tblpengguna_password" required>
 
                                 </div>
                                 <p class="hide tblpengguna_password_validation text-danger">Password minimal
@@ -87,7 +92,8 @@
                             <div class="col-12 mb-3">
                                 <div class="form-group">
                                     <label for="" class="mb-1">Konfirmasi Password</label>
-                                    <input type="text" class="form-control" name="pwconfirm" id="pwconfirm" required>
+                                    <input type="password" class="form-control" name="pwconfirm" id="pwconfirm"
+                                        required>
                                 </div>
                                 <p class="hide pwconfirm_validation text-danger">Konfirmasi password harus
                                     sama</p>

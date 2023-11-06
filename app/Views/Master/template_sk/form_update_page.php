@@ -36,10 +36,11 @@
                             <div class="col-md-6 col-12 mb-4">
                                 <div class="form-group">
                                     <label for="" class="mb-1">Nama Izin</label>
-                                    <select name="tblizin_id" id="tblizin_id" class="form-control single-select" required>
+                                    <select name="tblizin_id" id="tblizin_id" class="form-control single-select"
+                                        required>
                                         <option value="">Pilih</option>
                                         <?php foreach ($izin as $r) : ?>
-                                            <option value="<?= $r['tblizin_id'] ?>"><?= $r['tblizin_nama'] ?></option>
+                                        <option value="<?= $r['tblizin_id'] ?>"><?= $r['tblizin_nama'] ?></option>
                                         <?php endforeach ?>
                                     </select>
                                 </div>
@@ -47,12 +48,13 @@
                             <div class="col-md-6 col-12  mb-4">
                                 <div class="form-group">
                                     <label for="" class="mb-1">Nama Permohonan</label>
-                                    <select name="tblizinpermohonan_id" id="tblizinpermohonan_id" class="form-control single-select" required>
+                                    <select name="tblizinpermohonan_id" id="tblizinpermohonan_id"
+                                        class="form-control single-select" required>
                                         <option value="">Pilih</option>
                                         <?php foreach ($permohonan as $r) : ?>
-                                            <option value="<?= $r['tblizinpermohonan_id'] ?>">
-                                                <?= $r['tblizinpermohonan_nama'] ?>
-                                            </option>
+                                        <option value="<?= $r['tblizinpermohonan_id'] ?>">
+                                            <?= $r['tblizinpermohonan_nama'] ?>
+                                        </option>
                                         <?php endforeach ?>
                                     </select>
                                 </div>
@@ -63,20 +65,21 @@
                             <div class="col-md-6 col-12 mb-4">
                                 <div class="form-group">
                                     <label for="" class="mb-1">Template (dengan format word rtf)</label>
-                                    <input type="file" class="form-control" name="tblskizin_sktemplate" id="tblskizin_sktemplate">
+                                    <input type="file" class="form-control" name="tblskizin_sktemplate"
+                                        id="tblskizin_sktemplate">
                                     <input type="hidden" name="tblskizin_sktemplate_old" id="tblskizin_sktemplate_old">
                                 </div>
                             </div>
                             <div class="col-md-6 col-12 mb-4">
                                 <div class="form-group">
-                                    <label for="" class="mb-1">Tabel SK (jika tidak ada tambahkan <a href="">disini</a>
-                                        ,kemudian refresh halaman ini)</label>
-                                    <select name="tblskizin_tabelvariabel_id" id="tblskizin_tabelvariabel_id" class="form-control single-select" required>
+                                    <label for="" class="mb-1">Tabel SK </label>
+                                    <select name="tblskizin_tabelvariabel_id" id="tblskizin_tabelvariabel_id"
+                                        class="form-control single-select" required>
                                         <option value="">Pilih</option>
                                         <?php foreach ($variabel as $r) : ?>
-                                            <option value="<?= $r['tblskizin_tabelvariabel_id'] ?>">
-                                                <?= $r['tblskizin_tabelsk'] ?>
-                                            </option>
+                                        <option value="<?= $r['tblskizin_tabelvariabel_id'] ?>">
+                                            <?= $r['tblskizin_tabelsk'] ?>
+                                        </option>
                                         <?php endforeach ?>
                                     </select>
                                 </div>

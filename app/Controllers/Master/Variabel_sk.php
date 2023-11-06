@@ -135,6 +135,9 @@ class Variabel_sk extends BaseController
         $sqlQuery = "CREATE TABLE $nama_tabel (";
         $sqlQuery .= $nama_tabel . '_id INT(10) PRIMARY KEY AUTO_INCREMENT, ';
         $sqlQuery .= "tblizinpendaftaran_id INT(11), ";
+        $sqlQuery .= "no_izin VARCHAR(225), ";
+        $sqlQuery .= "tgl_penetapan date, ";
+        $sqlQuery .= "berlaku_sampai date, ";
         foreach ($nama_kolom as $key => $val) {
 
             if (!$panjang[$key]) {

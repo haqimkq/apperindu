@@ -16,7 +16,7 @@
                         <div class="col-12 mb-3">
                             <div class="form-group">
                                 <label for="" class="mb-1">Password Baru</label>
-                                <input type="text" class="form-control" name="tblpengguna_password"
+                                <input type="password" class="form-control" name="tblpengguna_password"
                                     id="tblpengguna_password" required>
 
                             </div>
@@ -27,7 +27,7 @@
                         <div class="col-12 mb-3">
                             <div class="form-group">
                                 <label for="" class="mb-1">Konfirmasi Password</label>
-                                <input type="text" class="form-control" name="pwconfirm" id="pwconfirm" required>
+                                <input type="password" class="form-control" name="pwconfirm" id="pwconfirm" required>
                             </div>
                             <p class="hide pwconfirm_validation text-danger">Konfirmasi password harus
                                 sama</p>

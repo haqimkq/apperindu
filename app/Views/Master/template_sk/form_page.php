@@ -70,8 +70,7 @@
                             </div>
                             <div class="col-md-6 col-12 mb-4">
                                 <div class="form-group">
-                                    <label for="" class="mb-1">Tabel SK (jika tidak ada tambahkan <a href="">disini</a>
-                                        ,kemudian refresh halaman ini)</label>
+                                    <label for="" class="mb-1">Tabel SK </label>
                                     <select name="tblskizin_tabelvariabel_id" id="tblskizin_tabelvariabel_id"
                                         class="form-control single-select" required>
                                         <option value="">Pilih</option>

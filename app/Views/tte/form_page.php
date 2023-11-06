@@ -32,11 +32,12 @@
 
                 </div>
                 <div class="card-footer">
+                    <div class="float-end">
+                        <button class="btn btn-secondary"
+                            onclick="lihat_persyaratan(<?= $request->uri->getSegment(3) ?>)">Lihat Persyaratan</button>
+                    </div>
 
 
-                    <button class="btn btn-outline-primary btn-sm"
-                        onclick="lihat_persyaratan(<?= $request->uri->getSegment(3) ?>)">Lihat Persyaratan</button>
-                    <!-- <button class="btn btn-primary btn-sm">Edit data primer</button> -->
                 </div>
 
             </div>

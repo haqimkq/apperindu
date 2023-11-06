@@ -153,7 +153,8 @@ class Tte extends BaseController
         $variable['nama_usaha'] = $r['tblizinpendaftaran_usaha'];
         $variable['alamat_usaha'] = $r['tblizinpendaftaran_lokasiizin'];
         $variable['alamat_pemohon'] = $r['tblizinpendaftaran_almtpemohon'];
-
+        $variable['npwp'] = $r['tblizinpendaftaran_npwp'];
+        $variable['nik'] = $r['tblizinpendaftaran_idpemohon'];
         $variable['tblizinpermohonan_id'] = $r['tblizinpermohonan_id'];
 
         // variabel tte

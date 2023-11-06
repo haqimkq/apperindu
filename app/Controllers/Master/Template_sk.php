@@ -334,9 +334,9 @@ class Template_sk extends BaseController
 
         $variable['tgl_permohonan'] = tanggal(date('Y-m-d'));
         $variable['nama_usaha'] = replace_variable('nama_usaha');
-        $variable['alamat_usaha'] = replace_variable('alamat_usaha');;
-
-
+        $variable['alamat_usaha'] = replace_variable('alamat_usaha');
+        $variable['npwp'] = replace_variable('npwp');
+        $variable['nik'] = replace_variable('nik');
 
         // variabel tte
         $variable['pas_foto'] = $pas_foto;

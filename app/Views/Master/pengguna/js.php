@@ -189,7 +189,7 @@ function username_check(id, username) {
 
 function validatePassword(password) {
     // Define the regular expressions for each password rule
-    const minLengthRegex = /.{8,}/; // Minimum 8 characters
+    const minLengthRegex = /.{6,}/; // Minimum 6 characters
     const uppercaseRegex = /[A-Z]/; // At least one uppercase letter
     const digitRegex = /[0-9]/; // At least one digit
     const specialCharRegex = /[$@$!%*?&]/; // At least one special character
