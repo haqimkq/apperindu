@@ -139,7 +139,7 @@ class Tte extends BaseController
         // generate qr code
         $encrypted_id = $this->model_doc->encrypt($id_pendaftaran, key_secret());
 
-        $val = base_url('verify/verify_by_qr/' . $encrypted_id);
+        $val = site_url('verify/verify_by_qr/' . $encrypted_id);
         $qr_path =  $this->model_doc->qrcode($val, qr_gen_dir());
         $qr = $this->model_doc->get_img($qr_path, array('width' => 3, 'height' => 3));
 
