@@ -59,40 +59,78 @@ class M_doc extends Model
     // }
 
 
-    public function word2pdf($inputDoc, $outputPdf)
+    public function word2pdf($file, $path)
     {
+        $apiURL = "http://103.165.243.16:8080/";
+        $url = $apiURL . "upload/";
+        $curl = curl_init();
 
-        if (!file_exists($inputDoc)) {
-            $response = [
-                'status' => false,
-                'message' => "Berkas tidak ditemukan",
-                'filename' => '',
-            ];
-            return $response;
-        }
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $apiURL . 'api/convert.php',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => array('file' => new \CURLFILE($file)),
+            CURLOPT_HTTPHEADER => array(
+                'Authorization: Basic YWRtaW46UGFzczg4OTk0NTQ1Ow=='
+            ),
+        ));
 
-        $os = strtoupper(substr(PHP_OS, 0, 3));
-        if ($os === 'WIN') {
-            $command = '"C:\Program Files\LibreOffice\program\soffice.exe" --headless --convert-to pdf --outdir "' . $outputPdf . '" "' . $inputDoc . '"';
-        } elseif ($os === 'LIN') {
-            $command = 'libreoffice --headless --convert-to pdf --outdir ' . $outputPdf . ' ' . $inputDoc;
-        } else {
-            $response = [
-                'status' => false,
-                'msg' => "Sistem operasi tidak didukung",
-                'outputPdf' => '',
-            ];
-            return $response;
-        }
-        exec($command, $output, $returnCode);
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+        $hasil =  json_decode($response, true);
 
 
-        if ($returnCode === 0) {
-            return basename($inputDoc, '.docx') . '.pdf';
+        if ($hasil['status']) {
+
+            if (file_put_contents($path . $hasil['filename'], file_get_contents($url . $hasil['filename']))) {
+                return  $hasil['filename'];
+            }
         }
 
         return false;
     }
+
+
+    // public function word2pdf($inputDoc, $outputPdf)
+    // {
+
+    //     if (!file_exists($inputDoc)) {
+    //         $response = [
+    //             'status' => false,
+    //             'message' => "Berkas tidak ditemukan",
+    //             'filename' => '',
+    //         ];
+    //         return $response;
+    //     }
+
+    //     $os = strtoupper(substr(PHP_OS, 0, 3));
+    //     if ($os === 'WIN') {
+    //         $command = '"C:\Program Files\LibreOffice\program\soffice.exe" --headless --convert-to pdf --outdir "' . $outputPdf . '" "' . $inputDoc . '"';
+    //     } elseif ($os === 'LIN') {
+    //         $command = 'libreoffice --headless --convert-to pdf --outdir ' . $outputPdf . ' ' . $inputDoc;
+    //     } else {
+    //         $response = [
+    //             'status' => false,
+    //             'msg' => "Sistem operasi tidak didukung",
+    //             'outputPdf' => '',
+    //         ];
+    //         return $response;
+    //     }
+    //     exec($command, $output, $returnCode);
+
+
+    //     if ($returnCode === 0) {
+    //         return basename($inputDoc, '.docx') . '.pdf';
+    //     }
+
+    //     return false;
+    // }
 
     public function get_img($imagePath, $size = array())
     {
