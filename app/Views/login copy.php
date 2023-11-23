@@ -5,7 +5,8 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" href="<?= base_url() ?>assets/images/favicon-32x32.png" type="image/png" />
+    <link rel="icon" href="https://raw.githubusercontent.com/ibnufajar0104/img_statis/main/logo%20tala.png"
+        type="image/png" />
     <!-- Bootstrap CSS -->
     <link href="<?= base_url() ?>assets/css/bootstrap.min.css" rel="stylesheet" />
     <link href="<?= base_url() ?>assets/css/bootstrap-extended.css" rel="stylesheet" />
@@ -13,11 +14,12 @@
     <link href="<?= base_url() ?>assets/css/icons.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="<?= base_url() ?>assets/plugins/notifications/css/lobibox.min.css" />
 
     <!-- loader-->
-    <link href="<?= base_url() ?>assets/css/pace.min.css" rel="stylesheet" />
+    <link href="assets/css/pace.min.css" rel="stylesheet" />
 
-    <title>Snacked - Bootstrap 5 Admin Template</title>
+    <title><?= $title ?></title>
 </head>
 
 <body class="bg-login">
@@ -26,52 +28,43 @@
     <div class="wrapper">
 
         <!--start content-->
-        <main class="authentication-content mt-5">
+        <main class="authentication-content">
             <div class="container-fluid">
-                <div class="row">
-                    <div class="col-12 col-lg-4 mx-auto">
-                        <div class="card shadow rounded-5 overflow-hidden">
-                            <div class="card-body p-4 p-sm-5">
-                                <h5 class="card-title text-center"><?= nama_aplkasi() ?></h5>
-                                <p class="card-text mb-5">Silahkan login untuk memulai sesi</p>
-                                <form class="form-body" method="post">
-                                    <?= csrf_field() ?>
-                                    <div class="row g-3">
-                                        <div class="col-12">
-                                            <label for="inputEmailAddress" class="form-label">Username</label>
-                                            <div class="ms-auto position-relative">
-                                                <div
-                                                    class="position-absolute top-50 translate-middle-y search-icon px-3">
-                                                    <i class="bi bi-person-fill"></i>
+                <div class="authentication-card">
+                    <div class="card shadow rounded-5 overflow-hidden">
+                        <div class="row g-0">
+                            <div class="col-lg-6 d-flex align-items-center justify-content-center border-end">
+                                <img src="https://raw.githubusercontent.com/ibnufajar0104/img_statis/main/fotopns123-1.png"
+                                    class="img-fluid" alt="" width="300">
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="card-body p-4 p-sm-5">
+                                    <h5 class="card-title"><?= nama_aplkasi() ?>
+                                    </h5>
+                                    <p class="card-text mb-5">Silahkan login untuk memulai sesi</p>
+                                    <form action="" method="POST" class="form" autocomplete="off">
+                                        <?= csrf_field() ?>
+                                        <div class="row g-3">
+                                            <div class="col-12">
+                                                <label for="inputEmailid" class="form-label">Username</label>
+                                                <input type="text" name="username" class="form-control  radius-30"
+                                                    id="username" required>
+                                            </div>
+                                            <div class="col-12">
+                                                <label for="inputEmailid" class="form-label">Password</label>
+                                                <input type="password" name="password" class="form-control  radius-30"
+                                                    id="password" required>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="d-grid gap-3">
+                                                    <button type="submit"
+                                                        class="btn  btn-primary radius-30 login">Login</button>
+
                                                 </div>
-                                                <input type="text" name="username" class="form-control radius-30 ps-5"
-                                                    id="username" placeholder="Username anda">
                                             </div>
                                         </div>
-                                        <div class="col-12">
-                                            <label for="inputChoosePassword" class="form-label">Password</label>
-                                            <div class="ms-auto position-relative">
-                                                <div
-                                                    class="position-absolute top-50 translate-middle-y search-icon px-3">
-                                                    <i class="bi bi-lock-fill"></i>
-                                                </div>
-                                                <input type="password" class="form-control radius-30 ps-5" id="password"
-                                                    name="password" placeholder="Password anda">
-                                            </div>
-                                        </div>
-                                        <div class="col-6">
-
-                                        </div>
-
-                                        <div class="col-12">
-                                            <div class="d-grid">
-                                                <button type="submit"
-                                                    class="btn btn-primary radius-30 login">LOGIN</button>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </form>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -92,7 +85,7 @@
     <script src="<?= base_url() ?>assets/plugins/notifications/js/notifications.min.js"></script>
 
     <script>
-    $('.form-body').submit(function(event) {
+    $('.form').submit(function(event) {
         event.preventDefault(); // Prevent the default form submission
         const formData = $(this).serialize();
 
