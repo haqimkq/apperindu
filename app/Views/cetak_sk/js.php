@@ -4,7 +4,7 @@
 <!-- <script src="assets/js/form-select2.js"></script> -->
 <script>
 $(document).ready(function() {
-
+    $('.hide').hide();
     $('.filter-select, .single-select').select2({
         theme: 'bootstrap4',
         width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' :
@@ -140,28 +140,37 @@ function permohonan_dinamis(id, el) {
     });
 }
 
-function loading_button(status, status2) {
-    if (status) {
 
+
+function loading_button(status) {
+    if (status) {
+        $('.cetak').prop('disabled', true);
         html =
             '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Tunggu sebentar...'
-        $('.simpan').html(html);
+        $('.cetak').html(html);
     } else {
 
+        $('.cetak').prop('disabled', false);
+        html = 'Cetak'
+        $('.cetak').html(html);
 
-        html =
-            'Simpan'
-        $('.simpan').html(html);
-
-    }
-
-    if (status2) {
-        $('.simpan').prop('disabled', false);
-    } else {
-        $('.simpan').prop('disabled', true);
     }
 }
 
+function loading_button2(status) {
+    if (status) {
+        $('.cetak').prop('disabled', true);
+        html =
+            '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Tunggu sebentar...'
+        $('.cetak').html(html);
+    } else {
+
+        $('.cetak').prop('disabled', false);
+        html = 'Cetak'
+        $('.cetak').html(html);
+
+    }
+}
 
 // Listen for the form's submit event
 $('.form').submit(function(event) {
@@ -188,9 +197,14 @@ $('.form').submit(function(event) {
                 }
 
                 success(response.msg);
+                loading_button(false, true);
                 setTimeout(function() {
-                    window.location.href = response.url;
+                    reviewCetak(response.path)
                 }, 1000);
+
+                // setTimeout(function() {
+                //     window.location.href = response.url;
+                // }, 1000);
 
             } else {
                 error(response.msg);
@@ -204,6 +218,52 @@ $('.form').submit(function(event) {
             // setTimeout(function() {
             //     history.back()
             // }, 1000);
+        }
+    });
+
+
+
+
+});
+
+
+$('.form2').submit(function(event) {
+    event.preventDefault(); // Prevent the default form submission
+
+    // Get the form data
+    const formData = $(this).serialize();
+
+
+    $.ajax({
+        data: formData,
+        type: "POST",
+        dataType: 'json',
+        url: "<?= site_url($path . '/form_simpan') ?>",
+        beforeSend: function() {
+            // Menampilkan elemen loading
+            loading_button2(true);
+        },
+        success: function(response) {
+            if (response.status) {
+
+
+                success(response.msg);
+                loading_button2(false);
+
+                setTimeout(function() {
+                    window.location.href = response.url;
+                }, 1000);
+
+            } else {
+                error(response.msg);
+                loading_button2(false);
+            }
+
+        },
+        error: function() {
+            // Menyembunyikan elemen loading jika terjadi kesalahan
+            error('Terjadi kesalahan');
+            loading_button2(false);;
         }
     });
 
@@ -237,7 +297,8 @@ $('#no_izin').keyup(function() {
         if (!$('#no_izin').next().hasClass("invalid-feedback")) {
             $('#no_izin').after('<div class="invalid-feedback">Nomor tidak boleh kosong</div>');
         }
-        loading_button(false, false);
+
+        $('.simpan').prop('disabled', true);
         return false;
     }
 
@@ -248,7 +309,7 @@ $('#no_izin').keyup(function() {
         dataType: 'json',
         url: "<?= site_url($path . '/validasi_no_izin') ?>",
         beforeSend: function() {
-            loading_button(true, false);
+            loading_button(true);
         },
         success: function(response) {
 
@@ -268,7 +329,7 @@ $('#no_izin').keyup(function() {
                     $('#no_izin').after(`<div class="valid-feedback">${dynamicText}</div>`);
                 }
 
-                loading_button(false, true);
+                loading_button(false);
             } else {
                 $('#no_izin').removeClass("is-valid");
                 $('#no_izin').addClass("is-invalid");
@@ -284,7 +345,9 @@ $('#no_izin').keyup(function() {
                     $('#no_izin').after(`<div class="invalid-feedback">${dynamicText}</div>`);
                 }
 
-                loading_button(false, false);
+                loading_button(false);
+
+                $('.simpan').prop('disabled', true);
             }
 
 
@@ -293,7 +356,7 @@ $('#no_izin').keyup(function() {
         error: function() {
 
             error('Terjadi kesalahan');
-            loading_button(false, false);
+            loading_button(false);
         }
     });
 });
@@ -306,11 +369,7 @@ $('.filter-select').change(function() {
 })
 
 $('#id_izin').change(function() {
-
-
     permohonan_dinamis($(this).val(), '#id_permohonan');
-
-
 });
 
 function update(id) {

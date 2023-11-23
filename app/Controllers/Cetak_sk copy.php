@@ -12,14 +12,14 @@ use App\Models\M_persyaratan_pemohon;
 use App\Models\Master\M_izin;
 use App\Models\Master\M_permohonan;
 use App\Models\Master\M_template;
-use App\Models\Master\M_tte_rekomendasi;
 
-class Rekomendasi extends BaseController
+
+class Cetak_sk extends BaseController
 {
 
-    private $page = 'Perlu Rekomendasi';
-    private $url = 'rekomendasi';
-    private $path = 'rekomendasi';
+    private $page = 'Perlu Surat Keterangan';
+    private $url = 'cetak_sk';
+    private $path = 'cetak_sk';
 
     protected $model;
     protected $model_pendaftaran;
@@ -31,7 +31,6 @@ class Rekomendasi extends BaseController
     protected $model_persyaratan_pemohon;
     protected $model_pemohon;
     protected $model_jwt;
-    protected $model_tte_rekomendasi;
     protected $primaryKey = 'tblizinpendaftaran_id';
 
 
@@ -48,7 +47,6 @@ class Rekomendasi extends BaseController
         $this->model_persyaratan_pemohon = new M_persyaratan_pemohon($this->request);
         $this->model_pemohon = new M_pemohon($this->request);
         $this->model_jwt = new MJwt();
-        $this->model_tte_rekomendasi = new M_tte_rekomendasi($this->request);
     }
 
 
@@ -83,9 +81,10 @@ class Rekomendasi extends BaseController
             <button class="btn btn-sm btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown"
                 aria-expanded="false">Opsi</button>
             <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="' . site_url($this->url . '/form_page/' . $l[$this->primaryKey]) . '"  >Cetak Rekomendasi</a>
+            <li><a class="dropdown-item" href="' . site_url($this->url . '/form_page/' . $l[$this->primaryKey]) . '"  >Cetak SK</a>
             </li>
          
+        
             <li><a class="dropdown-item"  href="#" onclick="log(\'' . $l['tblizinpendaftaran_id'] . '\')">Log Berkas</a>
             </li>
              
@@ -158,28 +157,29 @@ class Rekomendasi extends BaseController
     {
 
 
-        $rekomendasi = $this->model_tte_rekomendasi->get_by_blok_sistem_id();
+
         $post = $this->request->getPost();
         $r = $this->model_pendaftaran->get_by_id($post['tblizinpendaftaran_id']);
 
+        // variabel data primary
         $variable['nama_pemohon'] = $r['tblizinpendaftaran_namapemohon'];
         $variable['tgl_permohonan'] = tanggal($r['tblizinpendaftaran_tgljam']);
         $variable['nama_usaha'] = $r['tblizinpendaftaran_usaha'];
         $variable['alamat_usaha'] = $r['tblizinpendaftaran_lokasiizin'];
         $variable['alamat_pemohon'] = $r['tblizinpendaftaran_almtpemohon'];
-        $variable['izin'] = $r['tblizin_nama'];
-        $variable['tblizinpermohonan_id'] = $r['tblizinpermohonan_id'];
         $variable['npwp'] = $r['tblizinpendaftaran_npwp'];
         $variable['nik'] = $r['tblizinpendaftaran_idpemohon'];
+
+        $variable['tblizinpermohonan_id'] = $r['tblizinpermohonan_id'];
 
         // variabel tte
         $variable['qr_ttd'] = '';
         $variable['bsre_logo'] = '';
-        $variable['TTD'] =  '';
-        $variable['nama_kadis'] = $rekomendasi['nama'];
-        $variable['pangkat_kadis'] = $rekomendasi['pangkat'];
-        $variable['nip_kadis'] = $rekomendasi['nip'];
-        $variable['footer_ttd'] = footer_tte();
+        $variable['TTD'] = '';
+        $variable['nama_kadis'] = nama_kadis();
+        $variable['pangkat_kadis'] = pangkat_kadis();
+        $variable['nip_kadis'] = nip_kadis();
+        $variable['footer_ttd'] = '';
 
         $per = $this->model_persyaratan_pemohon->get_pas_foto($r['tblpemohon_id']);
 
@@ -214,17 +214,24 @@ class Rekomendasi extends BaseController
         // insert ke tabel tertentu
         if (!$this->insert($tabel, $arr)) {
 
-            $res = array('status' => false, 'msg' => 'Terjadi kesalahan saat menginput data ');
+            $res = array('status' => false, 'msg' => failed());
             return $this->response->setJSON($res);
         }
 
-        $file_name = 'rekomendasi_' . $post['tblizinpendaftaran_id'] . '.docx';
+        // insert proses berkas
+        if (!$this->insert_proses($post['tblizinpendaftaran_id'])) {
+            $res = array('status' => false, 'msg' => failed());
+            return $this->response->setJSON($res);
+        }
+
+
+
+        $file_name = $post['tblizinpendaftaran_id'] . '.docx';
         $path = 'doc/word/' . $file_name;
         $output = word_dir($file_name);
 
         // mencari template terkait
-        $template = template_dir($t['tblskizin_rekomtemplate']);
-
+        $template = template_dir($t['tblskizin_sktemplate']);
 
         // jika template tidak ditemukan
         if (!file_exists($template)) {
@@ -236,145 +243,86 @@ class Rekomendasi extends BaseController
         $this->model_doc->processRTFTemplate($template, $output, $variable);
 
         // generate ke pdf simpan ke server
-        $res = $this->model_doc->word2pdf($output, 'doc/before_tte/');
-
-        if (!isset($res)) {
-            $res = array('status' => false, 'msg' => 'Terjadi kesalahan saat conversi file pdf');
-            return $this->response->setJSON($res);
-        }
-
-        //    path pdf
-        $path2 = base_url('doc/before_tte/' . $res);
-
-        $r = $this->model_kendali_proses->get_by_status_4($post['tblizinpendaftaran_id']);
-        $id = $r['tblkendaliproses_id'];
-
-        $res = array('status' => true, 'msg' => 'Rekomendasi berhasil dicetak, lanjut melakukan tte', 'path' => $path2, 'url_file' => base_url($path), 'name_file' => $file_name);
-        return $this->response->setJSON($res);
-    }
-
-    public function tte()
-    {
-        // id_pendaftaran
-        $rekomendasi = $this->model_tte_rekomendasi->get_by_blok_sistem_id();
-        $id_pendaftaran = $this->request->getPost('tblizinpendaftaran_id');
-
-        // generate qr code
-        $val = base_url('doc/sign/rekomendasi_' . $id_pendaftaran . '.pdf');
-        $qr_path =  $this->model_doc->qrcode($val, qr_gen_dir());
-        $qr = $this->model_doc->get_img($qr_path, array('width' => 3, 'height' => 3));
-
-
-
-
-        // edit template
-        $r = $this->model_pendaftaran->get_by_id($id_pendaftaran);
-
-        // variabel data primary
-        $variable['nama_pemohon'] = $r['tblizinpendaftaran_namapemohon'];
-        $variable['tgl_permohonan'] = tanggal($r['tblizinpendaftaran_tgljam']);
-        $variable['nama_usaha'] = $r['tblizinpendaftaran_usaha'];
-        $variable['alamat_usaha'] = $r['tblizinpendaftaran_lokasiizin'];
-        $variable['alamat_pemohon'] = $r['tblizinpendaftaran_almtpemohon'];
-        $variable['izin'] = $r['tblizin_nama'];
-        $variable['tblizinpermohonan_id'] = $r['tblizinpermohonan_id'];
-        $variable['npwp'] = $r['tblizinpendaftaran_npwp'];
-        $variable['nik'] = $r['tblizinpendaftaran_idpemohon'];
-
-        // variabel tte
-        $variable['qr_ttd'] = '';
-        $variable['bsre_logo'] = '';
-        $variable['TTD'] = $qr;
-        $variable['nama_kadis'] = $rekomendasi['nama'];
-        $variable['pangkat_kadis'] = $rekomendasi['pangkat'];
-        $variable['nip_kadis'] = $rekomendasi['nip'];
-        $variable['footer_ttd'] = footer_tte();
-
-        $per = $this->model_persyaratan_pemohon->get_pas_foto($r['tblpemohon_id']);
-
-        if ($per) {
-            $dir =  'doc/persyaratan/' . $per['tblpemohonpersyaratan_file'];
-            $pas_foto = $this->model_doc->get_img($dir, array('width' => 3, 'height' => 4));
-            $variable['pas_foto'] = $pas_foto;
-        }
-
-        $id_permohonan = $variable['tblizinpermohonan_id'];
-        $tabel_info = $this->get_table_info($id_permohonan);
-        // mendapatkan tabel tertentu
-        $tabel = $this->get_table($id_permohonan);
-
-
-
-
-        // mendapatkan row dari tabel tertentu
-        $arr =  $this->get_row($tabel, $id_pendaftaran);
-
-        if (!$arr) {
-            $res = array('status' => false, 'msg' => 'Rekomendasi belum dicetak');
-            return $this->response->setJSON($res);
-        }
-
-
-        foreach ($tabel_info as $key => $t) {
-            if ($key != 0) {
-
-
-                // variabel data secondary
-                if ($t->type_name == 'date') {
-                    $variable[$t->name] = tanggal($arr[$t->name]);
-                } else {
-                    $variable[$t->name] = $arr[$t->name];
-                }
-            }
-        }
-
-
-        $t = $this->model_template->get_by_id_permohonan($variable['tblizinpermohonan_id']);
-
-
-        $file_name = 'rekomendasi_' . $id_pendaftaran . '.docx';
-
-        $output = word_dir($file_name);
-        $template = base_url('doc/template/' . $t['tblskizin_rekomtemplate']);
-        // edit template
-        $this->model_doc->processRTFTemplate($template, $output, $variable);
-        // convert jadi pdf
-        $res = $this->model_doc->word2pdf($output, unsign());
-        // tte
-        $path = unsign($res);
-
-
-
-        $nik = $rekomendasi['nik'];
-        $passphrase = $this->request->getPost('passphrase');
-        $res_tte = $this->model_doc->tte($id_pendaftaran, $path, $res, $nik, $passphrase);
-
-        $res_tte_decode = json_decode($res_tte, true);
-
-
-        // validasi tte 
-        if (isset($res_tte_decode['error'])) {
-            $res = array('status' => false, 'msg' => $res_tte_decode['error']);
-            return $this->response->setJSON($res);
-        }
-
-        // ketika berhasil
-        file_put_contents(sign('rekomendasi_' . $id_pendaftaran . '.pdf'), $res_tte);
-
-        // insert proses berkas
-        if (!$this->insert_proses($id_pendaftaran)) {
+        $res = $this->model_doc->word2pdf($output, before_tte());
+        if (!$res) {
             $res = array('status' => false, 'msg' => failed());
             return $this->response->setJSON($res);
         }
 
-
-        $r = $this->model_kendali_proses->get_by_status_4($id_pendaftaran);
+        // mendapatkan status terakhir untuk kendali berkas
+        $r = $this->model_kendali_proses->get_by_status_4($post['tblizinpendaftaran_id']);
         $id = $r['tblkendaliproses_id'];
 
-
-
-        $res = array('status' => true, 'msg' => 'Berhasil di tanda tangani, lanjut kendali berkas', 'url' => site_url('kendali_berkas/form_page/' . $id));
+        $res = array('status' => true, 'msg' => 'SK berhasil dicetak, lanjut melakukan kendali berkas', 'url_file' => base_url($path), 'name_file' => $variable['nama_pemohon'] . '_' . $file_name, 'url' => site_url('kendali_berkas/form_page/' . $id));
         return $this->response->setJSON($res);
+    }
+
+    public function get_pas_foto_by_api($id)
+    {
+
+        $token = $this->model_jwt->get_token_publik();
+        $token = json_decode($token, true);
+
+        if (!$token['status']) {
+            $response = [
+                'status' => false,
+                'msg' => 'Tidak dapat mendapatkan token'
+
+            ];
+
+
+            return $this->response->setJSON($response);
+        }
+
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => ip() . 'ptsp_online/pemohon/get_pas_foto',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => '{
+            "tblpemohon_id" : "' . $id . '"
+            }',
+
+            CURLOPT_HTTPHEADER => array(
+                'Content-Type: application/json',
+                'Authorization: Bearer ' . $token['token']
+            ),
+        ));
+
+        $res = curl_exec($curl);
+        $res = json_decode($res, true);
+
+        if (!isset($res['status'])) {
+            $response = [
+                'status' => false,
+                'msg' => 'Terjadi kesalahan'
+
+            ];
+
+
+            return $this->response->setJSON($response);
+        }
+
+
+        if (!$res['status']) {
+            $response = [
+                'status' => false,
+                'msg' => $res['msg']
+
+            ];
+
+
+            return $this->response->setJSON($response);
+        }
+
+
+        return $res['data'];
     }
 
     private function insert($t, $d)
@@ -412,7 +360,7 @@ class Rekomendasi extends BaseController
             $d['tblkendaliproses_tglselesai_sys'] = $time;
             $d['tblkendaliproses_tglterima'] = $time;
             $d['tblpengguna_id'] = session()->id;
-            $d['tblkendaliproses_catatan'] = 'Rekomendasi di cetak ulang';
+            $d['tblkendaliproses_catatan'] = 'SK di cetak ulang';
 
             $u =  $this->model_kendali_proses->update($id, $d);
 
@@ -424,7 +372,7 @@ class Rekomendasi extends BaseController
             // insert kendali proses progres
             $d['tblizinpendaftaran_id'] = $id_daftar;
             // 3 adalah Penerbitan Naskah Perizinan
-            $d['tblkendalibloksistemtugas_id'] = 49;
+            $d['tblkendalibloksistemtugas_id'] = 3;
             $d['tblkendaliproses_tglmulai'] = $time;
             $d['tblkendaliproses_tglmulai_sys'] = $time;
             $d['tblkendaliproses_tglselesai'] = $time;
@@ -433,7 +381,7 @@ class Rekomendasi extends BaseController
             $d['tblkendalibloksistem_idasal'] =  session()->blok_sistem_id;
             // 5 adalah BO Usaha 1
             $d['tblkendalibloksistem_idkirim'] =  session()->blok_sistem_id;
-            $d['tblkendaliproses_catatan'] = 'Rekomendasi telah dicetak';
+            $d['tblkendaliproses_catatan'] = 'SK telah dicetak';
             $d['tblkendaliproses_isparaf'] = 'T';
             $d['tblkendaliproses_isberkasfisikdikirim'] = 'T';
             $d['tblkendaliproses_tglberkasfisikdikirim'] = $time;
@@ -471,18 +419,13 @@ class Rekomendasi extends BaseController
     private function get_table($id)
     {
         $db = \Config\Database::connect();
-        $m = $db->table('v_template_rekomendasi');
+        $m = $db->table('v_template');
         $m->where('tblizinpermohonan_id', $id);
         $r = $m->get()->getRowArray();
 
         if (!$r) {
             return false;
         }
-
-        $m = $db->table('tblskizin_tabelvariabel');
-        $m->where('tblskizin_tabelvariabel_id', $r['tblskizin_tabelvariabel_idrekom']);
-        $r = $m->get()->getRowArray();
-
 
         return $r['tblskizin_tabelsk'];
     }

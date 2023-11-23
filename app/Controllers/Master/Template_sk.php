@@ -319,8 +319,14 @@ class Template_sk extends BaseController
     public function testing($id)
     {
 
+
+
+
+
         $this->model_pengaturan = new M_pengaturan();
         $row = $this->model->get_by_id($id);
+
+
         $qr = $this->model_doc->get_img(qr_dir(), array('width' => 3, 'height' => 3));
         $pas_foto = $this->model_doc->get_img(pas_foto_dir(), array('width' => 3, 'height' => 4));
 
@@ -396,6 +402,7 @@ class Template_sk extends BaseController
         $data['request'] = $this->request;
         $data['template'] =  $row['tblskizin_sktemplate'];
         $data['table'] = $row['tblskizin_tabelsk'];
+        $data['r'] = $row;
         $data['base64'] = $base64;
         return view($this->path . '/testing', $data);
     }

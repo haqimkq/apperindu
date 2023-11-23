@@ -219,10 +219,10 @@ class Cetak_sk extends BaseController
         }
 
         // insert proses berkas
-        if (!$this->insert_proses($post['tblizinpendaftaran_id'])) {
-            $res = array('status' => false, 'msg' => failed());
-            return $this->response->setJSON($res);
-        }
+        // if (!$this->insert_proses($post['tblizinpendaftaran_id'])) {
+        //     $res = array('status' => false, 'msg' => failed());
+        //     return $this->response->setJSON($res);
+        // }
 
 
 
@@ -248,14 +248,36 @@ class Cetak_sk extends BaseController
             $res = array('status' => false, 'msg' => failed());
             return $this->response->setJSON($res);
         }
-
+        $path2 = base_url('doc/before_tte/' . $res);
         // mendapatkan status terakhir untuk kendali berkas
         $r = $this->model_kendali_proses->get_by_status_4($post['tblizinpendaftaran_id']);
         $id = $r['tblkendaliproses_id'];
 
-        $res = array('status' => true, 'msg' => 'SK berhasil dicetak, lanjut melakukan kendali berkas', 'url_file' => base_url($path), 'name_file' => $variable['nama_pemohon'] . '_' . $file_name, 'url' => site_url('kendali_berkas/form_page/' . $id));
+        $res = array('status' => true, 'msg' => 'SK berhasil dicetak', 'path' => $path2, 'url_file' => base_url($path), 'name_file' => $variable['nama_pemohon'] . '_' . $file_name, 'url' => site_url('kendali_berkas/form_page/' . $id));
         return $this->response->setJSON($res);
     }
+
+    public function form_simpan()
+    {
+
+
+
+        $post = $this->request->getPost();
+
+
+        // insert proses berkas
+        if (!$this->insert_proses($post['tblizinpendaftaran_id'])) {
+            $res = array('status' => false, 'msg' => failed());
+            return $this->response->setJSON($res);
+        }
+
+        $r = $this->model_kendali_proses->get_by_status_4($post['tblizinpendaftaran_id']);
+        $id = $r['tblkendaliproses_id'];
+
+        $res = array('status' => true, 'msg' => 'SK berhasil disimpan, lanjut melakukan kendali berkas', 'url' => site_url('kendali_berkas/form_page/' . $id));
+        return $this->response->setJSON($res);
+    }
+
 
     public function get_pas_foto_by_api($id)
     {

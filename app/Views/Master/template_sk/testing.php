@@ -25,13 +25,13 @@
 
                     <div class="row">
                         <div class="col-md-12">
+                            <p><?= $r['tblizin_nama'] ?> > <?= $r['tblizinpermohonan_nama'] ?></p>
                             <p>Fitur ini hanya untuk uji coba template, data dan qr code yang digunakan bersifat uji
                                 coba
                             </p>
                         </div>
                         <div class="col-md-12">
-                            <embed src="data:application/pdf;base64,<?= $base64 ?>" type="application/pdf" width="100%"
-                                height="600px" />
+                            <embed src="data:application/pdf;base64,<?= $base64 ?>" type="application/pdf" width="100%" height="600px" />
                         </div>
                     </div>
 
@@ -40,8 +40,7 @@
 
         </div>
         <div class="col-md-8">
-            <form action="<?= site_url($path . '/update_template') ?>" method="POST" autocomplete="off"
-                enctype="multipart/form-data">
+            <form action="<?= site_url($path . '/update_template') ?>" method="POST" autocomplete="off" enctype="multipart/form-data">
                 <input type="hidden" name="id" id="id" value="<?= $request->uri->getSegment(3) ?>">
 
                 <?= csrf_field() ?>
@@ -62,10 +61,8 @@
                             <div class="col-md-6 col-12 mb-4">
                                 <div class="form-group">
                                     <label for="" class="mb-1">Template baru (dengan format rtf) </label>
-                                    <input type="file" class="form-control" name="tblskizin_sktemplate"
-                                        id="tblskizin_sktemplate">
-                                    <input type="hidden" value="<?= $template ?>" name="tblskizin_sktemplate_old"
-                                        id="tblskizin_sktemplate_old">
+                                    <input type="file" class="form-control" name="tblskizin_sktemplate" id="tblskizin_sktemplate">
+                                    <input type="hidden" value="<?= $template ?>" name="tblskizin_sktemplate_old" id="tblskizin_sktemplate_old">
                                 </div>
                             </div>
 
