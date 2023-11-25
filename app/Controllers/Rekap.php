@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\M_kendali_proses;
+use App\Models\M_rekap;
 use App\Models\Master\M_izin;
 use App\Models\Master\M_kecamatan;
 use App\Models\Master\M_permohonan;
@@ -24,6 +25,7 @@ class Rekap extends BaseController
     protected $model_izin;
     protected $model_permohonan;
     protected $model_kecamatan;
+
     protected $primaryKey       = 'tblkendaliproses_id';
     protected $model_blok_sistem_tugas;
     protected $request;
@@ -31,7 +33,7 @@ class Rekap extends BaseController
     public function __construct()
     {
         $this->request = Services::request();
-        $this->model = new M_kendali_proses($this->request);
+        $this->model = new M_rekap($this->request);
         $this->model_izin = new M_izin($this->request);
         $this->model_permohonan = new M_permohonan($this->request);
         $this->model_kecamatan = new M_kecamatan($this->request);
@@ -73,13 +75,16 @@ class Rekap extends BaseController
                 aria-expanded="false">Opsi</button>
             <ul class="dropdown-menu">';
 
-            $opsi .= '<li><a class="dropdown-item"  href="#" onclick="review(\'' . $draf_sk . '\')">Lihat Draf SK</a>
-            </li>';
+
 
             if ($l['tblizinpendaftaran_issign'] == 'T') {
                 $opsi .= '<li><a class="dropdown-item"  href="#" onclick="review(\'' . $sk . '\')">Lihat SK</a>
                 </li>';
             }
+            $opsi .= '<li><a class="dropdown-item"  href="#" onclick="review(\'' . $draf_sk . '\')">Lihat Draf SK</a>
+            </li>';
+
+
 
             $opsi .=  '<li><a class="dropdown-item" href="' . site_url('cetak_sk/form_page/' . $l['tblizinpendaftaran_id']) . '"  >Cetak Ulang</a>
             </li>';
@@ -98,7 +103,7 @@ class Rekap extends BaseController
             $row[] = '<div class="text-wrap">' . $l['tblizinpendaftaran_namapemohon'] . '</div>';
             $row[] = '<div class="text-wrap">' . $l['tblizinpendaftaran_usaha'] . '</div>';
 
-            $row[] = '<div class="text-wrap">' . tanggal($l['tblkendaliproses_tglterima']) . '</div>';
+            $row[] = '<div class="text-wrap">' . tanggal($l['tblizinpendaftaran_tgljam']) . '</div>';
             $row[] = $l['tblkecamatan_nama'];
             $row[] = $l['tblkelurahan_nama'];
 

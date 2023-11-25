@@ -5,7 +5,7 @@ namespace App\Models;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\Model;
 
-class M_pendaftaran extends Model
+class M_rekap extends Model
 {
     protected $table = 'tblizinpendaftaran';
     protected $table_view = 'v_pendaftaran';
@@ -20,36 +20,12 @@ class M_pendaftaran extends Model
     protected $allowedFilter  = [
         'tblizin_id',
         'tblizinpermohonan_id',
-        'tblpemohon_id'
-    ];
-
-    protected $allowedFields  = [
-        'tblizin_id',
-        'tblpemohon_id',
-        'tblizinpermohonan_id',
-        'tblizinpendaftaran_namapemohon',
-        'tblizinpendaftaran_usaha',
-        'tblizinpendaftaran_idpemohon',
-        'tblizinpendaftaran_npwp',
-        'tblizinpendaftaran_almtpemohon',
-        'tblizinpendaftaran_telponpemohon',
-        'tblizinpendaftaran_lokasiizin',
         'tblkecamatan_id',
         'tblkelurahan_id',
-        'tblizinpendaftaran_keterangan',
-        'tblizinpendaftaran_nomor',
-        'tblizinpendaftaran_tgljam',
-        'tblizinpendaftaran_tglbataslambat',
-        'tblizinpendaftaran_multi',
-        'tblpengguna_id',
         'tblizinpendaftaran_issign',
-        'tblizinpendaftaran_tglsign',
-        'status_online',
-        'sk_dicetak',
-        'tblizinpendaftaran_idonline'
-
-
+        'sk_dicetak'
     ];
+
 
     public function __construct(RequestInterface $request)
     {
@@ -94,8 +70,16 @@ class M_pendaftaran extends Model
             $this->dt->where($this->filter());
         }
 
-        $this->dt->where('status_online', 3);
-        $this->dt->orWhere('status_online', 4);
+        if ($this->request->getPost('dari')) {
+            $this->dt->where('tblizinpendaftaran_tgljam >=', $this->request->getPost('dari'));
+        }
+
+        if ($this->request->getPost('sampai')) {
+            $this->dt->where('tblizinpendaftaran_tgljam <=', $this->request->getPost('sampai'));
+        }
+
+
+
 
         $this->getDatatablesQuery();
         if ($this->request->getPost('length') != -1)
@@ -113,8 +97,16 @@ class M_pendaftaran extends Model
         }
 
 
-        $this->dt->where('status_online', 3);
-        $this->dt->orWhere('status_online', 4);
+        if ($this->request->getPost('dari')) {
+            $this->dt->where('tblizinpendaftaran_tgljam >=', $this->request->getPost('dari'));
+        }
+
+        if ($this->request->getPost('sampai')) {
+            $this->dt->where('tblizinpendaftaran_tgljam <=', $this->request->getPost('sampai'));
+        }
+
+
+
 
         $this->getDatatablesQuery();
         return $this->dt->countAllResults();
@@ -129,8 +121,16 @@ class M_pendaftaran extends Model
             $this->dt->where($this->filter());
         }
 
-        $this->dt->where('status_online', 3);
-        $this->dt->orWhere('status_online', 4);
+        if ($this->request->getPost('dari')) {
+            $this->dt->where('tblizinpendaftaran_tgljam >=', $this->request->getPost('dari'));
+        }
+
+        if ($this->request->getPost('sampai')) {
+            $this->dt->where('tblizinpendaftaran_tgljam <=', $this->request->getPost('sampai'));
+        }
+
+
+
         return $this->dt->countAllResults();
     }
 
@@ -151,77 +151,8 @@ class M_pendaftaran extends Model
             }
         }
 
+        $data['sk_dicetak'] = 'T';
+
         return $data;
-    }
-
-
-
-    public function get_nomor_registrasi()
-    {
-        $tahun =  date('Y');
-
-        $this->select('tblizinpendaftaran_nomor');
-        $this->like('tblizinpendaftaran_nomor', $tahun, 'before');
-        $this->orderBy('tblizinpendaftaran_tgljam', 'DESC');
-        $this->orderBy('tblizinpendaftaran_id', 'DESC');
-        $r = $this->limit(1)->first();
-
-        if ($r) {
-            $n = explode('/', $r['tblizinpendaftaran_nomor']);
-            $n = $n[0] + 1;
-            return $n;
-        }
-
-
-        return 1;
-    }
-
-    public function get_nomor_registrasi_by_id_izin($id)
-    {
-        $tahun =  date('Y');
-
-        $this->select('tblizinpendaftaran_nomor');
-        $this->where('tblizin_id', $id);
-        $this->like('tblizinpendaftaran_nomor', $tahun, 'before');
-        $this->orderBy('tblizinpendaftaran_tgljam', 'DESC');
-        $this->orderBy('tblizinpendaftaran_id', 'DESC');
-        $r = $this->limit(1)->first();
-
-        if ($r) {
-            $n = explode('/', $r['tblizinpendaftaran_nomor']);
-            $n = $n[1] + 1;
-            return $n;
-        }
-
-
-        return 1;
-    }
-
-    public function get_by_id($id)
-    {
-        $this->dt->where('tblizinpendaftaran_id', $id);
-        return $this->dt->get()->getRowArray();
-    }
-
-
-    public function get_by_pendaftaran_nomor($id)
-    {
-        $this->dt->where('tblizinpendaftaran_nomor', $id);
-        return $this->dt->get()->getRowArray();
-    }
-
-    public function get_by_id_pemohon($id)
-    {
-        $this->dt->where('tblpemohon_id', $id);
-        $this->dt->orderBy('tblizinpendaftaran_id', 'DESC');
-        return $this->dt->get()->getResultArray();
-    }
-
-    public function get_by_id_pemohon_selesai($id)
-    {
-        $this->dt->where('tblpemohon_id', $id);
-        $this->dt->where('tblizinpendaftaran_issign', 'T');
-        $this->dt->orderBy('tblizinpendaftaran_id', 'DESC');
-        return $this->dt->get()->getResultArray();
     }
 }

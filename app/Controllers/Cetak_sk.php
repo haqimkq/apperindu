@@ -426,6 +426,7 @@ class Cetak_sk extends BaseController
             }
         }
 
+        $d2['sk_dicetak'] = 'T';
         $d2['tblizinpendaftaran_issign'] = 'F';
         $u =  $this->model_pendaftaran->update($id_daftar, $d2);
 

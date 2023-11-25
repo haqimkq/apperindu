@@ -95,13 +95,6 @@ class M_kendali_proses extends Model
             $this->dt->where($this->filter());
         }
 
-        if ($this->request->getPost('dari')) {
-            $this->dt->where('tblizinpendaftaran_tgljam >=', $this->request->getPost('dari'));
-        }
-
-        if ($this->request->getPost('sampai')) {
-            $this->dt->where('tblizinpendaftaran_tgljam <=', $this->request->getPost('sampai'));
-        }
 
         $this->getDatatablesQuery();
         if ($this->request->getPost('length') != -1)
@@ -117,13 +110,7 @@ class M_kendali_proses extends Model
         if ($this->filter()) {
             $this->dt->where($this->filter());
         }
-        if ($this->request->getPost('dari')) {
-            $this->dt->where('tblizinpendaftaran_tgljam >=', $this->request->getPost('dari'));
-        }
 
-        if ($this->request->getPost('sampai')) {
-            $this->dt->where('tblizinpendaftaran_tgljam <=', $this->request->getPost('sampai'));
-        }
         $this->getDatatablesQuery();
         return $this->dt->countAllResults();
     }
@@ -135,14 +122,6 @@ class M_kendali_proses extends Model
         $this->_where();
         if ($this->filter()) {
             $this->dt->where($this->filter());
-        }
-
-        if ($this->request->getPost('dari')) {
-            $this->dt->where('tblizinpendaftaran_tgljam >=', $this->request->getPost('dari'));
-        }
-
-        if ($this->request->getPost('sampai')) {
-            $this->dt->where('tblizinpendaftaran_tgljam <=', $this->request->getPost('sampai'));
         }
         return $this->dt->countAllResults();
     }
@@ -301,32 +280,5 @@ class M_kendali_proses extends Model
         $this->selectMax('tblkendaliproses_id');
         $this->where('tblizinpendaftaran_id', $id);
         return $this->first();
-    }
-
-    public function export()
-    {
-
-        $data = array();
-        foreach ($this->allowedFilter as $key) {
-
-            if ($this->request->getPost($key)) {
-
-                $data[$key] = $this->request->getPost($key);
-            }
-        }
-        $this->dt->where($data);
-
-        if ($this->request->getPost('dari')) {
-            $this->dt->where('tblizinpendaftaran_tgljam >=', $this->request->getPost('dari'));
-        }
-
-        if ($this->request->getPost('sampai')) {
-            $this->dt->where('tblizinpendaftaran_tgljam <=', $this->request->getPost('sampai'));
-        }
-
-        $this->dt->where('tblkendalibloksistem_idasal', session()->blok_sistem_id);
-        $this->dt->where('tblkendaliproses_status', 6);
-        $this->dt->orderBy('tblizinpendaftaran_id', 'DESC');
-        return $this->dt->get()->getResultArray();
     }
 }
