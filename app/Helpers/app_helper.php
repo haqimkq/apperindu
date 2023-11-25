@@ -464,3 +464,12 @@ function replace_variable($var)
 
     return 'CTH: ' . $var;
 }
+
+function status_sk($str)
+{
+    if ($str == 'T') {
+        return 'Sudah TTE';
+    }
+
+    return 'Draf';
+}

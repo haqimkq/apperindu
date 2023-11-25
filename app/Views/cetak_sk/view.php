@@ -43,7 +43,7 @@
                             <select name="id_izin" id="id_izin" class="form-control filter-select">
                                 <option value="">Pilih</option>
                                 <?php foreach ($izin as $r) : ?>
-                                    <option value="<?= $r['tblizin_id'] ?>"><?= $r['tblizin_nama'] ?></option>
+                                <option value="<?= $r['tblizin_id'] ?>"><?= $r['tblizin_nama'] ?></option>
                                 <?php endforeach ?>
                             </select>
                         </div>
@@ -55,8 +55,8 @@
                             <select name="id_permohonan" id="id_permohonan" class="form-control filter-select">
                                 <option value="">Pilih</option>
                                 <?php foreach ($permohonan as $r) : ?>
-                                    <option value="<?= $r['tblizinpermohonan_id'] ?>"><?= $r['tblizinpermohonan_nama'] ?>
-                                    </option>
+                                <option value="<?= $r['tblizinpermohonan_id'] ?>"><?= $r['tblizinpermohonan_nama'] ?>
+                                </option>
                                 <?php endforeach ?>
                             </select>
                         </div>
@@ -97,7 +97,7 @@
                                     <th>Nama Permohonan</th>
                                     <th>Nama Pemohon</th>
                                     <th>Nama Usaha</th>
-                                    <th>Waktu Daftar</th>
+                                    <th>Tanggal Daftar</th>
                                     <th>Status Daftar</th>
 
 

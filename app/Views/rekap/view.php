@@ -14,7 +14,7 @@
         </div>
         <div class="ms-auto">
             <!-- <a class="btn btn-primary" href="<?= site_url($url . '/form_page') ?>">Tambah</a> -->
-            <!-- <button class="btn btn-primary" onclick="tambah()">Tambah</button> -->
+            <button class="btn btn-primary" onclick="export_excel()">Export Excel</button>
             <!-- <div class="btn-group">
                 <button type="button" class="btn btn-outline-primary">Export</button>
                 <button type="button"
@@ -32,7 +32,111 @@
         </div>
     </div>
 
+    <h6 class="mb-0 text-uppercase">Filter</h6>
+    <hr />
+    <div class="card mb-5">
+        <div class="card-body">
+            <form action="<?= site_url('rekap/export') ?>" class="form-filter" method="POST">
+                <?= csrf_field() ?>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group">
+                            <label for="" class="mb-1">Status</label>
+                            <select name="tblizinpendaftaran_issign" id="tblizinpendaftaran_issign" class="form-control filter-select">
+                                <option value="">Pilih</option>
+                                <option value="F">Draf</option>
+                                <option value="T">Sudah TTE</option>
 
+                            </select>
+                        </div>
+
+                    </div>
+
+
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group">
+                            <label for="" class="mb-1">Nama Izin</label>
+                            <select name="id_izin" id="id_izin" class="form-control filter-select">
+                                <option value="">Pilih</option>
+                                <?php foreach ($izin as $r) : ?>
+                                    <option value="<?= $r['tblizin_id'] ?>"><?= $r['tblizin_nama'] ?></option>
+                                <?php endforeach ?>
+                            </select>
+                        </div>
+
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group">
+                            <label for="" class="mb-1">Nama Permohonan</label>
+                            <select name="id_permohonan" id="id_permohonan" class="form-control filter-select">
+                                <option value="">Pilih</option>
+                                <?php foreach ($permohonan as $r) : ?>
+                                    <option value="<?= $r['tblizinpermohonan_id'] ?>"><?= $r['tblizinpermohonan_nama'] ?>
+                                    </option>
+                                <?php endforeach ?>
+                            </select>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group">
+                            <label for="" class="mb-1">Kecamatan</label>
+                            <select name="tblkecamatan_id" id="tblkecamatan_id" class="form-control filter-select" required>
+                                <option value="">Pilih</option>
+                                <?php foreach ($kecamatan as $r) : ?>
+                                    <option value="<?= $r['tblkecamatan_id'] ?>"><?= $r['tblkecamatan_nama'] ?>
+                                    </option>
+                                <?php endforeach ?>
+                            </select>
+                        </div>
+
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group">
+                            <label for="" class="mb-1">Kelurahan / Desa</label>
+                            <select name="tblkelurahan_id" id="tblkelurahan_id" class="form-control filter-select" required>
+                                <option value=""></option>
+
+                            </select>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group">
+                            <label for="" class="mb-1">Dari tanggal</label>
+                            <input type="date" name="dari" id="dari" class="form-control filter-date">
+                        </div>
+
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group">
+                            <label for="" class="mb-1">Sampai tanggal</label>
+                            <input type="date" name="sampai" id="sampai" class="form-control filter-date">
+                        </div>
+
+                    </div>
+
+                </div>
+            </form>
+
+
+        </div>
+        <div class="card-footer">
+            <div class="float-end">
+                <button class="btn btn-outline-primary" onclick="reset_filter()">Reset</button>
+            </div>
+
+        </div>
+    </div>
     <h6 class="mb-0 text-uppercase">Tabel Data <?= $page ?></h6>
     <hr />
     <div class="card">
@@ -47,12 +151,15 @@
                                     <th>No.</th>
 
                                     <th>Opsi</th>
+                                    <th>Status</th>
                                     <th>Nomor Daftar</th>
                                     <th>Nama Izin</th>
                                     <th>Nama Permohonan</th>
                                     <th>Nama Pemohon</th>
                                     <th>Nama Usaha</th>
-                                    <th>Waktu Daftar</th>
+                                    <th>Tanggal Daftar</th>
+                                    <th>Kecamatan</th>
+                                    <th>Kelurahan</th>
 
 
 

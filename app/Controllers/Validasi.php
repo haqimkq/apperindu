@@ -95,6 +95,13 @@ class Validasi extends BaseController
                 aria-expanded="false">Opsi</button>
             <ul class="dropdown-menu">';
 
+            $sk = 'doc/before_tte/' . $l['tblizinpendaftaran_id']  . '.pdf';
+            if (file_exists($sk)) {
+
+                $opsi .= '<li><a class="dropdown-item"  href="#" onclick="review(\'' . $sk . '\')">Lihat  Draf SK</a>
+            </li>';
+            }
+
             $opsi .= '<li><a class="dropdown-item"  href="#" onclick="lihat_persyaratan(\'' . $l['tblizinpendaftaran_id'] . '\')">Lihat Persyaratan</a>
             </li>';
             if (in_array(session()->blok_sistem_id, get_blok_sistem_type_3())) {

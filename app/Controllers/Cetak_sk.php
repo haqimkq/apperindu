@@ -17,7 +17,7 @@ use App\Models\Master\M_template;
 class Cetak_sk extends BaseController
 {
 
-    private $page = 'Perlu Surat Keterangan';
+    private $page = 'Cetak Surat Keterangan';
     private $url = 'cetak_sk';
     private $path = 'cetak_sk';
 
@@ -242,25 +242,29 @@ class Cetak_sk extends BaseController
         // generate word by rtf template
         $this->model_doc->processRTFTemplate($template, $output, $variable);
 
+
+
+        // jika file sudah ada hapus dulu
+
+        if (file_exists('doc/before_tte/' . $post['tblizinpendaftaran_id'] . '.pdf')) {
+            unlink('doc/before_tte/' . $post['tblizinpendaftaran_id'] . '.pdf');
+        }
+
         // generate ke pdf simpan ke server
         $res = $this->model_doc->word2pdf($output, before_tte());
         if (!$res) {
             $res = array('status' => false, 'msg' => failed());
             return $this->response->setJSON($res);
         }
-        $path2 = base_url('doc/before_tte/' . $res);
-        // mendapatkan status terakhir untuk kendali berkas
-        $r = $this->model_kendali_proses->get_by_status_4($post['tblizinpendaftaran_id']);
-        $id = $r['tblkendaliproses_id'];
 
-        $res = array('status' => true, 'msg' => 'SK berhasil dicetak', 'path' => $path2, 'url_file' => base_url($path), 'name_file' => $variable['nama_pemohon'] . '_' . $file_name, 'url' => site_url('kendali_berkas/form_page/' . $id));
+        $path2 = base_url('doc/before_tte/' . $res);;
+
+        $res = array('status' => true, 'msg' => 'Draf SK berhasil dicetak', 'path' => $path2, 'url_file' => base_url($path), 'name_file' => $variable['nama_pemohon'] . '_' . $file_name);
         return $this->response->setJSON($res);
     }
 
     public function form_simpan()
     {
-
-
 
         $post = $this->request->getPost();
 
@@ -274,7 +278,7 @@ class Cetak_sk extends BaseController
         $r = $this->model_kendali_proses->get_by_status_4($post['tblizinpendaftaran_id']);
         $id = $r['tblkendaliproses_id'];
 
-        $res = array('status' => true, 'msg' => 'SK berhasil disimpan, lanjut melakukan kendali berkas', 'url' => site_url('kendali_berkas/form_page/' . $id));
+        $res = array('status' => true, 'msg' => 'Draf SK berhasil disimpan, lanjut melakukan kendali berkas', 'url' => site_url('kendali_berkas/form_page/' . $id));
         return $this->response->setJSON($res);
     }
 
@@ -386,8 +390,8 @@ class Cetak_sk extends BaseController
 
             $u =  $this->model_kendali_proses->update($id, $d);
 
-            if ($u) {
-                return true;
+            if (!$u) {
+                return false;
             }
         } else {
 
@@ -415,11 +419,20 @@ class Cetak_sk extends BaseController
 
             $i = $this->model_kendali_proses->save($d);
 
-            if ($i) {
+            if (!$i) {
 
 
-                return true;
+                return false;
             }
+        }
+
+        $d2['tblizinpendaftaran_issign'] = 'F';
+        $u =  $this->model_pendaftaran->update($id_daftar, $d2);
+
+        if ($u) {
+
+
+            return true;
         }
 
         return false;

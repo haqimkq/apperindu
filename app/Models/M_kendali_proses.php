@@ -19,7 +19,11 @@ class M_kendali_proses extends Model
     protected $dt;
     protected $allowedFilter  = [
         'tblizin_id',
-        'tblizinpermohonan_id'
+        'tblizinpermohonan_id',
+        'tblkecamatan_id',
+        'tblkelurahan_id',
+        'tblizinpendaftaran_issign',
+
     ];
 
     protected $allowedFields    = [
@@ -90,6 +94,15 @@ class M_kendali_proses extends Model
         if ($this->filter()) {
             $this->dt->where($this->filter());
         }
+
+        if ($this->request->getPost('dari')) {
+            $this->dt->where('tblizinpendaftaran_tgljam >=', $this->request->getPost('dari'));
+        }
+
+        if ($this->request->getPost('sampai')) {
+            $this->dt->where('tblizinpendaftaran_tgljam <=', $this->request->getPost('sampai'));
+        }
+
         $this->getDatatablesQuery();
         if ($this->request->getPost('length') != -1)
             $this->dt->limit($this->request->getPost('length'), $this->request->getPost('start'));
@@ -104,7 +117,13 @@ class M_kendali_proses extends Model
         if ($this->filter()) {
             $this->dt->where($this->filter());
         }
+        if ($this->request->getPost('dari')) {
+            $this->dt->where('tblizinpendaftaran_tgljam >=', $this->request->getPost('dari'));
+        }
 
+        if ($this->request->getPost('sampai')) {
+            $this->dt->where('tblizinpendaftaran_tgljam <=', $this->request->getPost('sampai'));
+        }
         $this->getDatatablesQuery();
         return $this->dt->countAllResults();
     }
@@ -116,6 +135,14 @@ class M_kendali_proses extends Model
         $this->_where();
         if ($this->filter()) {
             $this->dt->where($this->filter());
+        }
+
+        if ($this->request->getPost('dari')) {
+            $this->dt->where('tblizinpendaftaran_tgljam >=', $this->request->getPost('dari'));
+        }
+
+        if ($this->request->getPost('sampai')) {
+            $this->dt->where('tblizinpendaftaran_tgljam <=', $this->request->getPost('sampai'));
         }
         return $this->dt->countAllResults();
     }
@@ -147,11 +174,11 @@ class M_kendali_proses extends Model
         if ($this->request->getPost('str') == 'dikirim') {
             $this->dt->where('tblkendalibloksistem_idkirim', session()->blok_sistem_id);
             $this->dt->where('tblkendaliproses_status', 4);
-            if (session()->blok_sistem_id == 5 || session()->blok_sistem_id == 6 || session()->blok_sistem_id == 7 || session()->blok_sistem_id == 8) {
+            // if (session()->blok_sistem_id == 5 || session()->blok_sistem_id == 6 || session()->blok_sistem_id == 7 || session()->blok_sistem_id == 8) {
 
-                $arr = $this->get_izin_id();
-                $this->dt->whereIn('tblizin_id', $arr);
-            }
+            //     $arr = $this->get_izin_id();
+            //     $this->dt->whereIn('tblizin_id', $arr);
+            // }
         }
 
         if ($this->request->getPost('str') == 'salah_kirim') {
@@ -169,11 +196,11 @@ class M_kendali_proses extends Model
             $this->dt->where('tblkendalibloksistem_idasal', session()->blok_sistem_id);
 
 
-            if (session()->blok_sistem_id == 5 || session()->blok_sistem_id == 6 || session()->blok_sistem_id == 7 || session()->blok_sistem_id == 8) {
+            // if (session()->blok_sistem_id == 5 || session()->blok_sistem_id == 6 || session()->blok_sistem_id == 7 || session()->blok_sistem_id == 8) {
 
-                $arr = $this->get_izin_id();
-                $this->dt->whereIn('tblizin_id', $arr);
-            }
+            //     $arr = $this->get_izin_id();
+            //     $this->dt->whereIn('tblizin_id', $arr);
+            // }
         }
 
         if ($this->request->getPost('str') == 'rekap') {
@@ -186,11 +213,11 @@ class M_kendali_proses extends Model
         if ($this->request->getPost('str') == 'cetak_sk') {
             $this->dt->where('tblkendalibloksistem_idkirim', session()->blok_sistem_id);
             $this->dt->where('tblkendaliproses_status', 4);
-            if (session()->blok_sistem_id == 5 || session()->blok_sistem_id == 6 || session()->blok_sistem_id == 7 || session()->blok_sistem_id == 8) {
+            // if (session()->blok_sistem_id == 5 || session()->blok_sistem_id == 6 || session()->blok_sistem_id == 7 || session()->blok_sistem_id == 8) {
 
-                $arr = $this->get_izin_id();
-                $this->dt->whereIn('tblizin_id', $arr);
-            }
+            //     $arr = $this->get_izin_id();
+            //     $this->dt->whereIn('tblizin_id', $arr);
+            // }
         }
 
 
@@ -274,5 +301,32 @@ class M_kendali_proses extends Model
         $this->selectMax('tblkendaliproses_id');
         $this->where('tblizinpendaftaran_id', $id);
         return $this->first();
+    }
+
+    public function export()
+    {
+
+        $data = array();
+        foreach ($this->allowedFilter as $key) {
+
+            if ($this->request->getPost($key)) {
+
+                $data[$key] = $this->request->getPost($key);
+            }
+        }
+        $this->dt->where($data);
+
+        if ($this->request->getPost('dari')) {
+            $this->dt->where('tblizinpendaftaran_tgljam >=', $this->request->getPost('dari'));
+        }
+
+        if ($this->request->getPost('sampai')) {
+            $this->dt->where('tblizinpendaftaran_tgljam <=', $this->request->getPost('sampai'));
+        }
+
+        $this->dt->where('tblkendalibloksistem_idasal', session()->blok_sistem_id);
+        $this->dt->where('tblkendaliproses_status', 6);
+        $this->dt->orderBy('tblizinpendaftaran_id', 'DESC');
+        return $this->dt->get()->getResultArray();
     }
 }
