@@ -2,9 +2,12 @@
 
 namespace App\Controllers\Api;
 
+use App\Models\M_doc;
 use App\Models\M_kendali_proses;
+use App\Models\M_otp;
 use App\Models\M_pemohon;
 use App\Models\M_pendaftaran;
+use App\Models\M_pengaturan;
 use App\Models\M_persyaratan_pemohon;
 use CodeIgniter\RESTful\ResourceController;
 use CodeIgniter\API\ResponseTrait;
@@ -28,6 +31,9 @@ class Permohonan extends ResourceController
     protected $model_persyaratan;
     protected $model_persyaratan_pemohon;
     protected $primaryKey = 'tblizinpendaftaran_id';
+    protected $model_peng;
+    protected $model_doc;
+    protected $otp;
 
     public function __construct()
     {
@@ -38,6 +44,9 @@ class Permohonan extends ResourceController
         $this->model_pengguna = new M_pengguna($this->request);
         $this->model_persyaratan = new M_persyaratan_permohonan($this->request);
         $this->model_persyaratan_pemohon = new M_persyaratan_pemohon($this->request);
+        $this->model_peng = new M_pengaturan();
+        $this->model_doc = new M_doc();
+        $this->model_otp = new M_otp();
     }
 
 
@@ -335,6 +344,7 @@ class Permohonan extends ResourceController
         $jenis = $this->request->getVar('jenis');
         $npwp = $this->request->getVar('tblpemohon_npwp');
         $nik = $this->request->getVar('tblpemohon_noidentitas');
+        $this->model_pemohon->where('tblpengguna_id !=', 0);
 
         if ($jenis == 1) {
 
@@ -577,6 +587,152 @@ class Permohonan extends ResourceController
         return $this->response->setJSON($response);
     }
 
+    public function kirim_otp()
+    {
+        $rules = [
+            'tblpemohon_telpon' => 'required',
+
+        ];
+
+        if (!$this->validate($rules)) {
+            $response = [
+                'status' => false,
+                'msg' => 'Form tidak lengkap atau terjadi kesalahan pada form'
+
+            ];
+
+            return $this->response->setJSON($response);
+        }
+
+        $no = $this->request->getVar('tblpemohon_telpon');
+        $this->model_pemohon->where('tblpemohon_telpon', $no);
+        $this->model_pemohon->where('tblpengguna_id !=', 0);
+        $row = $this->model_pemohon->first();
+
+        if ($row) {
+
+            $peng = $this->model_peng->get_row();
+
+            $otp = $this->model_otp->insert_otp($no);
+
+            if (!$otp) {
+                $response = [
+                    'status' => false,
+                    'msg' => 'Maaf, terjadi kesalahan',
+                ];
+                return $this->response->setJSON($response);
+            }
+
+            $msg = 'Kode OTP untuk mengganti password anda adalah ' . $otp;
+            $this->model_doc->send_wa($msg, $no, $peng['token_wa']);
+
+            $response = [
+                'status' => true,
+                'tblpengguna_id' => $row['tblpengguna_id'],
+                'msg' => 'Silahkan cek wa anda untuk mendapatkan OTP',
+            ];
+
+            return $this->response->setJSON($response);
+        }
+
+
+        $response = [
+            'status' => false,
+            'tblpengguna_id' => NULL,
+            'msg' => 'Nomor tidak terdaftar',
+        ];
+        return $this->response->setJSON($response);
+    }
+
+
+    public function verifikasi_otp()
+    {
+        $rules = [
+            'number' => 'required',
+            'otp' => 'required',
+        ];
+
+        if (!$this->validate($rules)) {
+            $response = [
+                'status' => false,
+                'msg' => 'Form tidak lengkap atau terjadi kesalahan pada form'
+
+            ];
+
+            return $this->response->setJSON($response);
+        }
+
+        $no = $this->request->getVar('number');
+        $otp = $this->request->getVar('otp');
+
+        $this->model_otp->where(array('number' => $no, 'otp' => $otp));
+        $row = $this->model_otp->first();
+
+        if ($row) {
+
+            $d['status'] = 1;
+            $up =  $this->model_otp->update($row['id'], $d);
+
+            if (!$up) {
+
+                $response = [
+                    'status' => false,
+                    'msg' => 'Maaf, terjadi kesalahan',
+                ];
+                return $this->response->setJSON($response);
+            }
+
+            $response = [
+                'status' => true,
+                'msg' => 'Silahkan ganti password anda',
+            ];
+
+            return $this->response->setJSON($response);
+        }
+
+
+        $response = [
+            'status' => false,
+            'msg' => 'Kode OTP Salah',
+        ];
+        return $this->response->setJSON($response);
+    }
+
+    public function ganti_password()
+    {
+        $rules = [
+            'tblpengguna_id' => 'required',
+            'password' => 'required',
+            'konfirmasi' => 'required|matches[password]'
+        ];
+
+        if (!$this->validate($rules)) {
+            $response = [
+                'status' => false,
+                'msg' => 'Form tidak lengkap atau terjadi kesalahan pada form'
+
+            ];
+
+            return $this->response->setJSON($response);
+        }
+
+        $d['tblpengguna_password'] =  password_hash($this->request->getVar('password'), PASSWORD_DEFAULT);
+        $up =   $this->model_pengguna->update($this->request->getVar('tblpengguna_id'), $d);
+
+        if ($up) {
+            $response = [
+                'status' => true,
+                'msg' => 'Password berhasil dirubah',
+            ];
+            return $this->response->setJSON($response);;
+        }
+
+        $response = [
+            'status' => false,
+            'msg' => 'Maaf, terjadi kesalahan',
+        ];
+        return $this->response->setJSON($response);
+    }
 
     private function id_online()
     {

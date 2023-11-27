@@ -32,13 +32,7 @@
                     <div class="card-body">
 
                         <div class="row">
-                            <div class="col-md-6 col-12 mb-3">
-                                <div class="form-group">
-                                    <label for="" class="mb-1">Fingger</label>
-                                    <input type="text" class="form-control" name="tblpemohon_finger"
-                                        id="tblpemohon_finger">
-                                </div>
-                            </div>
+
                             <div class="col-md-6 col-12 mb-3">
                                 <div class="form-group">
                                     <label for="" class="mb-1">Nama Pemohon</label>
@@ -53,23 +47,11 @@
                                         rows="2" required></textarea>
                                 </div>
                             </div>
-                            <div class="col-md-6 col-12 mb-3">
-                                <div class="form-group">
-                                    <label for="" class="mb-1">Jenis Identitas</label>
-                                    <select name="refjenisidentitas_id" id="refjenisidentitas_id" class="form-control"
-                                        required>
-                                        <option value="">Pilih</option>
-                                        <?php foreach ($identitas as $r) : ?>
-                                        <option value="<?= $r['refjenisidentitas_id'] ?>">
-                                            <?= $r['refjenisidentitas_nama'] ?></option>
-                                        <?php endforeach ?>
-                                    </select>
-                                </div>
-                            </div>
+
 
                             <div class="col-md-6 col-12 mb-3">
                                 <div class="form-group">
-                                    <label for="" class="mb-1">Nomor Identitas</label>
+                                    <label for="" class="mb-1">KTP</label>
                                     <input type="number" class="form-control" name="tblpemohon_noidentitas"
                                         id="tblpemohon_noidentitas" required>
                                 </div>

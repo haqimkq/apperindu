@@ -17,7 +17,7 @@ use App\Models\Master\M_tte_rekomendasi;
 class Rekomendasi extends BaseController
 {
 
-    private $page = 'Perlu Rekomendasi';
+    private $page = 'Cetak Rekomendasi';
     private $url = 'rekomendasi';
     private $path = 'rekomendasi';
 

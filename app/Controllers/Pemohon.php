@@ -299,12 +299,10 @@ class Pemohon extends BaseController
     public function form()
     {
 
-
         $rules = [
             'tblpemohon_noidentitas' => 'required',
             'tblpemohon_nama' => 'required',
             'tblpemohon_alamat' => 'required',
-            'refjenisidentitas_id' => 'required',
             'tblpemohon_npwp' => 'required',
             'tblpemohon_telpon' => 'required',
             'tblpemohon_email' => 'required'
@@ -317,7 +315,8 @@ class Pemohon extends BaseController
             $d[$r] = $this->request->getPost($r);
         }
 
-
+        $d['refjenisidentitas_id'] = 1;
+        $d['tblpemohon_finger'] = '';
 
         if ($this->validate($rules)) {
             if ($id) {

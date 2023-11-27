@@ -13,9 +13,23 @@ class Login extends BaseController
     public function index()
     {
 
+        $url = 'pendaftaran';
+
+        if ($this->session->blok_sistem_id == 99) {
+            $url = 'izin';
+        }
+
+        if (in_array($this->session->blok_sistem_id, get_blok_sistem_type_5())) {
+
+            $url = 'validasi';
+        }
+
+        if ($this->session->blok_sistem_id == 127) {
+            $url = 'validasi';
+        }
 
         if ($this->session->status) {
-            return redirect()->to('/dashboard');
+            return redirect()->to($url);
         }
 
 
@@ -105,7 +119,7 @@ class Login extends BaseController
         }
 
         if ($res['blok_sistem_id'] == 127) {
-            $url = 'tte/view/berkas';
+            $url = 'validasi';
         }
 
         $response = [

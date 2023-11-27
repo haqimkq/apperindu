@@ -120,6 +120,9 @@ $routes->post('permohonan/pengajuan_update', 'Pendaftaran::form_update_api', ['f
 $routes->post('permohonan/riwayat', 'Pemohon::arsip_api', ['filter' => 'auth_api']);
 $routes->post('permohonan/get_pemohon', 'Api\Permohonan::get_pemohon', ['filter' => 'auth_api']);
 $routes->post('permohonan/update_pemohon', 'Api\Permohonan::update_pemohon', ['filter' => 'auth_api']);
+$routes->post('permohonan/kirim_otp', 'Api\Permohonan::kirim_otp', ['filter' => 'auth_api']);
+$routes->post('permohonan/verifikasi_otp', 'Api\Permohonan::verifikasi_otp', ['filter' => 'auth_api']);
+$routes->post('permohonan/ganti_password', 'Api\Permohonan::ganti_password', ['filter' => 'auth_api']);
 $routes->get('permohonan/dokumen/(:any)', 'Tte::after_tte/$1');
 
 /*

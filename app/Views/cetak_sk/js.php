@@ -186,7 +186,7 @@
             url: "<?= site_url($path . '/form') ?>",
             beforeSend: function() {
                 // Menampilkan elemen loading
-                loading_button(true, false);
+                loading_button(true);
             },
             success: function(response) {
                 if (response.status) {
@@ -196,7 +196,7 @@
                     }
 
                     success(response.msg);
-                    loading_button(false, true);
+                    loading_button(false);
                     setTimeout(function() {
                         reviewCetak(response.path)
                     }, 1000);
@@ -207,7 +207,7 @@
 
                 } else {
                     error(response.msg);
-                    loading_button(false, true);
+                    loading_button(false);
                 }
 
             },
@@ -262,7 +262,7 @@
             error: function() {
                 // Menyembunyikan elemen loading jika terjadi kesalahan
                 error('Terjadi kesalahan');
-                loading_button2(false);;
+                loading_button2(false);
             }
         });
 
@@ -297,7 +297,7 @@
                 $('#no_izin').after('<div class="invalid-feedback">Nomor tidak boleh kosong</div>');
             }
 
-            $('.simpan').prop('disabled', true);
+            $('.cetak').prop('disabled', true);
             return false;
         }
 
@@ -345,8 +345,7 @@
                     }
 
                     loading_button(false);
-
-                    $('.simpan').prop('disabled', true);
+                    $('.cetak').prop('disabled', true);
                 }
 
 
