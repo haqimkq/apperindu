@@ -51,7 +51,7 @@
 
                             <div class="col-md-6 col-12 mb-3">
                                 <div class="form-group">
-                                    <label for="" class="mb-1">KTP</label>
+                                    <label for="" class="mb-1">NIK</label>
                                     <input type="number" class="form-control" name="tblpemohon_noidentitas"
                                         id="tblpemohon_noidentitas" required>
                                 </div>
@@ -59,7 +59,7 @@
 
                             <div class="col-md-6 col-12 mb-3">
                                 <div class="form-group">
-                                    <label for="" class="mb-1">Nomor NPWP</label>
+                                    <label for="" class="mb-1">NPWP</label>
                                     <input type="number" class="form-control" name="tblpemohon_npwp"
                                         id="tblpemohon_npwp" required>
                                 </div>

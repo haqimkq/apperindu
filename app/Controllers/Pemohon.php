@@ -190,7 +190,6 @@ class Pemohon extends BaseController
 
             $row[] = $l['tblpemohon_nama'];
             $row[] = '<div class="text-wrap">' . $l['tblpemohon_alamat'] . '</div>';
-            $row[] = '<div class="text-wrap">' . $l['refjenisidentitas_nama'] . '</div>';
             $row[] = $l['tblpemohon_noidentitas'];
             $row[] = '<div class="text-wrap">' . $l['tblpemohon_npwp'] . '</div>';
 

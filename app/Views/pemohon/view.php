@@ -36,8 +36,8 @@
                                     <th>Opsi</th>
                                     <th>Nama Pemohon</th>
                                     <th>Alamat Pemohon</th>
-                                    <th>Jenis Identitas</th>
-                                    <th>Nomor Identitas</th>
+
+                                    <th>NIK</th>
                                     <th>NPWP</th>
                                     <th>No. Telepon</th>
 
