@@ -12,6 +12,7 @@ use App\Models\M_persyaratan_pemohon;
 use App\Models\Master\M_izin;
 use App\Models\Master\M_permohonan;
 use App\Models\Master\M_template;
+use App\Models\Master\M_template_rekomendasi;
 use App\Models\Master\M_tte_rekomendasi;
 
 class Rekomendasi extends BaseController
@@ -39,7 +40,7 @@ class Rekomendasi extends BaseController
     {
         $this->request = Services::request();
         $this->model =  new M_kendali_proses($this->request);
-        $this->model_template = new M_template($this->request);
+        $this->model_template = new M_template_rekomendasi($this->request);
         $this->model_pendaftaran =  new M_pendaftaran($this->request);
         $this->model_kendali_proses = new M_kendali_proses($this->request);
         $this->model_doc = new M_doc();

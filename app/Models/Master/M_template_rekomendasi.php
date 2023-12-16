@@ -134,7 +134,9 @@ class M_template_rekomendasi extends Model
 
     public function get_by_id_permohonan($id)
     {
-        return $this->where('tblizinpermohonan_id', $id)->first();
+        // return $this->where('tblizinpermohonan_id', $id)->first();
+        $this->dt->where('tblizinpermohonan_id', $id);
+        return   $this->dt->get()->getRowArray();
     }
 
     public function get_row_tertentu($t, $id)

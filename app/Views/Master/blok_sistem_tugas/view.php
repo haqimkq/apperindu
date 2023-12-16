@@ -14,20 +14,7 @@
         </div>
         <div class="ms-auto">
             <button class="btn btn-primary" onclick="tambah()">Tambah</button>
-            <div class="btn-group">
-                <button type="button" class="btn btn-outline-primary">Export</button>
-                <button type="button"
-                    class="btn btn-outline-primary split-bg-primary dropdown-toggle dropdown-toggle-split"
-                    data-bs-toggle="dropdown"> <span class="visually-hidden">Toggle Dropdown</span>
-                </button>
-                <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-end">
-                    <a class="dropdown-item" href="javascript:;">PDF</a>
-                    <a class="dropdown-item" href="javascript:;">Exel</a>
-                    <!-- <a class="dropdown-item" href="javascript:;">Something else here</a> -->
-                    <!-- <div class="dropdown-divider"></div> <a class="dropdown-item" href="javascript:;">Separated link</a> -->
-                </div>
-            </div>
-            <button class="btn btn-outline-primary">Import</button>
+
 
         </div>
     </div>
@@ -44,8 +31,8 @@
                             <select name="id_blok_sistem" id="id_blok_sistem" class="form-control filter-select">
                                 <option value="">Pilih</option>
                                 <?php foreach ($blok_sistem as $r) : ?>
-                                <option value="<?= $r['tblkendalibloksistem_id'] ?>">
-                                    <?= $r['tblkendalibloksistem_nama'] ?></option>
+                                    <option value="<?= $r['tblkendalibloksistem_id'] ?>">
+                                        <?= $r['tblkendalibloksistem_nama'] ?></option>
                                 <?php endforeach ?>
                             </select>
                         </div>
