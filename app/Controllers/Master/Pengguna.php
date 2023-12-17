@@ -103,7 +103,7 @@ class Pengguna extends BaseController
             'tblkendalibloksistem_id' => 'required',
             'tblpengguna_isaktif' => 'required',
             'username' => 'required|is_unique[tblpengguna_new.username]',
-            'tblpengguna_password' => 'required|min_length[8]',
+            'tblpengguna_password' => 'required|min_length[6]',
         ];
 
 
@@ -185,7 +185,7 @@ class Pengguna extends BaseController
     {
 
         $rules = [
-            'tblpengguna_password' => 'required|min_length[8]',
+            'tblpengguna_password' => 'required|min_length[6]',
         ];
 
         $id = $this->request->getPost('id');

@@ -3,6 +3,8 @@
 
 <head>
     <title><?= $title ?></title>
+    <link rel="icon" href="https://raw.githubusercontent.com/ibnufajar0104/img_statis/main/logo-icon.png"
+        type="image/png" />
     <style>
     body {
         margin: 0;
