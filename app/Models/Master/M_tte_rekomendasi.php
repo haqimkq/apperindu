@@ -88,7 +88,7 @@ class M_tte_rekomendasi extends Model
 
     public function get_by_blok_sistem_id()
     {
-        $this->dt->where('blok_sistem_id', session()->blok_sistem_id);
-        return $this->first();
+        $this->dt->where('tblkendalibloksistem_id', session()->blok_sistem_id);
+        return $this->dt->get()->getRowArray();
     }
 }

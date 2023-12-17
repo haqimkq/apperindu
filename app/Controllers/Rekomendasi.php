@@ -160,6 +160,11 @@ class Rekomendasi extends BaseController
 
 
         $rekomendasi = $this->model_tte_rekomendasi->get_by_blok_sistem_id();
+        if (!$rekomendasi) {
+
+            $res = array('status' => false, 'msg' => 'Data TTE belum dibuat');
+            return $this->response->setJSON($res);
+        }
         $post = $this->request->getPost();
         $r = $this->model_pendaftaran->get_by_id($post['tblizinpendaftaran_id']);
 
