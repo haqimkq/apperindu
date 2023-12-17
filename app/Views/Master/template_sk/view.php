@@ -31,7 +31,7 @@
                             <select name="id_izin" id="id_izin" class="form-control filter-select">
                                 <option value="">Pilih</option>
                                 <?php foreach ($izin as $r) : ?>
-                                <option value="<?= $r['tblizin_id'] ?>"><?= $r['tblizin_nama'] ?></option>
+                                    <option value="<?= $r['tblizin_id'] ?>"><?= $r['tblizin_nama'] ?></option>
                                 <?php endforeach ?>
                             </select>
                         </div>
@@ -43,8 +43,8 @@
                             <select name="id_permohonan" id="id_permohonan" class="form-control filter-select">
                                 <option value="">Pilih</option>
                                 <?php foreach ($permohonan as $r) : ?>
-                                <option value="<?= $r['tblizinpermohonan_id'] ?>"><?= $r['tblizinpermohonan_nama'] ?>
-                                </option>
+                                    <option value="<?= $r['tblizinpermohonan_id'] ?>"><?= $r['tblizinpermohonan_nama'] ?>
+                                    </option>
                                 <?php endforeach ?>
                             </select>
                         </div>
@@ -93,23 +93,34 @@
                         </div>
 
                     </div>
-                    <div class="col-md-4 mt-5">
-                        <div class="form-group">
-                            <label class="form-label">Opsi Sekaligus</label>
-                            <select name="opsi" id="opsi" class="form-control">
-                                <option value="">Pilih</option>
-                                <option value="">Aktifkan</option>
-                                <option value="">Non Aktifkan</option>
-                                <option value="">Hapus</option>
-                            </select>
-                        </div>
 
-                    </div>
                 </div>
             </form>
         </div>
     </div>
+    <div class="modal fade" id="form-delete-modal" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="<?= $path ?>/delete" method="POST" class="form-delete">
+                    <?= csrf_field() ?>
+                    <input type="hidden" name="id" id="id-delete">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Konfirmasi</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
 
+                        <p>Yakin ingin menghapus data ?</p>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-primary">Yakin</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </main>
 
 

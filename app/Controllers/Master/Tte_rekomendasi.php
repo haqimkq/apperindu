@@ -189,4 +189,7 @@ class Tte_rekomendasi extends BaseController
         return $this->model_permohonan->get_permohonan_by_id_izin($id);
         // return $m->where($this->primaryKey, $id);
     }
+
+
+    
 }

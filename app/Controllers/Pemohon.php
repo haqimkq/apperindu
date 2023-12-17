@@ -6,6 +6,7 @@ use App\Models\M_doc;
 use Config\Services;
 use App\Models\M_pemohon;
 use App\Models\M_pendaftaran;
+use App\Models\Master\M_pengguna;
 use App\Models\Master\M_template;
 
 class Pemohon extends BaseController
@@ -19,6 +20,7 @@ class Pemohon extends BaseController
     protected $model_pendaftaran;
     protected $model_doc;
     protected $model_template;
+    protected $model_pengguna;
     protected $request;
     protected $primaryKey = 'tblpemohon_id';
 
@@ -30,6 +32,7 @@ class Pemohon extends BaseController
         $this->model_pendaftaran = new M_pendaftaran($this->request);
         $this->model_doc = new M_doc();
         $this->model_template  = new M_template($this->request);
+        $this->model_pengguna =  new M_pengguna($this->request);
     }
 
 
@@ -368,7 +371,13 @@ class Pemohon extends BaseController
     public function delete()
     {
 
-        $d = $this->model->delete($this->request->getPost('id'));
+        $id = $this->request->getPost('id');
+        $row = $this->model->find($id);
+        $id_pengguna = $row['tblpengguna_id'];
+
+        $this->model_pengguna->where('tblpengguna_id', $id_pengguna)->delete();
+
+        $d = $this->model->delete($id);
 
 
         if ($d) {

@@ -413,4 +413,23 @@ class Template_rekomendasi extends BaseController
 
         return $fields;
     }
+
+
+    public function delete()
+    {
+
+        $id = $this->request->getPost('id');
+
+
+        $d = $this->model->delete($id);
+
+
+        if ($d) {
+            session()->setFlashdata('success', success_delete());
+        } else {
+            session()->setFlashdata('error', failed());
+        }
+
+        return redirect()->to('/' . $this->url);
+    }
 }
