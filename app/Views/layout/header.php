@@ -14,13 +14,13 @@
         </form> -->
         <div class="top-navbar-right ms-auto">
             <ul class="navbar-nav align-items-center">
-                <li class="nav-item search-toggle-icon">
+                <!-- <li class="nav-item search-toggle-icon">
                     <a class="nav-link" href="#">
                         <div class="">
                             <i class="bi bi-search"></i>
                         </div>
                     </a>
-                </li>
+                </li> -->
 
 
                 <!-- <li class="nav-item dropdown dropdown-large">
