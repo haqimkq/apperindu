@@ -249,7 +249,7 @@ class Pendaftaran extends BaseController
         $p = $this->get_persyaratan($id_permohonan);
 
         // ekstensi file diterima 
-        $allowedExtensions = array('jpg', 'jpeg', 'png', 'pdf');
+        $allowedExtensions = array('jpg', 'pdf');
         $validFiles = [];
         foreach ($p as $row) {
 
@@ -347,7 +347,7 @@ class Pendaftaran extends BaseController
         $p = $this->get_persyaratan($id_permohonan);
 
         // ekstensi file diterima 
-        $allowedExtensions = array('jpg', 'jpeg', 'png', 'pdf');
+        $allowedExtensions = array('jpg', 'pdf');
         $validFiles = [];
         foreach ($p as $row) {
 
@@ -561,7 +561,7 @@ class Pendaftaran extends BaseController
         //  mengambil persyaratan by id_permohonan
         $p = $this->get_persyaratan($id_permohonan);
         // ekstensi file diterima 
-        $allowedExtensions = array('jpg', 'png', 'pdf');
+        $allowedExtensions = array('jpg', 'pdf');
         $validFiles = [];
         foreach ($p as $row) {
 
