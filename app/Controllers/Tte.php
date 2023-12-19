@@ -134,6 +134,8 @@ class Tte extends BaseController
 
     public function form()
     {
+
+        $peng = $this->model_pengaturan->get_row();
         // id_pendaftaran
         $id_pendaftaran = $this->request->getPost('tblizinpendaftaran_id');
         // generate qr code
@@ -161,9 +163,9 @@ class Tte extends BaseController
         $variable['qr_ttd'] = '';
         $variable['bsre_logo'] = '';
         $variable['TTD'] = $qr;
-        $variable['nama_kadis'] = nama_kadis();
-        $variable['pangkat_kadis'] = pangkat_kadis();
-        $variable['nip_kadis'] = nip_kadis();
+        $variable['nama_kadis'] = $peng['nama_kadis'];
+        $variable['pangkat_kadis'] = $peng['pangkat_kadis'];
+        $variable['nip_kadis'] = $peng['nip_kadis'];
         $variable['footer_ttd'] = footer_tte();
 
         $per = $this->model_persyaratan_pemohon->get_pas_foto($r['tblpemohon_id']);
@@ -217,7 +219,7 @@ class Tte extends BaseController
         $path = unsign($res);
 
         $passphrase = $this->request->getPost('passphrase');
-        $peng = $this->model_pengaturan->get_row();
+    
         $nik = $peng['nik_kadis'];
         $res_tte = $this->model_doc->tte($id_pendaftaran, $path,  $res, $nik, $passphrase);
 
@@ -251,7 +253,7 @@ class Tte extends BaseController
         $number = $r['tblizinpendaftaran_telponpemohon'];
 
         if ($number) {
-            $row = $this->model_pengaturan->get_row();
+          
             $variable['nama_pemohon'] = $r['tblizinpendaftaran_namapemohon'];
             $variable['tgl_permohonan'] = tanggal($r['tblizinpendaftaran_tgljam']);
             $variable['nama_usaha'] = $r['tblizinpendaftaran_usaha'];
@@ -261,9 +263,9 @@ class Tte extends BaseController
             $variable['nik'] = $r['tblizinpendaftaran_idpemohon'];
             $variable['no_pendaftaran'] = $r['tblizinpendaftaran_nomor'];
             $variable['link_dokumen_digital'] =  base_url('permohonan/dokumen/' . $this->model_doc->encrypt($r['tblizinpendaftaran_id'], key_secret()));
-            $msg = $this->model_pengaturan->replaceTemplateVariables($row['redaksi_tte'], $variable);
+            $msg = $this->model_pengaturan->replaceTemplateVariables($peng['redaksi_tte'], $variable);
 
-            $this->model_doc->send_wa($msg, $number, $row['token_wa']);
+            $this->model_doc->send_wa($msg, $number, $peng['token_wa']);
         }
 
 

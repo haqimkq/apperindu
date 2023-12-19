@@ -8,6 +8,7 @@ use Config\Services;
 use App\Models\M_kendali_proses;
 use App\Models\M_pemohon;
 use App\Models\M_pendaftaran;
+use App\Models\M_pengaturan;
 use App\Models\M_persyaratan_pemohon;
 use App\Models\Master\M_izin;
 use App\Models\Master\M_permohonan;
@@ -31,6 +32,7 @@ class Cetak_sk extends BaseController
     protected $model_persyaratan_pemohon;
     protected $model_pemohon;
     protected $model_jwt;
+    protected $model_pengaturan;
     protected $primaryKey = 'tblizinpendaftaran_id';
 
 
@@ -47,6 +49,7 @@ class Cetak_sk extends BaseController
         $this->model_persyaratan_pemohon = new M_persyaratan_pemohon($this->request);
         $this->model_pemohon = new M_pemohon($this->request);
         $this->model_jwt = new MJwt();
+        $this->model_pengaturan = new M_pengaturan();
     }
 
 
@@ -157,7 +160,7 @@ class Cetak_sk extends BaseController
     {
 
 
-
+        $peng = $this->model_pengaturan->get_row();
         $post = $this->request->getPost();
         $r = $this->model_pendaftaran->get_by_id($post['tblizinpendaftaran_id']);
 
@@ -176,9 +179,9 @@ class Cetak_sk extends BaseController
         $variable['qr_ttd'] = '';
         $variable['bsre_logo'] = '';
         $variable['TTD'] = '';
-        $variable['nama_kadis'] = nama_kadis();
-        $variable['pangkat_kadis'] = pangkat_kadis();
-        $variable['nip_kadis'] = nip_kadis();
+        $variable['nama_kadis'] = $peng['nama_kadis'];
+        $variable['pangkat_kadis'] = $peng['pangkat_kadis'];
+        $variable['nip_kadis'] = $peng['nip_kadis'];
         $variable['footer_ttd'] = '';
 
         $per = $this->model_persyaratan_pemohon->get_pas_foto($r['tblpemohon_id']);
