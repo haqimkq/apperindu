@@ -14,13 +14,13 @@
         </form> -->
         <div class="top-navbar-right ms-auto">
             <ul class="navbar-nav align-items-center">
-                <li class="nav-item search-toggle-icon">
+                <!-- <li class="nav-item search-toggle-icon">
                     <a class="nav-link" href="#">
                         <div class="">
                             <i class="bi bi-search"></i>
                         </div>
                     </a>
-                </li>
+                </li> -->
 
 
                 <!-- <li class="nav-item dropdown dropdown-large">
@@ -382,21 +382,18 @@
                 <li class="nav-item dropdown dropdown-user-setting">
                     <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" href="#" data-bs-toggle="dropdown">
                         <div class="user-setting d-flex align-items-center">
-                            <img src="https://raw.githubusercontent.com/ibnufajar0104/img_statis/main/logo%20tala.png"
-                                class="user-img" alt="" />
+                            <img src="https://raw.githubusercontent.com/ibnufajar0104/img_statis/main/logo%20tala.png" class="user-img" alt="" />
                         </div>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end">
                         <li>
                             <a class="dropdown-item" href="#">
                                 <div class="d-flex align-items-center">
-                                    <img src="https://raw.githubusercontent.com/ibnufajar0104/img_statis/main/logo%20tala.png"
-                                        alt="" class="rounded-circle" width="54" height="54" />
+                                    <img src="https://raw.githubusercontent.com/ibnufajar0104/img_statis/main/logo%20tala.png" alt="" class="rounded-circle" width="54" height="54" />
                                     <div class="ms-3">
                                         <h6 class="mb-0 dropdown-user-name" style="font-size: 12px;">
                                             <?= session()->nama ?></h6>
-                                        <small class="mb-0 dropdown-user-designation text-secondary"
-                                            style="font-size: 12px;"><?= session()->blok_sistem ?></small>
+                                        <small class="mb-0 dropdown-user-designation text-secondary" style="font-size: 12px;"><?= session()->blok_sistem ?></small>
                                     </div>
                                 </div>
                             </a>
