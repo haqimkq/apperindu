@@ -147,38 +147,6 @@
             </form>
         </div>
     </div>
-
-    <hr />
-    <div class="row review-card hide">
-
-        <div class="col-md-12">
-            <form action="" method="POST" class="form2" autocomplete="off">
-                <input type="hidden" name="tblizinpendaftaran_id" id="tblizinpendaftaran_id"
-                    value="<?= $request->uri->getSegment(3) ?>">
-
-                <?= csrf_field() ?>
-                <div class="card mb-5">
-
-                    <div class="card-body">
-                        <div id="review" class="px-4 py-4"></div>
-
-
-
-                    </div>
-
-                    <div class="card-footer">
-
-                        <div class="float-end">
-                            <button class="btn btn-primary simpan">Simpan</button>
-                        </div>
-
-                    </div>
-            </form>
-        </div>
-    </div>
-
-
-
     <div class="modal fade" id="form-modal" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -234,6 +202,38 @@
             </div>
         </div>
     </div>
+    <hr />
+    <div class="row review-card hide">
+
+        <div class="col-md-12">
+            <form action="" method="POST" class="form2" autocomplete="off">
+                <input type="hidden" name="tblizinpendaftaran_id" id="tblizinpendaftaran_id"
+                    value="<?= $request->uri->getSegment(3) ?>">
+
+                <?= csrf_field() ?>
+                <div class="card mb-5">
+
+                    <div class="card-body">
+                        <div id="review" class="px-4 py-4"></div>
+
+
+
+                    </div>
+
+                    <div class="card-footer">
+
+                        <div class="float-end">
+                            <button class="btn btn-primary simpan">Simpan</button>
+                        </div>
+
+                    </div>
+            </form>
+        </div>
+    </div>
+
+
+
+
 </main>
 
 
