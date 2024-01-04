@@ -57,7 +57,7 @@ class Persyaratan extends BaseController
 
 
             $row[] = $l['tblpersyaratan_nama'];
-
+            $row[] = $l['format'];
             $data[] = $row;
         }
 
@@ -76,6 +76,7 @@ class Persyaratan extends BaseController
     {
         $rules = [
             'tblpersyaratan_nama' => 'required',
+            'format' => 'required',
         ];
 
 

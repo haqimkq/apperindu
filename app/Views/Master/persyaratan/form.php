@@ -19,6 +19,18 @@
                                     id="tblpersyaratan_nama" required>
                             </div>
                         </div>
+
+
+                        <div class="col-12 mb-3">
+                            <div class="form-group">
+                                <label for="" class="mb-1">Format</label>
+                                <select name="format" id="format" class="form-control" required>
+                                    <option value="">pilih</option>
+                                    <option value="pdf">pdf</option>
+                                    <option value="png">png</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
 
                 </div>

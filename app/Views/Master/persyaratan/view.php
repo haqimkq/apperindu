@@ -39,6 +39,7 @@
                                         <th>Opsi</th>
 
                                         <th>Nama Persyaratan</th>
+                                        <th>Format</th>
 
 
                                     </tr>

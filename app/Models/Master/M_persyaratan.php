@@ -18,6 +18,7 @@ class M_persyaratan extends Model
 
     protected $allowedFields  = [
         'tblpersyaratan_nama',
+        'format'
     ];
 
     public function __construct(RequestInterface $request)
