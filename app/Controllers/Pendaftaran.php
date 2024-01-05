@@ -249,7 +249,7 @@ class Pendaftaran extends BaseController
         $p = $this->get_persyaratan($id_permohonan);
 
         // ekstensi file diterima 
-        $allowedExtensions = array('jpg', 'pdf');
+
         $validFiles = [];
         foreach ($p as $row) {
 
@@ -259,13 +259,13 @@ class Pendaftaran extends BaseController
 
             // persyaratan yang kosong dilewati saja
             if (!$file->getError() == 4) {
-                if (in_array($fileExtension, $allowedExtensions)) {
+                if ($fileExtension == $row['format']) {
                     // File ekstensi valid, bisa diunggah, (ditampung dlu )
                     $validFiles[$row['tblpersyaratan_id']] = $file;
                 } else {
 
                     //  jika tidak valid = stop proses nya
-                    $res = array('status' => false, 'msg' => 'Harap upload file ' . $row['tblpersyaratan_nama'] . ' dengan format ' . implode(',', $allowedExtensions));
+                    $res = array('status' => false, 'msg' => 'Harap upload file ' . $row['tblpersyaratan_nama'] . ' dengan format ' . $row['format']);
                     return $this->response->setJSON($res);
                 }
             }
@@ -346,8 +346,7 @@ class Pendaftaran extends BaseController
         //  mengambil persyaratan by id_permohonan
         $p = $this->get_persyaratan($id_permohonan);
 
-        // ekstensi file diterima 
-        $allowedExtensions = array('jpg', 'pdf');
+
         $validFiles = [];
         foreach ($p as $row) {
 
@@ -359,13 +358,13 @@ class Pendaftaran extends BaseController
 
                     // cek ekstensi 
                     $fileExtension = $file->guessExtension();
-                    if (in_array($fileExtension, $allowedExtensions)) {
+                    if ($fileExtension == $row['format']) {
                         // File ekstensi valid, bisa diunggah
                         $validFiles[$row['tblpersyaratan_id']] = $file;
                     } else {
 
                         //  jika tidak valid = stop proses nya
-                        $res = array('status' => false, 'msg' => 'Harap upload file ' . $row['tblpersyaratan_nama'] . ' dengan format ' . implode(',', $allowedExtensions));
+                        $res = array('status' => false, 'msg' => 'Harap upload file ' . $row['tblpersyaratan_nama'] . ' dengan format ' . $row['format']);
                         return $this->response->setJSON($res);
                     }
                 }
@@ -560,8 +559,7 @@ class Pendaftaran extends BaseController
         $id_permohonan = $this->request->getPost('tblizinpermohonan_id');
         //  mengambil persyaratan by id_permohonan
         $p = $this->get_persyaratan($id_permohonan);
-        // ekstensi file diterima 
-        $allowedExtensions = array('jpg', 'pdf');
+
         $validFiles = [];
         foreach ($p as $row) {
 
@@ -572,13 +570,13 @@ class Pendaftaran extends BaseController
                 if (!$file->getError() == 4) {
                     // cek ekstensi 
                     $fileExtension = $file->guessExtension();
-                    if (in_array($fileExtension, $allowedExtensions)) {
+                    if ($fileExtension == $row['format']) {
                         // File ekstensi valid, bisa diunggah
                         $validFiles[$row['tblpersyaratan_id']] = $file;
                     } else {
 
                         //  jika tidak valid = stop proses nya
-                        $res = array('status' => false, 'msg' => 'Harap upload file ' . $row['tblpersyaratan_nama'] . ' dengan format ' . implode(',', $allowedExtensions));
+                        $res = array('status' => false, 'msg' => 'Harap upload file ' . $row['tblpersyaratan_nama'] . ' dengan format ' . $row['format']);
                         return $this->response->setJSON($res);
                     }
                 }

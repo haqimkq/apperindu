@@ -146,9 +146,9 @@ class Tte extends BaseController
         $qr = $this->model_doc->get_img($qr_path, array('width' => 3, 'height' => 3));
 
 
-        // edit template
-        $r = $this->model_pendaftaran->get_by_id($id_pendaftaran);
 
+        $r = $this->model_pendaftaran->get_by_id($id_pendaftaran);
+        // edit template
         // variabel data primary
         $variable['nama_pemohon'] = $r['tblizinpendaftaran_namapemohon'];
         $variable['tgl_permohonan'] = tanggal($r['tblizinpendaftaran_tgljam']);
@@ -219,7 +219,7 @@ class Tte extends BaseController
         $path = unsign($res);
 
         $passphrase = $this->request->getPost('passphrase');
-    
+
         $nik = $peng['nik_kadis'];
         $res_tte = $this->model_doc->tte($id_pendaftaran, $path,  $res, $nik, $passphrase);
 
@@ -253,7 +253,7 @@ class Tte extends BaseController
         $number = $r['tblizinpendaftaran_telponpemohon'];
 
         if ($number) {
-          
+
             $variable['nama_pemohon'] = $r['tblizinpendaftaran_namapemohon'];
             $variable['tgl_permohonan'] = tanggal($r['tblizinpendaftaran_tgljam']);
             $variable['nama_usaha'] = $r['tblizinpendaftaran_usaha'];

@@ -56,7 +56,8 @@ class Persyaratan extends BaseController
             ';
 
 
-            $row[] = $l['tblpersyaratan_nama'];
+
+            $row[] = '<div class="text-wrap">' . $l['tblpersyaratan_nama'] . '</div>';
             $row[] = $l['format'];
             $data[] = $row;
         }

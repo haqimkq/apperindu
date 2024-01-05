@@ -27,7 +27,7 @@
                                 <select name="format" id="format" class="form-control" required>
                                     <option value="">pilih</option>
                                     <option value="pdf">pdf</option>
-                                    <option value="png">png</option>
+                                    <option value="jpg">jpg</option>
                                 </select>
                             </div>
                         </div>
