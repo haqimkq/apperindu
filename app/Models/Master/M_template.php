@@ -131,6 +131,15 @@ class M_template extends Model
     }
 
 
+    public function get_table_by_id_permohonan($id)
+    {
+        $this->dt->where('tblskizin_tabelvariabel_id !=', NULL);
+        $this->dt->where('tblizinpermohonan_id', $id);
+
+        return $this->dt->get()->getRowArray();
+    }
+
+
     public function get_by_id_permohonan($id)
     {
         $this->where('tblskizin_tabelvariabel_id !=', NULL);
@@ -141,6 +150,19 @@ class M_template extends Model
     {
         $db = \Config\Database::connect();
         $row = $db->table($t)->where('tblizinpendaftaran_id', $id)->get()->getRowArray();
+
+        if (!$row) {
+            return false;
+        }
+
+        return $row;
+    }
+
+
+    public function get_array_tertentu($t, $id)
+    {
+        $db = \Config\Database::connect();
+        $row = $db->table($t)->get()->getResultArray();
 
         if (!$row) {
             return false;

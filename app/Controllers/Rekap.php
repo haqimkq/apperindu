@@ -3,10 +3,13 @@
 namespace App\Controllers;
 
 use App\Models\M_kendali_proses;
+use App\Models\M_pendaftaran;
 use App\Models\M_rekap;
 use App\Models\Master\M_izin;
 use App\Models\Master\M_kecamatan;
 use App\Models\Master\M_permohonan;
+use App\Models\Master\M_template;
+use App\Models\Master\M_variabel_sk;
 use Config\Services;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -26,6 +29,8 @@ class Rekap extends BaseController
     protected $model_permohonan;
     protected $model_kecamatan;
 
+    protected $model_template;
+    protected $model_variabel;
     protected $primaryKey       = 'tblkendaliproses_id';
     protected $model_blok_sistem_tugas;
     protected $request;
@@ -37,6 +42,9 @@ class Rekap extends BaseController
         $this->model_izin = new M_izin($this->request);
         $this->model_permohonan = new M_permohonan($this->request);
         $this->model_kecamatan = new M_kecamatan($this->request);
+        $this->model_pendaftaran = new M_pendaftaran($this->request);
+        $this->model_template = new M_template($this->request);
+        $this->model_variabel = new M_variabel_sk($this->request);
     }
 
 
@@ -56,119 +64,59 @@ class Rekap extends BaseController
         return view($this->path . '/view', $data);
     }
 
-    public function get_data()
-    {
-
-
-        $lists = $this->model->getDatatables();
-        $data = [];
-        $no = $this->request->getPost('start');
-        $str =  $this->request->getPost('str');
-        foreach ($lists as $l) {
-            $no++;
-            $row = [];
-            $row[] = $no . '.';
-            $draf_sk = 'doc/before_tte/' . $l['tblizinpendaftaran_id'] . '.pdf';
-            $sk = 'doc/sign/' . $l['tblizinpendaftaran_id'] . '.pdf';
-            $opsi = '<div class="dropdown">
-            <button class="btn btn-sm btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                aria-expanded="false">Opsi</button>
-            <ul class="dropdown-menu">';
-
-
-
-            if ($l['tblizinpendaftaran_issign'] == 'T') {
-                $opsi .= '<li><a class="dropdown-item"  href="#" onclick="review(\'' . $sk . '\')">Lihat SK</a>
-                </li>';
-            }
-            $opsi .= '<li><a class="dropdown-item"  href="#" onclick="review(\'' . $draf_sk . '\')">Lihat Draf SK</a>
-            </li>';
-
-
-            if ($l['tblizinpendaftaran_issign'] == 'T') {
-                $opsi .=  '<li><a class="dropdown-item" href="' . site_url('cetak_sk/form_page/' . $l['tblizinpendaftaran_id']) . '"  >Cetak Ulang</a>
-            </li>';
-            }
-
-            $opsi .= '<li><a class="dropdown-item"  href="#" onclick="log(\'' . $l['tblizinpendaftaran_id'] . '\')">Log Berkas</a>
-            </li>
-               
-             
-            </div>';
-
-            $row[] = $opsi;
-            $row[] = '<div class="text-wrap">' . status_sk($l['tblizinpendaftaran_issign']) . '</div>';
-            $row[] = '<div class="text-wrap">' . $l['tblizinpendaftaran_nomor'] . '</div>';
-            $row[] = '<div class="text-wrap">' . $l['tblizin_nama'] . '</div>';
-            $row[] = '<div class="text-wrap">' . $l['tblizinpermohonan_nama'] . '</div>';
-            $row[] = '<div class="text-wrap">' . $l['tblizinpendaftaran_namapemohon'] . '</div>';
-            $row[] = '<div class="text-wrap">' . $l['tblizinpendaftaran_usaha'] . '</div>';
-
-            $row[] = '<div class="text-wrap">' . tanggal($l['tblizinpendaftaran_tgljam']) . '</div>';
-            $row[] = $l['tblkecamatan_nama'];
-            $row[] = $l['tblkelurahan_nama'];
-
-
-
-            $data[] = $row;
-        }
-
-        $output = [
-            'draw' => $this->request->getPost('draw'),
-            'recordsTotal' => $this->model->countAll(),
-            'recordsFiltered' => $this->model->countFiltered(),
-            'data' => $data
-        ];
-
-        echo json_encode($output);
-    }
 
     public function export()
     {
 
-        $datas = $this->model->export();
 
-
-        // Create a new Spreadsheet object
-        $spreadsheet = new Spreadsheet();
-
-        // Add data to the spreadsheet
-        $sheet = $spreadsheet->getActiveSheet();
-        $sheet->setCellValue('A1', 'No');
-        $sheet->setCellValue('B1', 'Nomor Pendaftaran');
-        $sheet->setCellValue('C1', 'Nama Izin');
-        $sheet->setCellValue('D1', 'Nama Permohonan');
-        $sheet->setCellValue('E1', 'Nama Pemohon');
-        $sheet->setCellValue('F1', 'Tanggal Daftar');
-        $sheet->setCellValue('G1', 'Kecamatan');
-        $sheet->setCellValue('H1', 'Kelurahan');
-        $sheet->setCellValue('I1', 'Status');
-
-        // Loop through database results and populate the spreadsheet
-        $row = 2;
-        $no = 1;
-        foreach ($datas as $data) {
-            $sheet->setCellValue('A' . $row, $no);
-            $sheet->setCellValue('B' . $row, $data['tblizinpendaftaran_nomor']);
-            $sheet->setCellValue('C' . $row, $data['tblizin_nama']);
-            $sheet->setCellValue('D' . $row, $data['tblizinpermohonan_nama']);
-            $sheet->setCellValue('E' . $row, $data['tblizinpendaftaran_namapemohon']);
-            $sheet->setCellValue('F' . $row, tanggal($data['tblizinpendaftaran_tgljam']));
-            $sheet->setCellValue('G' . $row, $data['tblkecamatan_nama']);
-            $sheet->setCellValue('H' . $row, $data['tblkelurahan_nama']);
-            $sheet->setCellValue('I' . $row, status_sk($data['tblizinpendaftaran_issign']));
-
-            $no++;
-            $row++;
+        $id_permohonan  = $this->request->getPost('tblizinpermohonan_id');
+        $w['tblizin_id'] = $this->request->getPost('tblizin_id');
+        $w['tblizinpermohonan_id'] = $id_permohonan;
+        $w['tblizinpendaftaran_issign'] = 'T';
+        if ($this->request->getPost('dari')) {
+            $w['tblizinpendaftaran_tgljam >=']  = $this->request->getPost('dari');
         }
 
-        // Set the header for the downloaded file
-        $this->response
-            ->setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-            ->setHeader('Content-Disposition', 'attachment;filename="exported_data.xlsx"')
-            ->setHeader('Cache-Control', 'max-age=0');
+        if ($this->request->getPost('sampai')) {
+            $w['tblizinpendaftaran_tgljam <=']  = $this->request->getPost('sampai');
+        }
 
-        $writer = new Xlsx($spreadsheet);
-        $writer->save('php://output');
+        $rows = $this->model_pendaftaran->get_data($w);
+        $tabel = $this->model_template->get_table_by_id_permohonan($id_permohonan);
+        $tabel_info = $this->model_variabel->get_table_info($tabel['tblskizin_tabelvariabel_id']);
+
+        $data = array();
+        $no = 1;
+        foreach ($rows as $row) {
+
+            $r['no'] = $no;
+            $r['nama'] = $row['tblizinpendaftaran_namapemohon'];
+            $r['alamat'] = $row['tblizinpendaftaran_almtpemohon'];
+            $r['nama_usaha'] = $row['tblizinpendaftaran_usaha'];
+            $r['alamat_usaha'] = $row['tblizinpendaftaran_lokasiizin'];
+            $r['nik'] = $row['tblizinpendaftaran_idpemohon'];
+            $r['npwp'] = $row['tblizinpendaftaran_npwp'];
+            $r['kecamatan'] = $row['tblkecamatan_nama'];
+            $r['kelurahan'] = $row['tblkelurahan_nama'];
+            $r['pemohonan'] = $row['tblizinpermohonan_nama'];
+            $r['tgl_daftar'] = $row['tblizinpendaftaran_tgljam'];
+            $d = $this->model_template->get_row_tertentu($tabel['tblskizin_tabelsk'], $row['tblizinpendaftaran_id']);
+            foreach ($tabel_info as $key => $t) {
+                if ($key > 1) {
+
+
+                    if ($t->type_name == 'date') {
+                        $r[$t->name] = isset($d[$t->name]) ? tanggal($d[$t->name])  : '';
+                    } else {
+                        $r[$t->name] =  isset($d[$t->name]) ? $d[$t->name] : '';
+                    }
+                }
+            }
+            $no++;
+            $data[] = $r;
+        }
+
+
+        return view($this->path . '/export', array('rows' => $data, 'tabel' => $tabel_info));
     }
 }

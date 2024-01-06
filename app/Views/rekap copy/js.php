@@ -14,8 +14,82 @@ $(document).ready(function() {
         allowClear: Boolean($(this).data('allow-clear')),
     });
 
+    if (!$('#tblizinpendaftaran_id').val()) {
+        datatable(true);
+    }
+
 
 });
+
+
+function datatable(bool) {
+
+    let data = {
+        tblizin_id: $('#id_izin').val(),
+        tblizinpermohonan_id: $('#id_permohonan').val(),
+        tblkecamatan_id: $('#tblkecamatan_id').val(),
+        tblkelurahan_id: $('#tblkelurahan_id').val(),
+        tblizinpendaftaran_issign: $('#tblizinpendaftaran_issign').val(),
+        dari: $('#dari').val(),
+        sampai: $('#sampai').val(),
+        'str': 'rekap',
+        '<?= csrf_token() ?>': '<?= csrf_hash() ?>'
+    }
+
+    $('.table').DataTable({
+        responsive: false,
+        autoWidth: false,
+        searching: true,
+        info: true,
+        paginate: true,
+        bDestroy: true,
+        ordering: false,
+        language: {
+            lengthMenu: "_MENU_  data per halaman",
+            zeroRecords: "Data tidak tersedia",
+            search: "Pencarian ",
+            info: "Menampilkan halaman _PAGE_ dari _PAGES_ halaman",
+            infoEmpty: "Data tidak tersedia",
+            infoFiltered: "(hasil pencarian/filter dari _MAX_ total data)",
+            paginate: {
+                "previous": "<",
+                "next": ">",
+            }
+        },
+        stateSave: bool,
+        processing: true, //Feature control the processing indicator.
+        serverSide: true, //Feature control DataTables' server-side processing mode.
+        order: [], //Initial no order.
+
+        // Load data for the table's content from an Ajax source
+        ajax: {
+            url: "<?php echo site_url($url . '/get_data') ?>",
+            data: data,
+            type: "POST",
+
+        },
+
+
+        //Set column definition initialisation properties.
+        columnDefs: [{
+            targets: [0], //first column / numbering column
+            orderable: false, //set not orderable
+        }, ],
+    });
+}
+
+
+function hapus(id) {
+    $('.form-delete').trigger('reset');
+    $('#form-delete-modal').modal('show');
+    $('#id-delete').val(id);
+}
+
+function export_excel() {
+
+    $('.form-filter').submit();
+}
+
 
 function downloadFile(url, name) {
 
@@ -112,7 +186,13 @@ function kelurahan_dinamis(id, el, select) {
 }
 
 
+$('.filter-date').change(function() {
+    datatable(false);
+})
 
+$('.filter-select').change(function() {
+    datatable(false);
+})
 
 $('#id_izin').change(function() {
 
