@@ -82,41 +82,83 @@ class Rekap extends BaseController
         }
 
         $rows = $this->model_pendaftaran->get_data($w);
+
+
+
         $tabel = $this->model_template->get_table_by_id_permohonan($id_permohonan);
         $tabel_info = $this->model_variabel->get_table_info($tabel['tblskizin_tabelvariabel_id']);
 
-        $data = array();
+
+        $spreadsheet = new Spreadsheet();
         $no = 1;
-        foreach ($rows as $row) {
-
-            $r['no'] = $no;
-            $r['nama'] = $row['tblizinpendaftaran_namapemohon'];
-            $r['alamat'] = $row['tblizinpendaftaran_almtpemohon'];
-            $r['nama_usaha'] = $row['tblizinpendaftaran_usaha'];
-            $r['alamat_usaha'] = $row['tblizinpendaftaran_lokasiizin'];
-            $r['nik'] = $row['tblizinpendaftaran_idpemohon'];
-            $r['npwp'] = $row['tblizinpendaftaran_npwp'];
-            $r['kecamatan'] = $row['tblkecamatan_nama'];
-            $r['kelurahan'] = $row['tblkelurahan_nama'];
-            $r['pemohonan'] = $row['tblizinpermohonan_nama'];
-            $r['tgl_daftar'] = $row['tblizinpendaftaran_tgljam'];
-            $d = $this->model_template->get_row_tertentu($tabel['tblskizin_tabelsk'], $row['tblizinpendaftaran_id']);
-            foreach ($tabel_info as $key => $t) {
-                if ($key > 1) {
+        $baris = 2;
+        $sheet = $spreadsheet->getActiveSheet();
+        $sheet->setCellValue('A1', 'NO');
+        $sheet->setCellValue('B1', 'NAMA');
+        $sheet->setCellValue('C1', 'NIK');
+        $sheet->setCellValue('D1', 'NPWP');
+        $sheet->setCellValue('E1', 'TELEPON');
+        $sheet->setCellValue('F1', 'ALAMAT');
+        $sheet->setCellValue('G1', 'NAMA USAHA');
+        $sheet->setCellValue('H1', 'ALAMAT USAHA');
 
 
-                    if ($t->type_name == 'date') {
-                        $r[$t->name] = isset($d[$t->name]) ? tanggal($d[$t->name])  : '';
-                    } else {
-                        $r[$t->name] =  isset($d[$t->name]) ? $d[$t->name] : '';
-                    }
-                }
+        $alfabet = 8;
+        foreach ($tabel_info as $key => $t) {
+
+            if ($key > 1) {
+                $sheet->setCellValue(alfabet($alfabet) . '1', strtoupper(str_replace("_", " ", $t->name)));
+                $alfabet++;
             }
-            $no++;
-            $data[] = $r;
         }
 
 
-        return view($this->path . '/export', array('rows' => $data, 'tabel' => $tabel_info));
+        foreach ($rows as $row) {
+            $alfabet = 8;
+            $sheet->setCellValue('A' . $baris, $no);
+            $sheet->setCellValue('B' . $baris, $row['tblizinpendaftaran_namapemohon']);
+            $sheet->setCellValue('C' . $baris, "'" . $row['tblizinpendaftaran_idpemohon']);
+            $sheet->setCellValue('D' . $baris, "'" . $row['tblizinpendaftaran_npwp']);
+            $sheet->setCellValue('E' . $baris, $row['tblizinpendaftaran_telponpemohon']);
+            $sheet->setCellValue('F' . $baris, $row['tblizinpendaftaran_almtpemohon']);
+            $sheet->setCellValue('G' . $baris, $row['tblizinpendaftaran_usaha']);
+            $sheet->setCellValue('H' . $baris, $row['tblizinpendaftaran_lokasiizin']);
+
+
+            $d = $this->model_template->get_row_tertentu($tabel['tblskizin_tabelsk'], $row['tblizinpendaftaran_id']);
+
+            foreach ($tabel_info as $key => $t) {
+
+
+                if ($key > 1) {
+                    if ($t->type_name == 'date') {
+                        $val = isset($d[$t->name]) ? tanggal($d[$t->name])  : '';
+                    } else {
+                        $val =  isset($d[$t->name]) ? $d[$t->name] : '';
+                    }
+                    $sheet->setCellValue(alfabet($alfabet) . $baris, $val);
+                    $alfabet++;
+                }
+            }
+
+            $no++;
+            $baris++;
+        }
+
+
+        $tanggal = '';
+        if ($this->request->getPost('dari') != ''  && $this->request->getPost('sampai') != '') {
+            $tanggal  = ' ' . $this->request->getPost('dari') . ' - ' . $this->request->getPost('sampai');
+        }
+
+        $per = $this->model_permohonan->find($id_permohonan);
+        $nama_file = $per['tblizinpermohonan_nama'] .  $tanggal . '.xlsx';
+        $this->response
+            ->setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+            ->setHeader('Content-Disposition', 'attachment;filename="' . $nama_file . '"')
+            ->setHeader('Cache-Control', 'max-age=0');
+
+        $writer = new Xlsx($spreadsheet);
+        $writer->save('php://output');
     }
 }

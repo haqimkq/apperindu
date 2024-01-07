@@ -34,7 +34,7 @@
                             <select name="tblizin_id" id="id_izin" class="form-control filter-select" required>
                                 <option value="">Pilih</option>
                                 <?php foreach ($izin as $r) : ?>
-                                    <option value="<?= $r['tblizin_id'] ?>"><?= $r['tblizin_nama'] ?></option>
+                                <option value="<?= $r['tblizin_id'] ?>"><?= $r['tblizin_nama'] ?></option>
                                 <?php endforeach ?>
                             </select>
                         </div>
@@ -43,11 +43,12 @@
                     <div class="col-md-6 mb-3">
                         <div class="form-group">
                             <label for="" class="mb-1">Nama Permohonan</label>
-                            <select name="tblizinpermohonan_id" id="id_permohonan" class="form-control filter-select" required>
+                            <select name="tblizinpermohonan_id" id="id_permohonan" class="form-control filter-select"
+                                required>
                                 <option value="">Pilih</option>
                                 <?php foreach ($permohonan as $r) : ?>
-                                    <option value="<?= $r['tblizinpermohonan_id'] ?>"><?= $r['tblizinpermohonan_nama'] ?>
-                                    </option>
+                                <option value="<?= $r['tblizinpermohonan_id'] ?>"><?= $r['tblizinpermohonan_nama'] ?>
+                                </option>
                                 <?php endforeach ?>
                             </select>
                         </div>

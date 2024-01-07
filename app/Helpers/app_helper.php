@@ -473,3 +473,13 @@ function status_sk($str)
 
     return 'Draf';
 }
+
+function alfabet($index)
+{
+    $alfabet = range('A', 'Z');
+
+
+    if ($index >= 0 && $index < count($alfabet)) {
+        return $alfabet[$index];
+    }
+}
