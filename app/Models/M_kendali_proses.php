@@ -285,4 +285,12 @@ class M_kendali_proses extends Model
         $this->where('tblizinpendaftaran_id', $id);
         return $this->first();
     }
+
+    public function get_izin_by_blok_sistem()
+    {
+
+        $this->dt->where('tblkendalibloksistem_idasal', session()->blok_sistem_id);
+        $this->dt->groupBy('tblizin_id');
+        return $this->dt->get()->getResultArray();
+    }
 }

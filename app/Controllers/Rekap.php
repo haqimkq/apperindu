@@ -25,6 +25,7 @@ class Rekap extends BaseController
     protected $model_pendaftaran;
     protected $model_blok_sistem;
     protected $model_kendali_alur;
+    protected $model_kendali_proses;
     protected $model_izin;
     protected $model_permohonan;
     protected $model_kecamatan;
@@ -45,6 +46,7 @@ class Rekap extends BaseController
         $this->model_pendaftaran = new M_pendaftaran($this->request);
         $this->model_template = new M_template($this->request);
         $this->model_variabel = new M_variabel_sk($this->request);
+        $this->model_kendali_proses = new M_kendali_proses($this->request);
     }
 
 
@@ -56,15 +58,80 @@ class Rekap extends BaseController
         $data['page'] = $this->page;
         $data['url'] = $this->url;
         $data['path'] = $this->path;
-        $data['izin'] = $this->model_izin->get_data();
+        $data['izin'] = $this->model_kendali_proses->get_izin_by_blok_sistem();
         $data['kecamatan'] = $this->model_kecamatan->findAll();
-        $data['permohonan'] = $this->model_permohonan->get_data();
+
 
 
         return view($this->path . '/view', $data);
     }
 
+    public function get_data()
+    {
 
+
+        $lists = $this->model->getDatatables();
+        $data = [];
+        $no = $this->request->getPost('start');
+        $str =  $this->request->getPost('str');
+        foreach ($lists as $l) {
+            $no++;
+            $row = [];
+            $row[] = $no . '.';
+            $draf_sk = 'doc/before_tte/' . $l['tblizinpendaftaran_id'] . '.pdf';
+            $sk = 'doc/sign/' . $l['tblizinpendaftaran_id'] . '.pdf';
+            $opsi = '<div class="dropdown">
+            <button class="btn btn-sm btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                aria-expanded="false">Opsi</button>
+            <ul class="dropdown-menu">';
+
+
+
+            if ($l['tblizinpendaftaran_issign'] == 'T') {
+                $opsi .= '<li><a class="dropdown-item"  href="#" onclick="review(\'' . $sk . '\')">Lihat SK</a>
+                </li>';
+            }
+            $opsi .= '<li><a class="dropdown-item"  href="#" onclick="review(\'' . $draf_sk . '\')">Lihat Draf SK</a>
+            </li>';
+
+
+            if ($l['tblizinpendaftaran_issign'] == 'T') {
+                $opsi .=  '<li><a class="dropdown-item" href="' . site_url('cetak_sk/form_page/' . $l['tblizinpendaftaran_id']) . '"  >Cetak Ulang</a>
+            </li>';
+            }
+
+            $opsi .= '<li><a class="dropdown-item"  href="#" onclick="log(\'' . $l['tblizinpendaftaran_id'] . '\')">Log Berkas</a>
+            </li>
+               
+             
+            </div>';
+
+            $row[] = $opsi;
+            $row[] = '<div class="text-wrap">' . status_sk($l['tblizinpendaftaran_issign']) . '</div>';
+            $row[] = '<div class="text-wrap">' . $l['tblizinpendaftaran_nomor'] . '</div>';
+            $row[] = '<div class="text-wrap">' . $l['tblizin_nama'] . '</div>';
+            $row[] = '<div class="text-wrap">' . $l['tblizinpermohonan_nama'] . '</div>';
+            $row[] = '<div class="text-wrap">' . $l['tblizinpendaftaran_namapemohon'] . '</div>';
+            $row[] = '<div class="text-wrap">' . $l['tblizinpendaftaran_usaha'] . '</div>';
+
+            $row[] = '<div class="text-wrap">' . tanggal($l['tblizinpendaftaran_tgljam']) . '</div>';
+            $row[] = $l['tblkecamatan_nama'];
+            $row[] = $l['tblkelurahan_nama'];
+
+
+
+            $data[] = $row;
+        }
+
+        $output = [
+            'draw' => $this->request->getPost('draw'),
+            'recordsTotal' => $this->model->countAll(),
+            'recordsFiltered' => $this->model->countFiltered(),
+            'data' => $data
+        ];
+
+        echo json_encode($output);
+    }
     public function export()
     {
 
