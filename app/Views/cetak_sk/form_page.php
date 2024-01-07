@@ -40,8 +40,7 @@
                     <div class="float-end">
                         <button class="btn btn-primary" onclick="update(<?= $request->uri->getSegment(3) ?>)">Edit Data
                             Primer</button>
-                        <button class="btn btn-secondary"
-                            onclick="lihat_persyaratan(<?= $request->uri->getSegment(3) ?>)">Lihat Persyaratan</button>
+                        <button class="btn btn-secondary" onclick="lihat_persyaratan(<?= $request->uri->getSegment(3) ?>)">Lihat Persyaratan</button>
                     </div>
                 </div>
 
@@ -54,11 +53,10 @@
     <hr />
     <div class="row">
         <div class="col-md-12">
-            <form action="<?= site_url($path . '/form') ?>" method="POST" autocomplete="off" class="form">
+            <form action="<?= site_url($path . '/form') ?>" method="POST" autocomplete="on" class="form">
 
 
-                <input type="hidden" id="tblizinpendaftaran_id" name="tblizinpendaftaran_id"
-                    value="<?= $request->uri->getSegment(3) ?>">
+                <input type="hidden" id="tblizinpendaftaran_id" name="tblizinpendaftaran_id" value="<?= $request->uri->getSegment(3) ?>">
                 <input type="hidden" name="table" id="table" value="<?= $table ?>">
 
                 <?= csrf_field() ?>
@@ -67,65 +65,59 @@
                     <div class="card-body">
                         <div class="row">
                             <?php foreach ($field as $key =>  $r) : ?>
-                            <?php if ($key > 1) : ?>
+                                <?php if ($key > 1) : ?>
 
 
 
 
-                            <div class="col-md-6 col-12 mb-4">
-                                <div class="form-group">
-                                    <label for=""
-                                        class="mb-1"><?= strtoupper(str_replace("_", " ", $r->name)) ?></label>
+                                    <div class="col-md-6 col-12 mb-4">
+                                        <div class="form-group">
+                                            <label for="" class="mb-1"><?= strtoupper(str_replace("_", " ", $r->name)) ?></label>
 
-                                    <?php if ($r->type_name == 'date') : ?>
-                                    <!-- date -->
-                                    <?php $tgl = date('Y-m-d'); ?>
-                                    <?php if ($arr[$r->name] != '' && $arr[$r->name] != '0000-00-00') : ?>
-                                    <?php $tgl = date('Y-m-d', strtotime($arr[$r->name])) ?>
-                                    <?php endif ?>
+                                            <?php if ($r->type_name == 'date') : ?>
+                                                <!-- date -->
+                                                <?php $tgl = date('Y-m-d'); ?>
+                                                <?php if ($arr[$r->name] != '' && $arr[$r->name] != '0000-00-00') : ?>
+                                                    <?php $tgl = date('Y-m-d', strtotime($arr[$r->name])) ?>
+                                                <?php endif ?>
 
 
-                                    <input type="date" class="form-control" value="<?= $tgl ?>" name="<?= $r->name ?>"
-                                        id="<?= $r->name ?>" required>
-                                    <?php else : ?>
+                                                <input type="date" class="form-control" value="<?= $tgl ?>" name="<?= $r->name ?>" id="<?= $r->name ?>" required>
+                                            <?php else : ?>
 
-                                    <!-- text -->
-                                    <!-- jika panjang < 80 -->
-                                    <?php $length = $r->length / 3 ?>
-                                    <?php if ($length <= 80) : ?>
-                                    <input type="text" class="form-control " name="<?= $r->name ?>"
-                                        value="<?= $arr[$r->name] ?>" id="<?= $r->name ?>" max="<?= $length ?>"
-                                        required>
-                                    <!-- jika panjang > 80 -->
-                                    <?php else : ?>
-                                    <textarea name="<?= $r->name ?>" id="<?= $r->name ?>" rows="2" class="form-control"
-                                        required><?= $arr[$r->name] ?></textarea>
-                                    <?php endif ?>
+                                                <!-- text -->
+                                                <!-- jika panjang < 80 -->
+                                                <?php $length = $r->length / 3 ?>
+                                                <?php if ($length <= 80) : ?>
+                                                    <input type="text" class="form-control " name="<?= $r->name ?>" value="<?= $arr[$r->name] ?>" id="<?= $r->name ?>" max="<?= $length ?>" required>
+                                                    <!-- jika panjang > 80 -->
+                                                <?php else : ?>
+                                                    <textarea name="<?= $r->name ?>" id="<?= $r->name ?>" rows="2" class="form-control" required><?= $arr[$r->name] ?></textarea>
+                                                <?php endif ?>
 
 
 
-                                    <!-- jika no izin/sk -->
+                                                <!-- jika no izin/sk -->
 
-                                    <?php if ($r->name == 'no_izin' && $arr[$r->name] == '') : ?>
-                                    <em>No. izin terakhir berdasarkan tgl penetapan : <?= $sk_terakhir ?></em>
-                                    <?php endif ?>
-                                    <?php endif ?>
-                                </div>
-                            </div>
+                                                <?php if ($r->name == 'no_izin' && $arr[$r->name] == '') : ?>
+                                                    <em>No. izin terakhir berdasarkan tgl penetapan : <?= $sk_terakhir ?></em>
+                                                <?php endif ?>
+                                            <?php endif ?>
+                                        </div>
+                                    </div>
 
 
 
 
 
-                            <?php endif ?>
+                                <?php endif ?>
 
                             <?php endforeach ?>
                         </div>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="download" id="download"
-                                        value="T">
+                                    <input class="form-check-input" type="checkbox" name="download" id="download" value="T">
                                     <label class="form-check-label" for="flexCheckDefault">Download File</label>
                                 </div>
                             </div>
@@ -165,29 +157,25 @@
                             <div class="col-12 mb-3">
                                 <div class="form-group">
                                     <label for="" class="mb-1">Nama Pemohon</label>
-                                    <input type="text" class="form-control" name="tblizinpendaftaran_namapemohon"
-                                        id="tblizinpendaftaran_namapemohon" required>
+                                    <input type="text" class="form-control" name="tblizinpendaftaran_namapemohon" id="tblizinpendaftaran_namapemohon" required>
                                 </div>
                             </div>
                             <div class="col-12 mb-3">
                                 <div class="form-group">
                                     <label for="" class="mb-1">Alamat Pemohon</label>
-                                    <input type="text" class="form-control" name="tblizinpendaftaran_almtpemohon"
-                                        id="tblizinpendaftaran_almtpemohon" required>
+                                    <input type="text" class="form-control" name="tblizinpendaftaran_almtpemohon" id="tblizinpendaftaran_almtpemohon" required>
                                 </div>
                             </div>
                             <div class="col-12 mb-3">
                                 <div class="form-group">
                                     <label for="" class="mb-1">Nama Usaha</label>
-                                    <input type="text" class="form-control" name="tblizinpendaftaran_usaha"
-                                        id="tblizinpendaftaran_usaha" required>
+                                    <input type="text" class="form-control" name="tblizinpendaftaran_usaha" id="tblizinpendaftaran_usaha" required>
                                 </div>
                             </div>
                             <div class="col-12 mb-3">
                                 <div class="form-group">
                                     <label for="" class="mb-1">Alamat / Lokasi Usaha</label>
-                                    <input type="text" class="form-control" name="tblizinpendaftaran_lokasiizin"
-                                        id="tblizinpendaftaran_lokasiizin" required>
+                                    <input type="text" class="form-control" name="tblizinpendaftaran_lokasiizin" id="tblizinpendaftaran_lokasiizin" required>
                                 </div>
                             </div>
 
@@ -207,8 +195,7 @@
 
         <div class="col-md-12">
             <form action="" method="POST" class="form2" autocomplete="off">
-                <input type="hidden" name="tblizinpendaftaran_id" id="tblizinpendaftaran_id"
-                    value="<?= $request->uri->getSegment(3) ?>">
+                <input type="hidden" name="tblizinpendaftaran_id" id="tblizinpendaftaran_id" value="<?= $request->uri->getSegment(3) ?>">
 
                 <?= csrf_field() ?>
                 <div class="card mb-5">
