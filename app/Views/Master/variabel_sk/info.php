@@ -1,5 +1,5 @@
 <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-    <p class="font-weight-bold">Tabel primary (diambi dari data pemohon)</p>
+    <p class="font-weight-bold">Tabel primary (diambil dari data pemohon)</p>
 
 </div>
 <table class="table table-striped table-bordered" style="width:100%">
@@ -86,32 +86,29 @@
 
         <?php $no = 1 ?>
         <?php foreach ($field as $key => $r) : ?>
-        <?php if ($key > 1) : ?>
-        <tr>
-            <td><?= $no ?>.</td>
-            <td>
+            <?php if ($key > 1) : ?>
+                <tr>
+                    <td><?= $no ?>.</td>
+                    <td>
 
-                <div class="dropdown">
-                    <button class="btn btn-outline-primary dropdown-toggle btn-sm" type="button"
-                        data-bs-toggle="dropdown" aria-expanded="false">Opsi</button>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#"
-                                onclick="edit_kolom('<?= $id ?>','<?= $r['nama_kolom'] ?>')">Edit Kolom</a>
-                        </li>
+                        <div class="dropdown">
+                            <button class="btn btn-outline-primary dropdown-toggle btn-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false">Opsi</button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#" onclick="edit_kolom('<?= $id ?>','<?= $r['nama_kolom'] ?>')">Edit Kolom</a>
+                                </li>
 
-                        <li><a class="dropdown-item" href="#"
-                                onclick="hapus_kolom('<?= $id ?>','<?= $r['nama_kolom'] ?>','<?= $table ?>')">Hapus
-                                Kolom</a>
-                        </li>
-                    </ul>
-                </div>
-            </td>
-            <td><?= $r['nama_kolom'] ?></td>
-            <td><?= $r['tipe_data'] ?></td>
-            <td><?= $r['panjang'] ?></td>
-        </tr>
-        <?php $no++ ?>
-        <?php endif ?>
+                                <li><a class="dropdown-item" href="#" onclick="hapus_kolom('<?= $id ?>','<?= $r['nama_kolom'] ?>','<?= $table ?>')">Hapus
+                                        Kolom</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                    <td><?= $r['nama_kolom'] ?></td>
+                    <td><?= $r['tipe_data'] ?></td>
+                    <td><?= $r['panjang'] ?></td>
+                </tr>
+                <?php $no++ ?>
+            <?php endif ?>
         <?php endforeach ?>
     </tbody>
 
