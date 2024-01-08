@@ -9,6 +9,8 @@ use App\Models\Master\M_permohonan;
 use App\Models\Master\M_template_rekomendasi;
 use App\Models\Master\M_variabel_sk;
 use Config\Services;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class Rekap_rekomendasi extends BaseController
 {
@@ -142,7 +144,7 @@ class Rekap_rekomendasi extends BaseController
         }
 
         $per = $this->model_permohonan->find($id_permohonan);
-        $nama_file = $per['tblizinpermohonan_nama'] .  $tanggal . '.xlsx';
+        $nama_file = 'Rekomendasi ' . $per['tblizinpermohonan_nama'] .  $tanggal . '.xlsx';
         $this->response
             ->setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
             ->setHeader('Content-Disposition', 'attachment;filename="' . $nama_file . '"')
