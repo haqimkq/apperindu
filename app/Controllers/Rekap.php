@@ -59,11 +59,44 @@ class Rekap extends BaseController
         $data['url'] = $this->url;
         $data['path'] = $this->path;
         $data['izin'] = $this->model_kendali_proses->get_izin_by_blok_sistem();
-        $data['kecamatan'] = $this->model_kecamatan->findAll();
+        // $data['kecamatan'] = $this->model_kecamatan->findAll();
 
 
 
         return view($this->path . '/view', $data);
+    }
+
+    public function per_tahun()
+    {
+
+
+        $data['title'] = $this->page . ' Per Tahun';
+        $data['page'] = $this->page . ' Per Tahun';
+        $data['url'] = $this->url . '/per_tahun';
+        $data['path'] = $this->path;
+        // $data['izin'] = $this->model_kendali_proses->get_izin_by_blok_sistem();
+        // $data['kecamatan'] = $this->model_kecamatan->findAll();
+
+
+
+        return view($this->path . '/per_tahun/view', $data);
+    }
+
+
+    public function per_kecamatan()
+    {
+
+
+        $data['title'] = $this->page . ' Per Kecamatan';
+        $data['page'] = $this->page . ' Per Kecamatan';
+        $data['url'] = $this->url . '/per_kecamatan';
+        $data['path'] = $this->path;
+        // $data['izin'] = $this->model_kendali_proses->get_izin_by_blok_sistem();
+        // $data['kecamatan'] = $this->model_kecamatan->findAll();
+
+
+
+        return view($this->path . '/per_kecamatan/view', $data);
     }
 
     public function get_data()
@@ -78,8 +111,10 @@ class Rekap extends BaseController
             $no++;
             $row = [];
             $row[] = $no . '.';
+
             $draf_sk = 'doc/before_tte/' . $l['tblizinpendaftaran_id'] . '.pdf';
             $sk = 'doc/sign/' . $l['tblizinpendaftaran_id'] . '.pdf';
+
             $opsi = '<div class="dropdown">
             <button class="btn btn-sm btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown"
                 aria-expanded="false">Opsi</button>
@@ -87,13 +122,15 @@ class Rekap extends BaseController
 
 
 
-            if ($l['tblizinpendaftaran_issign'] == 'T') {
+            if (file_exists($sk)) {
                 $opsi .= '<li><a class="dropdown-item"  href="#" onclick="review(\'' . $sk . '\')">Lihat SK</a>
                 </li>';
             }
-            $opsi .= '<li><a class="dropdown-item"  href="#" onclick="review(\'' . $draf_sk . '\')">Lihat Draf SK</a>
-            </li>';
 
+            if (file_exists($draf_sk)) {
+                $opsi .= '<li><a class="dropdown-item"  href="#" onclick="review(\'' . $draf_sk . '\')">Lihat Draf SK</a>
+            </li>';
+            }
 
             if ($l['tblizinpendaftaran_issign'] == 'T') {
                 $opsi .=  '<li><a class="dropdown-item" href="' . site_url('cetak_sk/form_page/' . $l['tblizinpendaftaran_id']) . '"  >Cetak Ulang</a>
@@ -107,7 +144,7 @@ class Rekap extends BaseController
             </div>';
 
             $row[] = $opsi;
-            $row[] = '<div class="text-wrap">' . status_sk($l['tblizinpendaftaran_issign']) . '</div>';
+            // $row[] = '<div class="text-wrap">' . status_sk($l['tblizinpendaftaran_issign']) . '</div>';
             $row[] = '<div class="text-wrap">' . $l['tblizinpendaftaran_nomor'] . '</div>';
             $row[] = '<div class="text-wrap">' . $l['tblizin_nama'] . '</div>';
             $row[] = '<div class="text-wrap">' . $l['tblizinpermohonan_nama'] . '</div>';
@@ -132,6 +169,68 @@ class Rekap extends BaseController
 
         echo json_encode($output);
     }
+
+    public function export_per_tahun()
+    {
+        $tahun = $this->request->getPost('tahun');
+        $w['YEAR(tgl_daftar) ='] = $tahun;
+        $w['tblizinpendaftaran_issign'] = 'T';
+        $izin =  $this->model_kendali_proses->get_izin_by_blok_sistem();
+
+        $data = array();
+
+
+        foreach ($izin as $i) {
+
+            $r['nama_izin'] = $i['tblizin_nama'];
+            $w['tblizin_id'] = $i['tblizin_id'];
+
+            foreach (bulan() as $key => $b) {
+                $w['MONTH(tgl_daftar) ='] = $key;
+                $row = $this->model_pendaftaran->get_num_rows($w);
+                $r[$key] = $row;
+            }
+
+            $data[] = $r;
+        }
+
+
+
+        return view($this->path . '/per_tahun/export', array('rows' => $data));
+    }
+
+    public function export_per_kecamatan()
+    {
+
+        $w['tgl_daftar >=']  = $this->request->getPost('dari');
+        $w['tgl_daftar <=']  = $this->request->getPost('sampai');
+        $w['tblizinpendaftaran_issign'] = 'T';
+        $izin =  $this->model_kendali_proses->get_izin_by_blok_sistem();
+        $kec = $this->model_kecamatan->findAll();
+        // dd($kec);
+
+        $data = array();
+
+
+        foreach ($izin as $i) {
+
+            $r['nama_izin'] = $i['tblizin_nama'];
+            $w['tblizin_id'] = $i['tblizin_id'];
+
+            foreach ($kec as  $k) {
+                $w['tblkecamatan_id'] = $k['tblkecamatan_id'];
+                $row = $this->model_pendaftaran->get_num_rows($w);
+                $r[$w['tblkecamatan_id']] = $row;
+            }
+
+            $data[] = $r;
+        }
+
+        // dd($data);
+
+        return view($this->path . '/per_kecamatan/export', array('rows' => $data, 'kec' => $kec));
+    }
+
     public function export()
     {
 
@@ -141,11 +240,11 @@ class Rekap extends BaseController
         $w['tblizinpermohonan_id'] = $id_permohonan;
         $w['tblizinpendaftaran_issign'] = 'T';
         if ($this->request->getPost('dari')) {
-            $w['tblizinpendaftaran_tgljam >=']  = $this->request->getPost('dari');
+            $w['tgl_daftar >=']  = $this->request->getPost('dari');
         }
 
         if ($this->request->getPost('sampai')) {
-            $w['tblizinpendaftaran_tgljam <=']  = $this->request->getPost('sampai');
+            $w['tgl_daftar <=']  = $this->request->getPost('sampai');
         }
 
         $rows = $this->model_pendaftaran->get_data($w);

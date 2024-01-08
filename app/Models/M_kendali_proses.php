@@ -142,6 +142,15 @@ class M_kendali_proses extends Model
                 $data[$key] = $this->request->getPost($key);
             }
         }
+
+
+        if ($this->request->getPost('dari')) {
+            $data['tgl_daftar >=']  = $this->request->getPost('dari');
+        }
+
+        if ($this->request->getPost('sampai')) {
+            $data['tgl_daftar <=']  = $this->request->getPost('sampai');
+        }
         return $data;
     }
 
@@ -153,6 +162,20 @@ class M_kendali_proses extends Model
         if ($this->request->getPost('str') == 'dikirim') {
             $this->dt->where('tblkendalibloksistem_idkirim', session()->blok_sistem_id);
             $this->dt->where('tblkendaliproses_status', 4);
+            $this->dt->groupBy('tblizinpendaftaran_nomor');
+            // if (session()->blok_sistem_id == 5 || session()->blok_sistem_id == 6 || session()->blok_sistem_id == 7 || session()->blok_sistem_id == 8) {
+
+            //     $arr = $this->get_izin_id();
+            //     $this->dt->whereIn('tblizin_id', $arr);
+            // }
+        }
+
+
+
+        if ($this->request->getPost('str') == 'validasi') {
+            $this->dt->where('tblkendalibloksistem_idkirim', session()->blok_sistem_id);
+            $this->dt->where('tblkendaliproses_status', 4);
+            $this->dt->where('tblizinpendaftaran_issign', 'F');
             $this->dt->groupBy('tblizinpendaftaran_nomor');
             // if (session()->blok_sistem_id == 5 || session()->blok_sistem_id == 6 || session()->blok_sistem_id == 7 || session()->blok_sistem_id == 8) {
 

@@ -43,7 +43,7 @@ class Validasi extends BaseController
         $data['page'] = $this->page;
         $data['url'] = $this->url;
         $data['path'] = $this->path;
-        $data['str'] = 'dikirim';
+        $data['str'] = 'validasi';
         $data['izin'] = $this->model_izin->get_data();
         $data['permohonan'] = $this->model_permohonan->get_data();
 

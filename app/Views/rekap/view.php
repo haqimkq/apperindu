@@ -59,14 +59,16 @@
                     <div class="col-md-6 mb-3">
                         <div class="form-group">
                             <label for="" class="mb-1">Dari tanggal</label>
-                            <input type="date" name="dari" id="dari" class="form-control filter-date">
+                            <input type="date" name="dari" id="dari" value="<?= date('Y-m-d') ?>"
+                                class="form-control filter-date">
                         </div>
 
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-group">
                             <label for="" class="mb-1">Sampai tanggal</label>
-                            <input type="date" name="sampai" id="sampai" class="form-control filter-date">
+                            <input type="date" name="sampai" id="sampai" value="<?= date('Y-m-d') ?>"
+                                class="form-control filter-date">
                         </div>
 
                     </div>
@@ -101,7 +103,7 @@
                                     <th>No.</th>
 
                                     <th>Opsi</th>
-                                    <th>Status</th>
+                                    <!-- <th>Status</th> -->
                                     <th>Nomor Daftar</th>
                                     <th>Nama Izin</th>
                                     <th>Nama Permohonan</th>

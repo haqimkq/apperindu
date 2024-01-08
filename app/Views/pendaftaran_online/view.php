@@ -99,7 +99,7 @@
                                     <th>Nama Usaha</th>
 
                                     <th>Status</th>
-                                    <th>Waktu Daftar</th>
+                                    <th>Tanggal Daftar</th>
 
 
                                 </tr>

@@ -57,6 +57,58 @@ class Rekap_rekomendasi extends BaseController
         return view($this->path . '/view', $data);
     }
 
+
+    public function get_data()
+    {
+
+
+        $lists = $this->model->getDatatables();
+        $data = [];
+        $no = $this->request->getPost('start');
+        $str =  $this->request->getPost('str');
+        foreach ($lists as $l) {
+            $no++;
+            $row = [];
+            $row[] = $no . '.';
+            $rekom = 'doc/sign/rekomendasi_' . $l['tblizinpendaftaran_id'] . '.pdf';
+            $opsi = '<div class="dropdown">
+            <button class="btn btn-sm btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                aria-expanded="false">Opsi</button>
+            <ul class="dropdown-menu">';
+
+            $opsi .= '<li><a class="dropdown-item"  href="#" onclick="review(\'' . $rekom . '\')">Lihat Rekomendasi</a>
+            </li>';
+            $opsi .= '<li><a class="dropdown-item"  href="#" onclick="log(\'' . $l['tblizinpendaftaran_id'] . '\')">Log Berkas</a>
+            </li>
+               
+             
+            </div>';
+
+            $row[] = $opsi;
+            $row[] = '<div class="text-wrap">' . $l['tblizinpendaftaran_nomor'] . '</div>';
+            $row[] = '<div class="text-wrap">' . $l['tblizin_nama'] . '</div>';
+            $row[] = '<div class="text-wrap">' . $l['tblizinpermohonan_nama'] . '</div>';
+            $row[] = '<div class="text-wrap">' . $l['tblizinpendaftaran_namapemohon'] . '</div>';
+            $row[] = '<div class="text-wrap">' . $l['tblizinpendaftaran_usaha'] . '</div>';
+
+            $row[] = '<div class="text-wrap">' . tanggal($l['tblkendaliproses_tglterima']) . '</div>';
+
+
+
+
+            $data[] = $row;
+        }
+
+        $output = [
+            'draw' => $this->request->getPost('draw'),
+            'recordsTotal' => $this->model->countAll(),
+            'recordsFiltered' => $this->model->countFiltered(),
+            'data' => $data
+        ];
+
+        echo json_encode($output);
+    }
+
     public function export()
     {
 

@@ -71,11 +71,11 @@ class M_rekap extends Model
         }
 
         if ($this->request->getPost('dari')) {
-            $this->dt->where('tblizinpendaftaran_tgljam >=', $this->request->getPost('dari'));
+            $this->dt->where('tgl_daftar >=', $this->request->getPost('dari'));
         }
 
         if ($this->request->getPost('sampai')) {
-            $this->dt->where('tblizinpendaftaran_tgljam <=', $this->request->getPost('sampai'));
+            $this->dt->where('tgl_daftar <=', $this->request->getPost('sampai'));
         }
 
 
@@ -98,11 +98,11 @@ class M_rekap extends Model
 
 
         if ($this->request->getPost('dari')) {
-            $this->dt->where('tblizinpendaftaran_tgljam >=', $this->request->getPost('dari'));
+            $this->dt->where('tgl_daftar >=', $this->request->getPost('dari'));
         }
 
         if ($this->request->getPost('sampai')) {
-            $this->dt->where('tblizinpendaftaran_tgljam <=', $this->request->getPost('sampai'));
+            $this->dt->where('tgl_daftar <=', $this->request->getPost('sampai'));
         }
 
 
@@ -122,11 +122,11 @@ class M_rekap extends Model
         }
 
         if ($this->request->getPost('dari')) {
-            $this->dt->where('tblizinpendaftaran_tgljam >=', $this->request->getPost('dari'));
+            $this->dt->where('tgl_daftar >=', $this->request->getPost('dari'));
         }
 
         if ($this->request->getPost('sampai')) {
-            $this->dt->where('tblizinpendaftaran_tgljam <=', $this->request->getPost('sampai'));
+            $this->dt->where('tgl_daftar <=', $this->request->getPost('sampai'));
         }
 
 
@@ -151,24 +151,9 @@ class M_rekap extends Model
             }
         }
 
-        $data['sk_dicetak'] = 'T';
+        // $data['sk_dicetak'] = 'T';
+        $data['tblizinpendaftaran_issign'] = 'T';
 
         return $data;
-    }
-
-
-    public function export()
-    {
-
-        if ($this->request->getPost('dari')) {
-            $this->dt->where('tblizinpendaftaran_tgljam >=', $this->request->getPost('dari'));
-        }
-
-        if ($this->request->getPost('sampai')) {
-            $this->dt->where('tblizinpendaftaran_tgljam <=', $this->request->getPost('sampai'));
-        }
-
-        $this->dt->where($this->filter());
-        return  $this->dt->get()->getResultArray();
     }
 }

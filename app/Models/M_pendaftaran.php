@@ -209,6 +209,13 @@ class M_pendaftaran extends Model
         return $this->dt->get()->getResultArray();
     }
 
+
+    public function get_num_rows($w)
+    {
+        $this->dt->where($w);
+        return $this->dt->get()->getNumRows();
+    }
+
     public function get_by_pendaftaran_nomor($id)
     {
         $this->dt->where('tblizinpendaftaran_nomor', $id);
