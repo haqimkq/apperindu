@@ -6,7 +6,7 @@ use App\Models\M_doc;
 use Config\Services;
 
 use App\Models\M_kendali_proses;
-
+use App\Models\M_pendaftaran;
 use App\Models\M_pendaftaran_online;
 use App\Models\M_pengaturan;
 use App\Models\M_persyaratan_pemohon;
@@ -39,6 +39,7 @@ class Pendaftaran_online extends BaseController
     {
         $this->request = Services::request();
         $this->model =  new M_pendaftaran_online($this->request);
+        $this->model_pendaftaran =  new M_pendaftaran($this->request);
         $this->model_persyaratan = new M_persyaratan_permohonan($this->request);
         $this->model_persyaratan_pemohon = new M_persyaratan_pemohon($this->request);
         $this->model_izin =  new M_izin($this->request);
@@ -53,7 +54,7 @@ class Pendaftaran_online extends BaseController
 
     {
 
-
+       
         $data['title'] = 'Data ' . $this->page;
         $data['page'] = $this->page;
         $data['url'] = $this->url;
@@ -297,5 +298,15 @@ class Pendaftaran_online extends BaseController
         }
 
         return redirect()->to('/' . $this->url);
+    }
+
+
+    public function jml_pendaftaran()
+    {
+        $w['tblizinpendaftaran_issign'] = 'F';
+        $w['status_online'] = '1';
+        $row = $this->model_pendaftaran->get_num_rows($w);
+        
+        echo  'Pendaftaran Online <span class="badge bg-primary">'.$row.'</span>';
     }
 }

@@ -60,7 +60,7 @@
         </div>
 
     </form>
-    <h6 class="mb-0 text-uppercase">Tabel Data <?= $page ?></h6>
+    <!-- <h6 class="mb-0 text-uppercase">Tabel Data <?= $page ?></h6>
     <hr />
     <div class="card">
         <div class="card-body">
@@ -68,7 +68,7 @@
 
 
         </div>
-    </div>
+    </div> -->
 </main>
 
 

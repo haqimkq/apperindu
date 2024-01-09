@@ -59,7 +59,8 @@ class Pemohon extends BaseController
         $data['page'] = 'Arsip Pemohon';
         $data['url'] = $this->url;
         $data['path'] = $this->path;
-        $rows = $this->model_pendaftaran->get_by_id_pemohon($id);
+     
+        $rows = $this->model_pendaftaran->get_by_id_pemohon_selesai($id);
 
         $arr = array();
 

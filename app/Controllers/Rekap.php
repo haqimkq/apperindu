@@ -7,6 +7,7 @@ use App\Models\M_pendaftaran;
 use App\Models\M_rekap;
 use App\Models\Master\M_izin;
 use App\Models\Master\M_kecamatan;
+use App\Models\Master\M_kelurahan;
 use App\Models\Master\M_permohonan;
 use App\Models\Master\M_template;
 use App\Models\Master\M_variabel_sk;
@@ -29,6 +30,7 @@ class Rekap extends BaseController
     protected $model_izin;
     protected $model_permohonan;
     protected $model_kecamatan;
+    protected $model_kelurahan;
 
     protected $model_template;
     protected $model_variabel;
@@ -47,6 +49,7 @@ class Rekap extends BaseController
         $this->model_template = new M_template($this->request);
         $this->model_variabel = new M_variabel_sk($this->request);
         $this->model_kendali_proses = new M_kendali_proses($this->request);
+        $this->model_kelurahan = new M_kelurahan($this->request);
     }
 
 
@@ -97,6 +100,23 @@ class Rekap extends BaseController
 
 
         return view($this->path . '/per_kecamatan/view', $data);
+    }
+
+
+    public function per_kelurahan()
+    {
+
+
+        $data['title'] = $this->page . ' Per Kelurahan';
+        $data['page'] = $this->page . ' Per Kelurahan';
+        $data['url'] = $this->url . '/per_kelurahan';
+        $data['path'] = $this->path;
+        // $data['izin'] = $this->model_kendali_proses->get_izin_by_blok_sistem();
+        $data['kecamatan'] = $this->model_kecamatan->findAll();
+
+
+
+        return view($this->path . '/per_kelurahan/view', $data);
     }
 
     public function get_data()
@@ -172,6 +192,72 @@ class Rekap extends BaseController
 
     public function export_per_tahun()
     {
+
+
+        $tahun = $this->request->getPost('tahun');
+        $w['YEAR(tgl_daftar) ='] = $tahun;
+        $w['tblizinpendaftaran_issign'] = 'T';
+        $izin =  $this->model_kendali_proses->get_izin_by_blok_sistem();
+
+
+        $no = 1;
+        $baris = 2;
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+        $sheet->setCellValue('A1', 'NO');
+        $sheet->setCellValue('B1', 'Nama Izin');
+        $alfabet = 2;
+        foreach (bulan() as $key => $b) {
+            $total[$key] = 0;
+            $sheet->setCellValue(alfabet($alfabet) . '1', $b);
+            $alfabet++;
+        }
+
+        foreach ($izin as $i) {
+            $alfabet = 2;
+
+            $w['tblizin_id'] = $i['tblizin_id'];
+
+            $sheet->setCellValue('A' . $baris, $no);
+            $sheet->setCellValue('B' . $baris, $i['tblizin_nama']);
+
+            foreach (bulan() as $key => $b) {
+                $w['MONTH(tgl_daftar) ='] = $key;
+                $row = $this->model_pendaftaran->get_num_rows($w);
+                $total[$key] = $total[$key] +  $row;
+                $sheet->setCellValue(alfabet($alfabet) . $baris, $row);
+                $alfabet++;
+            }
+
+            // $data[] = $r;
+            $no++;
+            $baris++;
+        }
+        $sheet->setCellValue('A' . $baris, '');
+        $sheet->setCellValue('B' . $baris, 'Total');
+
+
+        $alfabet = 2;
+        foreach (bulan() as $key => $b) {
+
+            $sheet->setCellValue(alfabet($alfabet) . $baris, $total[$key]);
+            $alfabet++;
+        }
+
+        $nama_file =  'Rekap ' . $tahun . '.xlsx';
+        $this->response
+            ->setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+            ->setHeader('Content-Disposition', 'attachment;filename="' . $nama_file . '"')
+            ->setHeader('Cache-Control', 'max-age=0');
+
+        $writer = new Xlsx($spreadsheet);
+        $writer->save('php://output');
+
+        // return view($this->path . '/per_tahun/export', array('rows' => $data));
+    }
+
+    public function get_data_per_tahun()
+    {
         $tahun = $this->request->getPost('tahun');
         $w['YEAR(tgl_daftar) ='] = $tahun;
         $w['tblizinpendaftaran_issign'] = 'T';
@@ -207,6 +293,74 @@ class Rekap extends BaseController
         $w['tblizinpendaftaran_issign'] = 'T';
         $izin =  $this->model_kendali_proses->get_izin_by_blok_sistem();
         $kec = $this->model_kecamatan->findAll();
+
+
+
+        $no = 1;
+        $baris = 2;
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+        $sheet->setCellValue('A1', 'NO');
+        $sheet->setCellValue('B1', 'Nama Izin');
+        $alfabet = 2;
+        foreach ($kec as  $k) {
+            $total[$k['tblkecamatan_id']] = 0;
+            $sheet->setCellValue(alfabet($alfabet) . '1', $k['tblkecamatan_nama']);
+            $alfabet++;
+        }
+
+
+        foreach ($izin as $i) {
+            $alfabet = 2;
+            // $r['nama_izin'] = $i['tblizin_nama'];
+            $w['tblizin_id'] = $i['tblizin_id'];
+            $sheet->setCellValue('A' . $baris, $no);
+            $sheet->setCellValue('B' . $baris, $i['tblizin_nama']);
+            foreach ($kec as  $k) {
+                $w['tblkecamatan_id'] = $k['tblkecamatan_id'];
+                $row = $this->model_pendaftaran->get_num_rows($w);
+                // $r[$w['tblkecamatan_id']] = $row;
+                $total[$k['tblkecamatan_id']] = $total[$k['tblkecamatan_id']] +  $row;
+                $sheet->setCellValue(alfabet($alfabet) . $baris, $row);
+                $alfabet++;
+            }
+
+            $no++;
+            $baris++;
+        }
+
+
+        $sheet->setCellValue('A' . $baris, '');
+        $sheet->setCellValue('B' . $baris, 'Total');
+
+
+        $alfabet = 2;
+        foreach ($kec as  $k) {
+
+            $sheet->setCellValue(alfabet($alfabet) . $baris, $total[$k['tblkecamatan_id']]);
+            $alfabet++;
+        }
+
+        $tanggal  = ' ' . $this->request->getPost('dari') . ' - ' . $this->request->getPost('sampai');
+        $nama_file =  'Rekap Per Kecamatan ' . $tanggal . '.xlsx';
+        $this->response
+            ->setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+            ->setHeader('Content-Disposition', 'attachment;filename="' . $nama_file . '"')
+            ->setHeader('Cache-Control', 'max-age=0');
+
+        $writer = new Xlsx($spreadsheet);
+        $writer->save('php://output');
+    }
+
+
+    public function get_data_per_kecamatan()
+    {
+
+        $w['tgl_daftar >=']  = $this->request->getPost('dari');
+        $w['tgl_daftar <=']  = $this->request->getPost('sampai');
+        $w['tblizinpendaftaran_issign'] = 'T';
+        $izin =  $this->model_kendali_proses->get_izin_by_blok_sistem();
+        $kec = $this->model_kecamatan->findAll();
         // dd($kec);
 
         $data = array();
@@ -229,6 +383,108 @@ class Rekap extends BaseController
         // dd($data);
 
         return view($this->path . '/per_kecamatan/export', array('rows' => $data, 'kec' => $kec));
+    }
+
+    public function export_per_kelurahan()
+    {
+
+        $id_kec = $this->request->getPost('tblkecamatan_id');
+
+        $w['tgl_daftar >=']  = $this->request->getPost('dari');
+        $w['tgl_daftar <=']  = $this->request->getPost('sampai');
+        $w['tblizinpendaftaran_issign'] = 'T';
+        $izin =  $this->model_kendali_proses->get_izin_by_blok_sistem();
+        $kel = $this->model_kelurahan->where('tblkecamatan_id', $id_kec)->find();
+
+        $no = 1;
+        $baris = 2;
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+        $sheet->setCellValue('A1', 'NO');
+        $sheet->setCellValue('B1', 'Nama Izin');
+        $alfabet = 2;
+        foreach ($kel as  $k) {
+            $total[$k['tblkelurahan_id']] = 0;
+            $sheet->setCellValue(alfabet($alfabet) . '1', $k['tblkelurahan_nama']);
+            $alfabet++;
+        }
+
+
+        foreach ($izin as $i) {
+            $alfabet = 2;
+            // $r['nama_izin'] = $i['tblizin_nama'];
+            $w['tblizin_id'] = $i['tblizin_id'];
+            $sheet->setCellValue('A' . $baris, $no);
+            $sheet->setCellValue('B' . $baris, $i['tblizin_nama']);
+            foreach ($kel as  $k) {
+                $w['tblkelurahan_id'] = $k['tblkelurahan_id'];
+                $row = $this->model_pendaftaran->get_num_rows($w);
+                // $r[$w['tblkelurahan_id']] = $row;
+                $total[$k['tblkelurahan_id']] = $total[$k['tblkelurahan_id']] +  $row;
+                $sheet->setCellValue(alfabet($alfabet) . $baris, $row);
+                $alfabet++;
+            }
+
+            $no++;
+            $baris++;
+        }
+
+
+        $sheet->setCellValue('A' . $baris, '');
+        $sheet->setCellValue('B' . $baris, 'Total');
+
+
+        $alfabet = 2;
+        foreach ($kel as  $k) {
+
+            $sheet->setCellValue(alfabet($alfabet) . $baris, $total[$k['tblkelurahan_id']]);
+            $alfabet++;
+        }
+
+        $tanggal  = ' ' . $this->request->getPost('dari') . ' - ' . $this->request->getPost('sampai');
+        $kec = $this->model_kecamatan->find($id_kec);
+        $nama_file =  'Rekap Per Kelurahan (Kecamatan ' . $kec['tblkecamatan_nama'] . ') ' . $tanggal . '.xlsx';
+        $this->response
+            ->setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+            ->setHeader('Content-Disposition', 'attachment;filename="' . $nama_file . '"')
+            ->setHeader('Cache-Control', 'max-age=0');
+
+        $writer = new Xlsx($spreadsheet);
+        $writer->save('php://output');
+    }
+
+
+    public function get_data_per_kelurahan()
+    {
+
+        $id_kec = $this->request->getPost('tblkecamatan_id');
+
+        $w['tgl_daftar >=']  = $this->request->getPost('dari');
+        $w['tgl_daftar <=']  = $this->request->getPost('sampai');
+        $w['tblizinpendaftaran_issign'] = 'T';
+        $izin =  $this->model_kendali_proses->get_izin_by_blok_sistem();
+        $kel = $this->model_kelurahan->where('tblkecamatan_id', $id_kec)->find();
+
+        $data = array();
+
+
+        foreach ($izin as $i) {
+
+            $r['nama_izin'] = $i['tblizin_nama'];
+            $w['tblizin_id'] = $i['tblizin_id'];
+
+            foreach ($kel as  $k) {
+                $w['tblkelurahan_id'] = $k['tblkelurahan_id'];
+                $row = $this->model_pendaftaran->get_num_rows($w);
+                $r[$w['tblkelurahan_id']] = $row;
+            }
+
+            $data[] = $r;
+        }
+
+        // dd($data);
+
+        return view($this->path . '/per_kelurahan/export', array('rows' => $data, 'kel' => $kel));
     }
 
     public function export()

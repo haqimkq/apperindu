@@ -311,9 +311,19 @@ class M_kendali_proses extends Model
 
     public function get_izin_by_blok_sistem()
     {
-
-        $this->dt->where('tblkendalibloksistem_idasal', session()->blok_sistem_id);
+        if (session()->blok_sistem_id != 99){
+            $this->dt->where('tblkendalibloksistem_idasal', session()->blok_sistem_id);
+        }
+        
         $this->dt->groupBy('tblizin_id');
         return $this->dt->get()->getResultArray();
+    }
+
+    public function jml_validasi_berkas(){
+        $this->dt->where('tblkendalibloksistem_idkirim', session()->blok_sistem_id);
+        $this->dt->where('tblkendaliproses_status', 4);
+        $this->dt->where('tblizinpendaftaran_issign', 'F');
+        $this->dt->groupBy('tblizinpendaftaran_nomor');
+        return $this->dt->get()->getNumRows();
     }
 }

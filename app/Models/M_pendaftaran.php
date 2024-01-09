@@ -229,6 +229,9 @@ class M_pendaftaran extends Model
         return $this->dt->get()->getResultArray();
     }
 
+
+    
+
     public function get_by_id_pemohon_selesai($id)
     {
         $this->dt->where('tblpemohon_id', $id);
@@ -236,4 +239,7 @@ class M_pendaftaran extends Model
         $this->dt->orderBy('tblizinpendaftaran_id', 'DESC');
         return $this->dt->get()->getResultArray();
     }
+
+
+  
 }

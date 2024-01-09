@@ -36,6 +36,9 @@
 
     <h6 class="mb-0 text-uppercase">Data <?= $page ?></h6>
 
+
+
+    <?php if($arsip) :?>
     <?php foreach ($arsip as $r) : ?>
     <hr />
     <div class="card">
@@ -183,8 +186,10 @@
         </div>
     </div>
     <?php endforeach ?>
-    <!-- modal -->
 
+    <?php else:?>
+    <p class="mt-2">Belum ada riwayat permohonan</p>
+    <?php endif?>
 </main>
 
 

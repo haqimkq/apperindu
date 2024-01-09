@@ -40,7 +40,7 @@ class Kendali_berkas extends BaseController
     public function view($str)
     {
 
-
+        $this->jml_validasi_berkas();
         $this->page = $this->page . ' ' . $this->name_it($str);
         $data['title'] = $this->page;
         $data['page'] = $this->page;
@@ -237,5 +237,12 @@ class Kendali_berkas extends BaseController
         }
 
         return $d['tblkendalibloksistem_id'];
+    }
+
+
+    public function jml_validasi_berkas(){
+   
+
+        echo  'Validasi Berkas <span class="badge bg-primary">'.$this->model->jml_validasi_berkas().'</span>';
     }
 }

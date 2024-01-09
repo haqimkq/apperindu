@@ -59,7 +59,7 @@ class Pendaftaran extends BaseController
 
     {
 
-
+    
         $data['title'] = 'Data ' . $this->page;
         $data['page'] = $this->page;
         $data['url'] = $this->url;
@@ -856,4 +856,6 @@ class Pendaftaran extends BaseController
 
         return $row['tblizinpendaftaran_idonline'];
     }
+
+   
 }

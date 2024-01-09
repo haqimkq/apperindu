@@ -5,7 +5,8 @@
     <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" href="https://raw.githubusercontent.com/ibnufajar0104/img_statis/main/logo-icon.png" type="image/png" />
+    <link rel="icon" href="https://raw.githubusercontent.com/ibnufajar0104/img_statis/main/logo-icon.png"
+        type="image/png" />
     <!--plugins-->
 
     <link rel="stylesheet" href="<?= base_url() ?>assets/plugins/notifications/css/lobibox.min.css" />
@@ -38,59 +39,59 @@
 
     <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
     <style>
-        #loader-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #ffffff;
-            z-index: 9999;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+    #loader-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #ffffff;
+        z-index: 9999;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #loader {
+        border: 16px solid #f3f3f3;
+        /* Light gray */
+        border-top: 16px solid #3498db;
+        /* Blue */
+        border-radius: 50%;
+        width: 120px;
+        height: 120px;
+        animation: spin 2s linear infinite;
+    }
+
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
         }
 
-        #loader {
-            border: 16px solid #f3f3f3;
-            /* Light gray */
-            border-top: 16px solid #3498db;
-            /* Blue */
-            border-radius: 50%;
-            width: 120px;
-            height: 120px;
-            animation: spin 2s linear infinite;
+        100% {
+            transform: rotate(360deg);
         }
+    }
 
-        @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
+    table,
+    td {
+        vertical-align: middle;
+        font-size: 12px;
+    }
 
-            100% {
-                transform: rotate(360deg);
-            }
-        }
+    .table-persyaratan td {
+        vertical-align: bottom;
+    }
 
-        table,
-        td {
-            vertical-align: middle;
-            font-size: 12px;
-        }
+    label {
+        font-size: 12px;
+        /* font-weight: 600; */
+    }
 
-        .table-persyaratan td {
-            vertical-align: bottom;
-        }
+    body {
+        font-family: 'Roboto';
 
-        label {
-            font-size: 12px;
-            /* font-weight: 600; */
-        }
-
-        body {
-            font-family: 'Roboto';
-
-        }
+    }
     </style>
     <title><?= $title ?></title>
 </head>
@@ -125,10 +126,12 @@
 
         <!--start switcher-->
         <div class="switcher-body">
-            <button class="btn btn-primary btn-switcher shadow-sm" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">
+            <button class="btn btn-primary btn-switcher shadow-sm" type="button" data-bs-toggle="offcanvas"
+                data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">
                 <i class="bi bi-paint-bucket me-0"></i>
             </button>
-            <div class="offcanvas offcanvas-end shadow border-start-0 p-2" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling">
+            <div class="offcanvas offcanvas-end shadow border-start-0 p-2" data-bs-scroll="true"
+                data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling">
                 <div class="offcanvas-header border-bottom">
                     <h5 class="offcanvas-title" id="offcanvasScrollingLabel">
                         Theme Customizer
@@ -139,20 +142,24 @@
                     <h6 class="mb-0">Theme Variation</h6>
                     <hr />
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="LightTheme" value="option1" />
+                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="LightTheme"
+                            value="option1" />
                         <label class="form-check-label" for="LightTheme">Light</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="DarkTheme" value="option2" />
+                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="DarkTheme"
+                            value="option2" />
                         <label class="form-check-label" for="DarkTheme">Dark</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="SemiDarkTheme" value="option3" checked />
+                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="SemiDarkTheme"
+                            value="option3" checked />
                         <label class="form-check-label" for="SemiDarkTheme">Semi Dark</label>
                     </div>
                     <hr />
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="MinimalTheme" value="option3" />
+                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="MinimalTheme"
+                            value="option3" />
                         <label class="form-check-label" for="MinimalTheme">Minimal Theme</label>
                     </div>
                     <hr />
@@ -275,224 +282,272 @@
     </script> -->
 
     <script>
-        $(document).ready(function() {
+    $(document).ready(function() {
 
-            var loader = document.getElementById("loader-overlay");
-            setTimeout(function() {
-                loader.style.display = "none";
-                theme();
-            }, 200);
-
-            <?php if (session()->getFlashdata('success')) : ?>
-                Lobibox.notify('success', {
-                    pauseDelayOnHover: true,
-                    size: 'mini',
-                    rounded: true,
-                    icon: 'bx bx-check-circle',
-                    delayIndicator: false,
-                    continueDelayOnInactiveTab: false,
-                    position: 'top right',
-                    msg: '<?= session()->getFlashdata('success') ?>'
-                });
-            <?php endif ?>
-
-
-            <?php if (session()->getFlashdata('error')) : ?>
-                Lobibox.notify('error', {
-                    pauseDelayOnHover: true,
-                    size: 'mini',
-                    rounded: true,
-                    icon: 'bx bx-x-circle',
-                    delayIndicator: false,
-                    continueDelayOnInactiveTab: false,
-                    position: 'top right',
-                    msg: '<?= session()->getFlashdata('error') ?>'
-                });
-            <?php endif ?>
-        })
-
-
-
-        $("#LightTheme").on("click", function() {
-
-            localStorage.setItem("theme", "light-theme");
+        var loader = document.getElementById("loader-overlay");
+        setTimeout(function() {
+            loader.style.display = "none";
             theme();
+        }, 200);
+
+
+        var menu_pendaftaran_online = $('#menu-pendaftaran-online').hasClass('jml-pendaftaran-online');
+
+        if (menu_pendaftaran_online) {
+
+            jml_pendaftaran_online();
+        }
+
+
+        var menu_validasi_berkas = $('#menu-validasi-berkas').hasClass('jml-validasi-berkas');
+
+        if (menu_validasi_berkas) {
+
+
+            jml_validasi_berkas();
+        }
+
+
+        <?php if (session()->getFlashdata('success')) : ?>
+        Lobibox.notify('success', {
+            pauseDelayOnHover: true,
+            size: 'mini',
+            rounded: true,
+            icon: 'bx bx-check-circle',
+            delayIndicator: false,
+            continueDelayOnInactiveTab: false,
+            position: 'top right',
+            msg: '<?= session()->getFlashdata('success') ?>'
         });
+        <?php endif ?>
 
-        $("#DarkTheme").on("click", function() {
 
-            localStorage.setItem("theme", "dark-theme");
-            theme();
+        <?php if (session()->getFlashdata('error')) : ?>
+        Lobibox.notify('error', {
+            pauseDelayOnHover: true,
+            size: 'mini',
+            rounded: true,
+            icon: 'bx bx-x-circle',
+            delayIndicator: false,
+            continueDelayOnInactiveTab: false,
+            position: 'top right',
+            msg: '<?= session()->getFlashdata('error') ?>'
         });
+        <?php endif ?>
+    })
 
-        $("#SemiDarkTheme").on("click", function() {
 
-            localStorage.setItem("theme", "semi-dark");
-            theme();
 
-        });
+    $("#LightTheme").on("click", function() {
 
-        $("#MinimalTheme").on("click", function() {
+        localStorage.setItem("theme", "light-theme");
+        theme();
+    });
 
-            localStorage.setItem("theme", "minimal-theme");
-            theme();
-        });
+    $("#DarkTheme").on("click", function() {
 
-        $('#bulk').change(function() {
+        localStorage.setItem("theme", "dark-theme");
+        theme();
+    });
 
-            if (this.checked) {
+    $("#SemiDarkTheme").on("click", function() {
 
-                $('.bulk').prop('checked', true);
+        localStorage.setItem("theme", "semi-dark");
+        theme();
 
-            } else {
-                $('.bulk').prop('checked', false);
+    });
+
+    $("#MinimalTheme").on("click", function() {
+
+        localStorage.setItem("theme", "minimal-theme");
+        theme();
+    });
+
+    $('#bulk').change(function() {
+
+        if (this.checked) {
+
+            $('.bulk').prop('checked', true);
+
+        } else {
+            $('.bulk').prop('checked', false);
+        }
+    });
+
+    function theme() {
+
+        var t = localStorage.getItem("theme");
+
+        if (t) {
+            $("html").attr("class", t)
+        } else {
+            $("html").attr("class", "light-theme")
+        }
+    }
+
+
+    function reset_filter() {
+
+        $('.form-filter').trigger('reset');
+        $('.filter-select').val(null).trigger('change');
+    }
+
+
+
+    function log(id) {
+        $('#log-modal').modal('show');
+
+        $.ajax({
+            data: {
+                id: id,
+                '<?= csrf_token() ?>': '<?= csrf_hash() ?>'
+            },
+            type: "POST",
+            dataType: 'html',
+            url: "<?= site_url('pendaftaran/log') ?>",
+            success: function(response) {
+                $('.content').html(response)
             }
         });
+    }
 
-        function theme() {
 
-            var t = localStorage.getItem("theme");
+    function error(msg) {
+        Lobibox.notify('error', {
+            pauseDelayOnHover: true,
+            size: 'mini',
+            rounded: true,
+            icon: 'bx bx-x-circle',
+            delayIndicator: false,
+            continueDelayOnInactiveTab: false,
+            position: 'top right',
+            msg: msg
+        });
+    }
 
-            if (t) {
-                $("html").attr("class", t)
-            } else {
-                $("html").attr("class", "light-theme")
+    function success(msg) {
+        Lobibox.notify('success', {
+            pauseDelayOnHover: true,
+            size: 'mini',
+            rounded: true,
+            icon: 'bx bx-check-circle',
+            delayIndicator: false,
+            continueDelayOnInactiveTab: false,
+            position: 'top right',
+            msg: msg
+        });
+    }
+
+    function info(id) {
+
+        $('#info-modal').modal('show');
+        get_info(id);
+
+    }
+
+    function get_info(id) {
+        $.ajax({
+            data: {
+                id: id,
+                '<?= csrf_token() ?>': '<?= csrf_hash() ?>'
+            },
+            type: "POST",
+            dataType: 'html',
+            url: "<?= site_url('Master/variabel_sk/get_info') ?>",
+            beforeSend: function() {
+                var html =
+                    '<div class="text-center"><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Tunggu sebentar...</div>';
+                $('.content').html(html)
+                console.log(html);
+            },
+            success: function(response) {
+                $('.content').html(response);
+
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                error('Tabel sudah dihapus dari database');
             }
-        }
-
-
-        function reset_filter() {
-
-            $('.form-filter').trigger('reset');
-            $('.filter-select').val(null).trigger('change');
-        }
-
-
-
-        function log(id) {
-            $('#log-modal').modal('show');
-
-            $.ajax({
-                data: {
-                    id: id,
-                    '<?= csrf_token() ?>': '<?= csrf_hash() ?>'
-                },
-                type: "POST",
-                dataType: 'html',
-                url: "<?= site_url('pendaftaran/log') ?>",
-                success: function(response) {
-                    $('.content').html(response)
-                }
-            });
-        }
-
-
-        function error(msg) {
-            Lobibox.notify('error', {
-                pauseDelayOnHover: true,
-                size: 'mini',
-                rounded: true,
-                icon: 'bx bx-x-circle',
-                delayIndicator: false,
-                continueDelayOnInactiveTab: false,
-                position: 'top right',
-                msg: msg
-            });
-        }
-
-        function success(msg) {
-            Lobibox.notify('success', {
-                pauseDelayOnHover: true,
-                size: 'mini',
-                rounded: true,
-                icon: 'bx bx-check-circle',
-                delayIndicator: false,
-                continueDelayOnInactiveTab: false,
-                position: 'top right',
-                msg: msg
-            });
-        }
-
-        function info(id) {
-
-            $('#info-modal').modal('show');
-            get_info(id);
-
-        }
-
-        function get_info(id) {
-            $.ajax({
-                data: {
-                    id: id,
-                    '<?= csrf_token() ?>': '<?= csrf_hash() ?>'
-                },
-                type: "POST",
-                dataType: 'html',
-                url: "<?= site_url('Master/variabel_sk/get_info') ?>",
-                beforeSend: function() {
-                    var html =
-                        '<div class="text-center"><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Tunggu sebentar...</div>';
-                    $('.content').html(html)
-                    console.log(html);
-                },
-                success: function(response) {
-                    $('.content').html(response);
-
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    error('Tabel sudah dihapus dari database');
-                }
-            });
-        }
+        });
+    }
 
 
 
 
 
-        function lihat_persyaratan(id) {
+    function lihat_persyaratan(id) {
 
 
-            $('#persyaratan-modal').modal('show');
+        $('#persyaratan-modal').modal('show');
 
-            $.ajax({
-                data: {
-                    id: id,
-                    '<?= csrf_token() ?>': '<?= csrf_hash() ?>'
-                },
-                type: "POST",
-                dataType: 'html',
-                url: "<?= site_url('pendaftaran/persyaratan') ?>",
-                success: function(response) {
-
-
-                    $('.content').html(response)
-                }
-            });
-        }
+        $.ajax({
+            data: {
+                id: id,
+                '<?= csrf_token() ?>': '<?= csrf_hash() ?>'
+            },
+            type: "POST",
+            dataType: 'html',
+            url: "<?= site_url('pendaftaran/persyaratan') ?>",
+            success: function(response) {
 
 
-        function review(path) {
-            console.log('path')
-            var fileExt = path.split('.').pop().toLowerCase();
-
-            if (fileExt === "pdf") {
-                $("#fileContent").html(`<iframe src="${path}" width="100%" height="500px"></iframe>`);
-            } else if (fileExt === "jpg" || fileExt === "jpeg" || fileExt === "png" || fileExt === "gif") {
-                $("#fileContent").html(`<img src="${path}" alt="Image" width="50%">`);
-            } else {
-                $("#fileContent").html("Jenis file tidak didukung.");
+                $('.content').html(response)
             }
+        });
+    }
 
-            $("#fileModal").modal("show");
+
+    function review(path) {
+        console.log('path')
+        var fileExt = path.split('.').pop().toLowerCase();
+
+        if (fileExt === "pdf") {
+            $("#fileContent").html(`<iframe src="${path}" width="100%" height="500px"></iframe>`);
+        } else if (fileExt === "jpg" || fileExt === "jpeg" || fileExt === "png" || fileExt === "gif") {
+            $("#fileContent").html(`<img src="${path}" alt="Image" width="50%">`);
+        } else {
+            $("#fileContent").html("Jenis file tidak didukung.");
         }
 
+        $("#fileModal").modal("show");
+    }
 
-        function reviewCetak(path) {
 
-            $("#review").html(`<iframe src="${path}" width="100%" height="600px"></iframe>`);
-            $('.review-card').show();
-            // $("#reviewCetak").show()
-        }
+    function reviewCetak(path) {
+
+        $("#review").html(`<iframe src="${path}" width="100%" height="600px"></iframe>`);
+        $('.review-card').show();
+        // $("#reviewCetak").show()
+    }
+
+    function jml_pendaftaran_online() {
+
+        $.ajax({
+
+            type: "GET",
+            dataType: 'html',
+            url: "<?= site_url('pendaftaran_online/jml_pendaftaran') ?>",
+            success: function(response) {
+
+
+                $('.jml-pendaftaran-online').html(response)
+            }
+        });
+    }
+
+    function jml_validasi_berkas() {
+
+        $.ajax({
+
+            type: "GET",
+            dataType: 'html',
+            url: "<?= site_url('kendali_berkas/jml_validasi_berkas') ?>",
+            success: function(response) {
+
+
+                $('.jml-validasi-berkas').html(response)
+            }
+        });
+    }
     </script>
 
     <?= $this->renderSection('js'); ?>

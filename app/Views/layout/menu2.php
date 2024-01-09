@@ -14,22 +14,24 @@
 
 <li class="<?= $url == 'pendaftaran' ? 'mm-active' : '' ?>"> <a href="<?= site_url() ?>pendaftaran">
         <div class="parent-icon"><i class="fadeIn animated bx bx-file"></i></div>
-        <div class="menu-title">Pendaftaran</div>
+        <div class="menu-title ">Pendaftaran </div>
     </a>
 
 </li>
 
 <li class="<?= $url == 'pendaftaran_online' ? 'mm-active' : '' ?>"> <a href="<?= site_url('pendaftaran_online') ?>">
         <div class="parent-icon"><i class="fadeIn animated bx bx-globe"></i></div>
-        <div class="menu-title">Pendaftaran Online</div>
+        <div id="menu-pendaftaran-online" class="menu-title jml-pendaftaran-online">Pendaftaran Online</div>
     </a>
 
 </li>
+
+
 <?php endif ?>
 <?php if (in_array(session()->blok_sistem_id, get_blok_sistem_type_5())) : ?>
 <li class="<?= $url == 'validasi' ? 'mm-active' : '' ?>"> <a href="<?= site_url() ?>validasi">
         <div class="parent-icon"><i class="fadeIn animated bx bx-check"></i></div>
-        <div class="menu-title">Validasi Berkas</div>
+        <div id="menu-validasi-berkas" class="menu-title jml-validasi-berkas">Validasi Berkas</div>
     </a>
 
 </li>

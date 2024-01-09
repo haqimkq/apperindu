@@ -149,3 +149,28 @@
 
     </ul>
 </li>
+
+
+<li>
+    <a href="javascript:;" class="has-arrow">
+        <div class="parent-icon"><i class="fadeIn animated bx bx-table"></i></div>
+        <div class="menu-title">Rekapitulasi</div>
+    </a>
+    <ul>
+        <li class="<?= $url == 'rekap' ? 'mm-active' : '' ?>">
+            <a href="<?= site_url() ?>rekap"><i class="bi bi-circle"></i>Per Izin</a>
+        </li>
+        <li class="<?= $url == 'rekap/per_tahun' ? 'mm-active' : '' ?>">
+            <a href="<?= site_url() ?>rekap/per_tahun"><i class="bi bi-circle"></i>Per Tahun
+            </a>
+        </li>
+        <li class="<?= $url == 'rekap/per_kecamatan' ? 'mm-active' : '' ?>">
+            <a href=" <?= site_url() ?>rekap/per_kecamatan"><i class="bi bi-circle"></i>Per Kecamatan</a>
+        </li>
+        <li class="<?= $url == 'rekap/per_kelurahan' ? 'mm-active' : '' ?>">
+            <a href=" <?= site_url() ?>rekap/per_kelurahan"><i class="bi bi-circle"></i>Per Kelurahan</a>
+        </li>
+
+
+    </ul>
+</li>

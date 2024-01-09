@@ -31,9 +31,10 @@ class M_persyaratan extends Model
 
     private function getDatatablesQuery()
     {
+        
         $i = 0;
         foreach ($this->column_search as $item) {
-            if ($this->request->get[]('search')['value']) {
+            if ($this->request->getPost('search')['value']) {
                 if ($i === 0) {
                     $this->dt->groupStart();
                     $this->dt->like($item, $this->request->getPost('search')['value']);

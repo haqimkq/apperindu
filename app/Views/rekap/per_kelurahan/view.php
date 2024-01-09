@@ -20,21 +20,38 @@
 
     <h6 class="mb-0 text-uppercase">Filter</h6>
     <hr />
-    <form action="<?= site_url('rekap/export_per_kecamatan') ?>" method="POST">
+    <form action="<?= site_url('rekap/export_per_kelurahan') ?>" method="POST">
         <div class="card mb-5">
 
             <div class="card-body">
 
                 <?= csrf_field() ?>
 
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group">
+                            <label for="" class="mb-1">Kecamatan</label>
+                            <select name="tblkecamatan_id" id="tblkecamatan_id" class="form-control filter-select"
+                                required>
+                                <option value="">Pilih</option>
+                                <?php foreach ($kecamatan as $r) : ?>
+                                <option value="<?= $r['tblkecamatan_id'] ?>"><?= $r['tblkecamatan_nama'] ?>
+                                </option>
+                                <?php endforeach ?>
+                            </select>
+                        </div>
 
+                    </div>
+
+
+                </div>
 
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <div class="form-group">
                             <label for="" class="mb-1">Dari tanggal</label>
                             <input type="date" name="dari" id="dari" value="<?= date('Y-m-d') ?>"
-                                class="form-control filter-date" required>
+                                class="form-control filter-date">
                         </div>
 
                     </div>
@@ -42,7 +59,7 @@
                         <div class="form-group">
                             <label for="" class="mb-1">Sampai tanggal</label>
                             <input type="date" name="sampai" id="sampai" value="<?= date('Y-m-d') ?>"
-                                class="form-control filter-date" required>
+                                class="form-control filter-date">
                         </div>
 
                     </div>
