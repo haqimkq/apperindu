@@ -387,6 +387,8 @@ class Template_sk extends BaseController
 
         $res = $this->model_doc->word2pdf($output, before_tte());
         if (!$res) {
+            $res = array('status' => false, 'msg' => 'Maaf, ada kesalahan saat mengenerate template');
+            return $this->response->setJSON($res);
         }
 
         $path = before_tte($res);
