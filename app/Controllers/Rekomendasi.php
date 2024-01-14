@@ -341,7 +341,8 @@ class Rekomendasi extends BaseController
         $file_name = 'rekomendasi_' . $id_pendaftaran . '.docx';
 
         $output = word_dir($file_name);
-        $template = base_url('doc/template/' . $t['tblskizin_rekomtemplate']);
+        // $template = base_url('doc/template/' . $t['tblskizin_rekomtemplate']);
+        $template = 'doc/template/' . $t['tblskizin_rekomtemplate'];
         // edit template
         $this->model_doc->processRTFTemplate($template, $output, $variable);
         // convert jadi pdf

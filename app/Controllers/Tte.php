@@ -210,7 +210,10 @@ class Tte extends BaseController
         $file_name = $id_pendaftaran . '.docx';
 
         $output = word_dir($file_name);
-        $template = base_url('doc/template/' . $t['tblskizin_sktemplate']);
+
+
+
+        $template = 'doc/template/' . $t['tblskizin_sktemplate'];
         // edit template
         $this->model_doc->processRTFTemplate($template, $output, $variable);
         // convert jadi pdf
