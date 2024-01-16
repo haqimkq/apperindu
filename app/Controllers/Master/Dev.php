@@ -4,62 +4,46 @@ namespace App\Controllers\Master;
 
 use Config\Services;
 use App\Controllers\BaseController;
+use App\Models\M_persyaratan_pemohon;
 use PhpOffice\PhpWord\TemplateProcessor;
 
 class Dev extends BaseController
 {
 
+    protected $db;
+    protected $dt;
+
+    protected $model_persyaratan_pemohon;
+
 
     public function __construct()
     {
+        $this->db = db_connect();
         $this->request = Services::request();
+        $this->model_persyaratan_pemohon = new  M_persyaratan_pemohon($this->request);
     }
 
 
     public function index()
     {
+        $query = "SELECT * FROM tblpemohonpersyaratan2";
+        $row = $this->db->query($query)->getResultArray();
 
-        $templateFile = base_url('doc/template.docx');
-        $outputFile = 'C:/xampp74/htdocs/ptsp/doc/sk.docx';
+        foreach ($row as $r) {
+            $query = 'SELECT * FROM tblpemohon WHERE tblpemohon_idonline = ' . $r['tblpemohon_id'];
+            $d =  $this->db->query($query)->getRowArray();
+            $data['tblpemohon_id'] = $d['tblpemohon_id'];
+            $data['tblizinpendaftaran_id'] = 0;
+            $data['tblpersyaratan_id'] = $r['tblpersyaratan_id'];
+            $data['tblpemohonpersyaratan_file'] = $r['tblpemohonpersyaratan_file'];
+            $data['tblpemohonpersyaratan_keterangan'] = $r['tblpemohonpersyaratan_keterangan'];
 
+            $query = 'SELECT * FROM tblpemohonpersyaratan WHERE tblpemohon_id = ' . $d['tblpemohon_id'] . ' AND  tblpersyaratan_id = ' . $r['tblpersyaratan_id'];
+            $n =  $this->db->query($query)->getNumRows();
 
-        $data = [
-            'nama_usaha' => 'John Doe',
-            'nama_penanggungjawab' => 'Jl. Contoh No. 123',
-            'lokasi' => 'Jl. Contoh No. 123',
-            'modal' => ''
-        ];
-
-        $templateProcessor = new TemplateProcessor($templateFile);
-        $templateProcessor->setValues($data);
-        $templateProcessor->saveAs($outputFile);
-
-
-        $this->response->download($outputFile, null);
-    }
-
-
-    public function pengguna_new()
-    {
-        $m_pengguna =  new \App\Models\Master\M_pengguna($this->request);
-        $m_pengguna_old =  new \App\Models\Master\M_pengguna_old();
-
-        $pengguna_old = $m_pengguna_old->findAll();
-        foreach ($pengguna_old as $p) {
-
-            $d = array(
-                'username' => $p['tblpengguna_id'],
-                'tblpengguna_password' =>  password_hash($p['tblpengguna_password'], PASSWORD_DEFAULT),
-                'tblpengguna_nama' => $p['tblpengguna_nama'],
-                'tblpengguna_unitkerja' => $p['tblpengguna_unitkerja'],
-                'tblkendalibloksistem_id' => $p['tblkendalibloksistem_id'],
-                'tblantriangroup_id' => $p['tblantriangroup_id'],
-                'tblpengguna_nip' => $p['tblpengguna_nip'],
-                'tblpengguna_jabatan' => $p['tblpengguna_jabatan']
-
-            );
-
-            $m_pengguna->save($d);
+            if (!$n && $r['tblpemohonpersyaratan_file']) {
+                $this->model_persyaratan_pemohon->insert($data);
+            }
         }
     }
 }

@@ -35,9 +35,11 @@
                         </td>
 
                         <td> <?php if (isset($r['file'])) : ?>
-                                <!-- <a target="_blank" href="<?= site_url('doc/persyaratan/' . $r['file']) ?>">Lihat file
-                                    sebelumnya</a> -->
-                                <button type="button" onclick="review('<?= base_url('doc/persyaratan/' . $r['file']) ?>')" class="btn btn-block btn-outline-secondary btn-sm review  mb-2"><i class="fadeIn animated bx bx-file"></i>
+                                <?php $file = base_url('doc/persyaratan/' . $r['file']) ?>
+                                <?php if (!file_exists($file)) {
+                                        $file = base_url('doc/persyaratan/migrasi/' . $r['file']);
+                                    } ?>
+                                <button type="button" onclick="review('<?= $file ?>')" class="btn btn-block btn-outline-secondary btn-sm review  mb-2"><i class="fadeIn animated bx bx-file"></i>
                                     Lihat file
                                     sebelumnya</button>
                             <?php endif ?>

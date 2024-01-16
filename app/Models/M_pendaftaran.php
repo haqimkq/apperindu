@@ -12,7 +12,7 @@ class M_pendaftaran extends Model
     protected $primaryKey = 'tblizinpendaftaran_id';
     protected $column_order = [];
     protected $column_search = ['tblizinpendaftaran_nomor', 'tblizinpendaftaran_namapemohon', 'tblizinpendaftaran_usaha'];
-    protected $order = ['tblizinpendaftaran_id' => 'DESC'];
+    protected $order = ['tgl_daftar' => 'DESC'];
     protected $request;
     protected $db;
     protected $dt;
@@ -94,8 +94,8 @@ class M_pendaftaran extends Model
             $this->dt->where($this->filter());
         }
 
-        $this->dt->where('status_online', 3);
-        $this->dt->orWhere('status_online', 4);
+        $this->dt->where('status_online !=', 1);
+        $this->dt->where('status_online !=', 2);
 
         $this->getDatatablesQuery();
         if ($this->request->getPost('length') != -1)
@@ -230,7 +230,7 @@ class M_pendaftaran extends Model
     }
 
 
-    
+
 
     public function get_by_id_pemohon_selesai($id)
     {
@@ -239,7 +239,4 @@ class M_pendaftaran extends Model
         $this->dt->orderBy('tblizinpendaftaran_id', 'DESC');
         return $this->dt->get()->getResultArray();
     }
-
-
-  
 }

@@ -64,7 +64,7 @@ class Login extends BaseController
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-            CURLOPT_URL => site_url('login_api'),
+            CURLOPT_URL => ip() . '/login_api',
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,

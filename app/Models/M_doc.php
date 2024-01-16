@@ -22,49 +22,14 @@ class M_doc extends Model
     }
 
 
-    // public function word2pdf($file, $path)
-    // {
-
-
-    //     $curl = curl_init();
-
-    //     curl_setopt_array($curl, array(
-    //         CURLOPT_URL => 'http://103.165.243.16:8080/word2pdf/api/convert-to-pdf.php',
-    //         CURLOPT_RETURNTRANSFER => true,
-    //         CURLOPT_ENCODING => '',
-    //         CURLOPT_MAXREDIRS => 10,
-    //         CURLOPT_TIMEOUT => 0,
-    //         CURLOPT_FOLLOWLOCATION => true,
-    //         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-    //         CURLOPT_CUSTOMREQUEST => 'POST',
-
-    //         CURLOPT_POSTFIELDS => array('sendimage' => new \CURLFILE($file)),
-    //     ));
-
-    //     $response = curl_exec($curl);
-
-    //     curl_close($curl);
-
-    //     $res = json_decode($response);
-
-
-
-    //     if ($res->status) {
-    //         $url = 'http://103.165.243.16:8080/word2pdf/upload/' . $res->filename;
-    //         $file_name = basename($url);
-    //         file_put_contents($path . $file_name, file_get_contents($url));
-    //         return  $res->filename;
-    //     }
-
-    //     return false;
-    // }
-
     public function word2pdf($file, $path)
     {
+
+
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-            CURLOPT_URL => 'http://103.165.243.60:7101/converter.php',
+            CURLOPT_URL => 'http://103.165.243.16:8080/word2pdf/api/convert-to-pdf.php',
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -72,28 +37,63 @@ class M_doc extends Model
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS => array('file' => new \CURLFILE($file)),
+
+            CURLOPT_POSTFIELDS => array('sendimage' => new \CURLFILE($file)),
         ));
 
         $response = curl_exec($curl);
 
-        $res = json_decode($response, true);
+        curl_close($curl);
 
-        if ($res['status'] == 200) {
-            $file_name = ($file);
-            $info = pathinfo($file_name);
+        $res = json_decode($response);
 
-            $file_name = $info['filename'] . '.pdf';
 
-            $pdfContent = base64_decode($res['file_base64']);
-            $put =  file_put_contents($path . $file_name, $pdfContent);
-            if ($put) {
-                return $file_name;
-            }
+
+        if ($res->status) {
+            $url = 'http://103.165.243.16:8080/word2pdf/upload/' . $res->filename;
+            $file_name = basename($url);
+            file_put_contents($path . $file_name, file_get_contents($url));
+            return  $res->filename;
         }
 
         return false;
     }
+
+    // public function word2pdf($file, $path)
+    // {
+    //     $curl = curl_init();
+
+    //     curl_setopt_array($curl, array(
+    //         CURLOPT_URL => 'http://103.165.243.60:7101/converter.php',
+    //         CURLOPT_RETURNTRANSFER => true,
+    //         CURLOPT_ENCODING => '',
+    //         CURLOPT_MAXREDIRS => 10,
+    //         CURLOPT_TIMEOUT => 0,
+    //         CURLOPT_FOLLOWLOCATION => true,
+    //         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+    //         CURLOPT_CUSTOMREQUEST => 'POST',
+    //         CURLOPT_POSTFIELDS => array('file' => new \CURLFILE($file)),
+    //     ));
+
+    //     $response = curl_exec($curl);
+
+    //     $res = json_decode($response, true);
+
+    //     if ($res['status'] == 200) {
+    //         $file_name = ($file);
+    //         $info = pathinfo($file_name);
+
+    //         $file_name = $info['filename'] . '.pdf';
+
+    //         $pdfContent = base64_decode($res['file_base64']);
+    //         $put =  file_put_contents($path . $file_name, $pdfContent);
+    //         if ($put) {
+    //             return $file_name;
+    //         }
+    //     }
+
+    //     return false;
+    // }
 
     public function get_img($imagePath, $size = array())
     {

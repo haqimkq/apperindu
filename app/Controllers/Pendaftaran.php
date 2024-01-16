@@ -59,7 +59,7 @@ class Pendaftaran extends BaseController
 
     {
 
-    
+
         $data['title'] = 'Data ' . $this->page;
         $data['page'] = $this->page;
         $data['url'] = $this->url;
@@ -88,7 +88,8 @@ class Pendaftaran extends BaseController
                 aria-expanded="false">Opsi</button>
             <ul class="dropdown-menu">
              
-                
+                <li><a class="dropdown-item"  href="#" onclick="lihat_persyaratan(\'' . $l['tblizinpendaftaran_id'] . '\')">Lihat Persyaratan</a>
+                </li>
                 <li><a class="dropdown-item" target="_blank" href="' . site_url($this->url . '/cetak_tanda_terima/' . $l[$this->primaryKey]) . '">Cetak tanda terima</a>
                 </li>
                 <li><a class="dropdown-item" target="_blank" href="' . site_url($this->url . '/cetak_kartu_kendali/' . $l[$this->primaryKey]) . '">Cetak kartu kendali</a>
@@ -856,6 +857,4 @@ class Pendaftaran extends BaseController
 
         return $row['tblizinpendaftaran_idonline'];
     }
-
-   
 }
