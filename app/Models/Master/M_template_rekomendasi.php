@@ -121,7 +121,7 @@ class M_template_rekomendasi extends Model
             }
         }
 
-        $data['tblizin_isaktif'] = 'T';
+        // $data['tblizin_isaktif'] = 'T';
         return $data;
     }
 
