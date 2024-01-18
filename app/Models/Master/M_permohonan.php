@@ -115,6 +115,11 @@ class M_permohonan extends Model
         return $this->dt->where('tblizin_id', $id);
     }
 
+    public function get_permohonan_by_id_izin_aktif($id)
+    {
+        $this->dt->where('tblizin_id', $id);
+        return $this->dt->where('tblizinpermohonan_isaktif', 'T');
+    }
 
     public function get_permohonan_where_not_in($id = null, $id_ex = null, $rekom = null)
     {

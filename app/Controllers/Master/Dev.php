@@ -4,6 +4,7 @@ namespace App\Controllers\Master;
 
 use Config\Services;
 use App\Controllers\BaseController;
+use App\Models\M_pendaftaran;
 use App\Models\M_persyaratan_pemohon;
 use PhpOffice\PhpWord\TemplateProcessor;
 
@@ -14,6 +15,7 @@ class Dev extends BaseController
     protected $dt;
 
     protected $model_persyaratan_pemohon;
+    protected $model_pendaftatan;
 
 
     public function __construct()
@@ -21,11 +23,13 @@ class Dev extends BaseController
         $this->db = db_connect();
         $this->request = Services::request();
         $this->model_persyaratan_pemohon = new  M_persyaratan_pemohon($this->request);
+        $this->model_pendaftatan = new M_pendaftaran($this->request);
     }
 
 
     public function index()
     {
+        // input persyaratan pemohon online
         $query = "SELECT * FROM tblpemohonpersyaratan2";
         $row = $this->db->query($query)->getResultArray();
 
@@ -45,5 +49,37 @@ class Dev extends BaseController
                 $this->model_persyaratan_pemohon->insert($data);
             }
         }
+    }
+
+
+    public function pendaftaran_migrasi()
+    {
+        $query = "SELECT * FROM tblizinpendaftaran_migrasi";
+        $row = $this->db->query($query)->getResultArray();
+       
+        $i = 0;
+        foreach ($row as $r) {
+
+            $nr = $this->model_pendaftatan->get_by_pendaftaran_nomor($r['tblizinpendaftaran_nomor']);
+         
+
+            if(!$nr){
+                
+             
+                $in = $this->model_pendaftatan->insert($r);
+                
+                if($in){
+                    $i++;
+                   dd($r);
+                }
+                   
+            }
+
+          
+            
+        
+        }
+
+        echo 'Terinput '.$i. ' data';
     }
 }

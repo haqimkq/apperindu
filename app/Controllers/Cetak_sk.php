@@ -264,7 +264,6 @@ class Cetak_sk extends BaseController
 
 
         // jika file sudah ada hapus dulu
-
         if (file_exists('doc/before_tte/' . $post['tblizinpendaftaran_id'] . '.pdf')) {
             unlink('doc/before_tte/' . $post['tblizinpendaftaran_id'] . '.pdf');
         }
@@ -276,7 +275,7 @@ class Cetak_sk extends BaseController
             return $this->response->setJSON($res);
         }
 
-        $path2 = base_url('doc/before_tte/' . $res);;
+        $path2 = base_url('doc/before_tte/' . $res);
 
         $res = array('status' => true, 'msg' => 'Draf SK berhasil dicetak', 'path' => $path2, 'url_file' => base_url($path), 'name_file' => $variable['nama_pemohon'] . '_' . $file_name);
         return $this->response->setJSON($res);

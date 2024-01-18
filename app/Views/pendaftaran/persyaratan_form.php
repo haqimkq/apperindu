@@ -25,28 +25,32 @@
             <table class="table table-persyaratan table-borderless">
 
                 <?php foreach ($row as $r) : ?>
-                    <tr>
+                <tr>
 
-                        <td width="50%">
-                            <div class="text-wrap mb-2">
-                                <?= $r['tblpersyaratan_nama'] ?>
-                            </div>
-                            <input type="file" name="<?= $r['tblpersyaratan_id'] ?>" id="<?= $r['tblpersyaratan_id'] ?>" class="form-control form-control-sm mb-2">
-                        </td>
+                    <td width="50%">
+                        <div class="text-wrap mb-2">
+                            <?= $r['tblpersyaratan_nama'] ?>
+                        </div>
+                        <input type="file" name="<?= $r['tblpersyaratan_id'] ?>" id="<?= $r['tblpersyaratan_id'] ?>"
+                            class="form-control form-control-sm mb-2">
+                    </td>
 
-                        <td> <?php if (isset($r['file'])) : ?>
-                                <?php $file = base_url('doc/persyaratan/' . $r['file']) ?>
-                                <?php if (!file_exists($file)) {
+                    <td> <?php if (isset($r['file'])) : ?>
+                        <?php $file =  base_url('doc/persyaratan/' . $r['file']) ?>
+                        <?php $file_real = 'doc/persyaratan/' . $r['file'] ?>
+                        <?php if (!file_exists($file_real)) {
                                         $file = base_url('doc/persyaratan/migrasi/' . $r['file']);
                                     } ?>
-                                <button type="button" onclick="review('<?= $file ?>')" class="btn btn-block btn-outline-secondary btn-sm review  mb-2"><i class="fadeIn animated bx bx-file"></i>
-                                    Lihat file
-                                    sebelumnya</button>
-                            <?php endif ?>
-                        </td>
+                        <button type="button" onclick="review('<?= $file ?>')"
+                            class="btn btn-block btn-outline-secondary btn-sm review  mb-2"><i
+                                class="fadeIn animated bx bx-file"></i>
+                            Lihat file
+                            sebelumnya</button>
+                        <?php endif ?>
+                    </td>
 
 
-                    </tr>
+                </tr>
                 <?php endforeach ?>
             </table>
         </div>

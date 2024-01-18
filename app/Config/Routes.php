@@ -67,7 +67,7 @@ $routes->get('login', 'Login::index');
 
 
 $routes->get('dev', 'Master\Dev::index');
-$routes->get('dev/pengguna_new', 'Master\Dev::pengguna_new');
+$routes->get('dev/pendaftaran_migrasi', 'Master\Dev::pendaftaran_migrasi');
 
 
 $routes->get('tte_rekomendasi', 'Master\Tte_rekomendasi::index');

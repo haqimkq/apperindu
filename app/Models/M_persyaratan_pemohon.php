@@ -46,11 +46,15 @@ class M_persyaratan_pemohon extends Model
     }
 
 
-    public function get_by_id_pemohon_and_persyaratan($id_pemohon, $id_persyaratan)
+    public function get_by_id_pemohon_and_persyaratan($id_pemohon, $id_persyaratan,$id_pendaftaran = null)
     {
         $this->dt->where('tblpemohon_id', $id_pemohon);
         $this->dt->where('tblpersyaratan_id', $id_persyaratan);
-
+        if($id_pendaftaran){
+            $this->dt->where('tblizinpendaftaran_id', $id_pendaftaran);
+        }else{
+            $this->dt->orderBy('tblpemohonpersyaratan_id','DESC');
+        }
         return $this->dt->get()->getRowArray();
     }
 

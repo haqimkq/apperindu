@@ -98,6 +98,8 @@ class Tte extends BaseController
                 $after = base_url('doc/sign/' . $l[$this->primaryKey] . '.pdf');
                 $opsi .= '<li><a class="dropdown-item"  href="#" onclick="review(\'' . $after . '\')">Sesudah TTE</a>
                 </li>';
+                $opsi .= '<li><a class="dropdown-item"  href="' . site_url($this->url . '/form_page/' . $l[$this->primaryKey]) . '">TTE Ulang</a>
+                </li>';
             }
             $opsi .= '<li><a class="dropdown-item"  href="#" onclick="log(\'' . $l['tblizinpendaftaran_id'] . '\')">Log Berkas</a>
             </li>
@@ -172,6 +174,16 @@ class Tte extends BaseController
 
         if ($per) {
             $dir =  'doc/persyaratan/' . $per['tblpemohonpersyaratan_file'];
+            if (!file_exists($dir)) {
+                $dir =  'doc/persyaratan/migrasi/' . $per['tblpemohonpersyaratan_file'];
+                if (!file_exists($dir)) {
+                    $res = array('status' => false, 'msg' => 'Pas Foto tidak ada');
+                    return $this->response->setJSON($res);
+                }
+
+             
+            }
+
             $pas_foto = $this->model_doc->get_img($dir, array('width' => 3, 'height' => 4));
             $variable['pas_foto'] = $pas_foto;
         }
@@ -236,8 +248,12 @@ class Tte extends BaseController
             return $this->response->setJSON($res);
         }
 
+        // jika file sudah ada hapus dulu
+        if (file_exists('doc/sign/' . $id_pendaftaran . '.pdf')) {
+            unlink('doc/sign/' . $id_pendaftaran . '.pdf');
+        }
+        
         // ketika berhasil
-
         file_put_contents(sign($id_pendaftaran . '.pdf'), $res_tte);
 
         // update data sudah tte

@@ -195,8 +195,8 @@ class Pendaftaran extends BaseController
 
         // proses berkas lebih dari 2 tidak bisa diedit
         if ($row > 2) {
-            $res = array('status' => false, 'msg' => 'Tidak bisa diedit karena berkas sudah masuk');
-            return $this->response->setJSON($res);
+            // $res = array('status' => false, 'msg' => 'Tidak bisa diedit karena berkas sudah masuk');
+            // return $this->response->setJSON($res);
         }
 
         $this->model_persyartaan_lengkap  = new M_izinpersyaratanlengkap();
@@ -280,12 +280,12 @@ class Pendaftaran extends BaseController
             // edit persyaratan pendaftaran
             $pp['tblpemohon_id'] = $d['tblpemohon_id'];
             $pp['tblpersyaratan_id'] = $key;
-
+            $pp['tblizinpendaftaran_id'] = $id_pendaftaran;
             // cek dlu, jika sudah ada maka edit, jika tidak maka insert
             $r = $this->model_persyaratan_pemohon->get_persyaratan_pemohon($pp);
 
             if ($r) {
-                $du['tblizinpendaftaran_id'] = $id_pendaftaran;
+                // $du['tblizinpendaftaran_id'] = $id_pendaftaran;
                 $du['tblpemohonpersyaratan_file'] = $file->getName();
                 if (!$this->model_persyaratan_pemohon->update($r['tblpemohonpersyaratan_id'], $du)) {
 
@@ -413,12 +413,12 @@ class Pendaftaran extends BaseController
             // edit persyaratan pendaftaran
             $pp['tblpemohon_id'] = $d['tblpemohon_id'];
             $pp['tblpersyaratan_id'] = $key;
-
+            $pp['tblizinpendaftaran_id'] = $id;
             // cek dlu, jika sudah ada maka edit, jika tidak maka insert
             $r = $this->model_persyaratan_pemohon->get_persyaratan_pemohon($pp);
 
             if ($r) {
-                $du['tblizinpendaftaran_id'] = $id;
+               
                 $du['tblpemohonpersyaratan_file'] = $file->getName();
 
                 if (!$this->model_persyaratan_pemohon->update($r['tblpemohonpersyaratan_id'], $du)) {
@@ -591,12 +591,12 @@ class Pendaftaran extends BaseController
             // edit persyaratan pendaftaran
             $pp['tblpemohon_id'] = $d['tblpemohon_id'];
             $pp['tblpersyaratan_id'] = $key;
-
+            $pp['tblizinpendaftaran_id'] = $id_pendaftaran;
             // cek dlu, jika sudah ada maka edit, jika tidak maka insert
             $r = $this->model_persyaratan_pemohon->get_persyaratan_pemohon($pp);
 
             if ($r) {
-                $du['tblizinpendaftaran_id'] = $id_pendaftaran;
+                
                 $du['tblpemohonpersyaratan_file'] = $file->getName();
                 if (!$this->model_persyaratan_pemohon->update($r['tblpemohonpersyaratan_id'], $du)) {
                     $res = array('status' => false, 'msg' =>  failed());
@@ -728,12 +728,12 @@ class Pendaftaran extends BaseController
 
         $id = $this->request->getPost('id');
         $id_pemohon = $this->request->getPost('id_pemohon');
-
+        $id_pendaftaran = $this->request->getPost('id_pendaftaran');
         $rows =   $this->model_persyaratan->get_persyaratan_by_id_permohonan($id)->get()->getResultArray();
         $arr = array();
         foreach ($rows as $r) {
 
-            $r['file'] = $this->get_persyaratan_pemohon($id_pemohon, $r['tblpersyaratan_id']);
+            $r['file'] = $this->get_persyaratan_pemohon($id_pemohon, $r['tblpersyaratan_id'],$id_pendaftaran);
             $arr[] = $r;
         }
 
@@ -742,10 +742,10 @@ class Pendaftaran extends BaseController
     }
 
 
-    public function get_persyaratan_pemohon($id_pemohon, $id_persyaratan)
+    public function get_persyaratan_pemohon($id_pemohon, $id_persyaratan,$id_pendaftaran = null)
     {
 
-        $row = $this->model_persyaratan_pemohon->get_by_id_pemohon_and_persyaratan($id_pemohon, $id_persyaratan);
+        $row = $this->model_persyaratan_pemohon->get_by_id_pemohon_and_persyaratan($id_pemohon, $id_persyaratan,$id_pendaftaran);
 
         if ($row) {
             return $row['tblpemohonpersyaratan_file'];
@@ -835,7 +835,8 @@ class Pendaftaran extends BaseController
         $id = $this->request->getPost('id');
         $r = $this->model->get_by_id($id);
         // cari persyaratan by pemohon
-        $p = $this->model_persyaratan_pemohon->get_by_id_pemohon($r['tblpemohon_id']);
+        $p = $this->model_persyaratan_pemohon->get_by_id_pendaftaran($id);
+        // $p = $this->model_persyaratan_pemohon->get_by_id_pemohon($r['tblpemohon_id']);
 
         $data['title'] = 'Data Persyaratan';
         $data['page'] = 'Persyaratan';

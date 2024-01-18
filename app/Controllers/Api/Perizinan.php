@@ -91,7 +91,7 @@ class Perizinan extends ResourceController
         }
 
         $id = $this->request->getVar('tblizin_id');
-        $rows = $this->model_permohonan->get_permohonan_by_id_izin($id)->get()->getResultArray();
+        $rows = $this->model_permohonan->get_permohonan_by_id_izin_aktif($id)->get()->getResultArray();
 
 
         if (!$rows) {

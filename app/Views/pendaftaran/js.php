@@ -305,6 +305,7 @@ $('#tblizinpermohonan_id').change(function() {
 
 function persyaratan_dinamis(id) {
 
+    var id_pendaftaran = $('#tblizinpendaftaran_id').val();
     var tblpemohon_id = $('#tblpemohon_id').val();
 
 
@@ -314,6 +315,7 @@ function persyaratan_dinamis(id) {
         data: {
             id: id,
             id_pemohon: tblpemohon_id,
+            id_pendaftaran: id_pendaftaran,
             '<?= csrf_token() ?>': '<?= csrf_hash() ?>'
         },
         dataType: 'html',

@@ -25,13 +25,15 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <?php $file = base_url('doc/persyaratan/' . $row['tblpemohonpersyaratan_file']) ?>
+                                    <?php $file = 'doc/persyaratan/' . $row['tblpemohonpersyaratan_file'] ?>
                                     <?php if (!file_exists($file)) {
-                                        $file = base_url('doc/persyaratan/migrasi/' . $row['tblpemohonpersyaratan_file']);
+                                        $file = 'doc/persyaratan/migrasi/' . $row['tblpemohonpersyaratan_file'];
                                     } ?>
 
                                     <button type="button" onclick="review('<?= $file  ?>')" class="btn btn-block btn-outline-secondary btn-sm review  mb-2"><i class="fadeIn animated bx bx-file"></i>
-                                        Lihat file</button>
+                                        Lihat file </button>
+
+
                                 </td>
                             </tr>
                             <?php $no++ ?>

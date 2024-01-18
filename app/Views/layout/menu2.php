@@ -37,6 +37,13 @@
 </li>
 <?php endif ?>
 <?php if (in_array(session()->blok_sistem_id, get_blok_sistem_type_3())) : ?>
+
+<li class="<?= $url == 'pendaftaran' ? 'mm-active' : '' ?>"> <a href="<?= site_url() ?>pendaftaran">
+        <div class="parent-icon"><i class="fadeIn animated bx bx-file"></i></div>
+        <div class="menu-title ">Pendaftaran </div>
+    </a>
+
+</li>
 <li class="<?= $url == 'cetak_sk' ? 'mm-active' : '' ?>"> <a href="<?= site_url() ?>cetak_sk">
         <div class="parent-icon"><i class="fadeIn animated bx bx-file"></i></div>
         <div class="menu-title">Cetak SK</div>
@@ -122,12 +129,12 @@
     </a>
     <ul>
         <li class="<?= $url == 'tte/view/berkas' ? 'mm-active' : '' ?>">
-            <a href="<?= site_url() ?>tte/view/berkas"><i class="bi bi-circle"></i>Berkas</a>
+            <a href="<?= site_url() ?>tte/view/berkas"><i class="bi bi-circle"></i>Belum di TTE</a>
         </li>
-        <li class="<?= $url == 'tte/view/berkas_mandiri' ? 'mm-active' : '' ?>">
+        <!-- <li class="<?= $url == 'tte/view/berkas_mandiri' ? 'mm-active' : '' ?>">
             <a href="<?= site_url() ?>tte/view/berkas_mandiri"><i class="bi bi-circle"></i>Berkas Layanan
                 Mandiri</a>
-        </li>
+        </li> -->
         <li class="<?= $url == 'tte/view/sudah' ? 'mm-active' : '' ?>">
             <a href=" <?= site_url() ?>tte/view/sudah"><i class="bi bi-circle"></i>Sudah di TTE</a>
         </li>
