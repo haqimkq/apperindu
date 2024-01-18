@@ -836,7 +836,11 @@ class Pendaftaran extends BaseController
         $r = $this->model->get_by_id($id);
         // cari persyaratan by pemohon
         $p = $this->model_persyaratan_pemohon->get_by_id_pendaftaran($id);
-        // $p = $this->model_persyaratan_pemohon->get_by_id_pemohon($r['tblpemohon_id']);
+
+        if(!$p){
+             $p = $this->model_persyaratan_pemohon->get_by_id_pemohon($r['tblpemohon_id']);
+        }
+       
 
         $data['title'] = 'Data Persyaratan';
         $data['page'] = 'Persyaratan';
