@@ -729,6 +729,15 @@ class Pendaftaran extends BaseController
         $id = $this->request->getPost('id');
         $id_pemohon = $this->request->getPost('id_pemohon');
         $id_pendaftaran = $this->request->getPost('id_pendaftaran');
+
+        $arr = $this->get_persyaratan_dinamis($id, $id_pemohon, $id_pendaftaran);
+
+        return view($this->path . '/persyaratan_form', array('row' => $arr));
+    }
+
+
+    private function get_persyaratan_dinamis($id, $id_pemohon, $id_pendaftaran)
+    {
         $rows =   $this->model_persyaratan->get_persyaratan_by_id_permohonan($id)->get()->getResultArray();
         $arr = array();
         foreach ($rows as $r) {
@@ -737,8 +746,7 @@ class Pendaftaran extends BaseController
             $arr[] = $r;
         }
 
-
-        return view($this->path . '/persyaratan_form', array('row' => $arr));
+        return $arr;
     }
 
 
@@ -835,13 +843,7 @@ class Pendaftaran extends BaseController
         $id = $this->request->getPost('id');
         $r = $this->model->get_by_id($id);
         // cari persyaratan by pemohon
-
-        $p = $this->model_persyaratan_pemohon->get_by_id_pendaftaran($id);
-
-        if (!$p) {
-            $p = $this->model_persyaratan_pemohon->get_by_id_pemohon($r['tblpemohon_id']);
-        }
-
+        $p = $this->get_persyaratan_dinamis($r['tblizinpermohonan_id'], $r['tblpemohon_id'], $id);
 
         $data['title'] = 'Data Persyaratan';
         $data['page'] = 'Persyaratan';

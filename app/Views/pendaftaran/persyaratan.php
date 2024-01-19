@@ -13,49 +13,56 @@
                 </thead>
                 <tbody>
                     <?php if ($p) : ?>
-                        <?php $no = 1 ?>
-                        <?php foreach ($p as $row) : ?>
+                    <?php $no = 1 ?>
+                    <?php foreach ($p as $row) : ?>
 
-                            <tr>
-                                <td><?= $no ?>.</td>
+                    <tr>
+                        <td><?= $no ?>.</td>
 
-                                <td>
-                                    <div class="text-wrap">
-                                        <?= $row['tblpersyaratan_nama'] ?>
-                                    </div>
-                                </td>
-                                <td>
-                                    <?php $file = 'doc/persyaratan/' . $row['tblpemohonpersyaratan_file'] ?>
-                                    <?php if (!file_exists($file)) {
-                                        $file = 'doc/persyaratan/migrasi/' . $row['tblpemohonpersyaratan_file'];
-                                    } ?>
+                        <td>
+                            <div class="text-wrap">
+                                <?= $row['tblpersyaratan_nama'] ?>
+                            </div>
+                        </td>
+                        <td>
 
-                                    <button type="button" onclick="review('<?= $file  ?>')" class="btn btn-block btn-outline-secondary btn-sm review  mb-2"><i class="fadeIn animated bx bx-file"></i>
-                                        Lihat file </button>
+                            <?php if ($row['file']) : ?>
+                            <?php $file = path_persyaratan($row['file']) ?>
 
 
-                                </td>
-                            </tr>
-                            <?php $no++ ?>
-                        <?php endforeach ?>
-                        <?php $rekom = 'doc/sign/rekomendasi_' . $id . '.pdf' ?>
+                            <button type="button" onclick="review('<?= $file  ?>')"
+                                class="btn btn-block btn-outline-secondary btn-sm review  mb-2"><i
+                                    class="fadeIn animated bx bx-file"></i>
+                                Lihat file </button>
+                            <?php else : ?>
+                            Tida ada
+                            <?php endif ?>
 
-                        <?php if (file_exists($rekom)) : ?>
-                            <tr>
-                                <td><?= $no ?>.</td>
-                                <td><b>Rekomendasi Dinas Terkait</b></td>
-                                <td>
 
-                                    <button type="button" onclick="review('<?= base_url($rekom) ?>')" class="btn btn-block btn-outline-secondary btn-sm review  mb-2"><i class="fadeIn animated bx bx-file"></i>
-                                        Lihat file</button>
+                        </td>
+                    </tr>
+                    <?php $no++ ?>
+                    <?php endforeach ?>
+                    <?php $rekom = 'doc/sign/rekomendasi_' . $id . '.pdf' ?>
 
-                                </td>
-                            </tr>
-                        <?php endif; ?>
+                    <?php if (file_exists($rekom)) : ?>
+                    <tr>
+                        <td><?= $no ?>.</td>
+                        <td><b>Rekomendasi Dinas Terkait</b></td>
+                        <td>
+
+                            <button type="button" onclick="review('<?= base_url($rekom) ?>')"
+                                class="btn btn-block btn-outline-secondary btn-sm review  mb-2"><i
+                                    class="fadeIn animated bx bx-file"></i>
+                                Lihat file</button>
+
+                        </td>
+                    </tr>
+                    <?php endif; ?>
                     <?php else : ?>
-                        <tr>
-                            <td class="text-center" colspan="4">Tidak ada data</td>
-                        </tr>
+                    <tr>
+                        <td class="text-center" colspan="4">Tidak ada data</td>
+                    </tr>
                     <?php endif ?>
                 </tbody>
 

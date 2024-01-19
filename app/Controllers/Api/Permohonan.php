@@ -486,7 +486,7 @@ class Permohonan extends ResourceController
         foreach ($rows as $r) {
             $r['file'] = null;
             if ($id_pemohon) {
-                $r['file'] = $this->get_persyaratan_pemohon($id_pemohon, $r['tblpersyaratan_id'],$id_pendaftaran);
+                $r['file'] = $this->get_persyaratan_pemohon($id_pemohon, $r['tblpersyaratan_id'], $id_pendaftaran);
             }
 
             $arr[] = $r;
@@ -513,10 +513,10 @@ class Permohonan extends ResourceController
         return $this->response->setJSON($response);
     }
 
-    private function get_persyaratan_pemohon($id_pemohon, $id_persyaratan,$id_pendaftaran)
+    private function get_persyaratan_pemohon($id_pemohon, $id_persyaratan, $id_pendaftaran)
     {
 
-        $row = $this->model_persyaratan_pemohon->get_by_id_pemohon_and_persyaratan($id_pemohon, $id_persyaratan,$id_pendaftaran);
+        $row = $this->model_persyaratan_pemohon->get_by_id_pemohon_and_persyaratan($id_pemohon, $id_persyaratan, $id_pendaftaran);
 
         if ($row) {
             return $row['tblpemohonpersyaratan_file'];
@@ -639,7 +639,7 @@ class Permohonan extends ResourceController
         $response = [
             'status' => false,
             'tblpengguna_id' => NULL,
-            'msg' => 'Nomor tidak terdaftar',
+            'msg' => 'Nomor tidak terdaftar,silahkan registrasi terlebih dahulu',
         ];
         return $this->response->setJSON($response);
     }

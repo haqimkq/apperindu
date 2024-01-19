@@ -515,3 +515,14 @@ function tanggal_terakhir()
 {
     return '2023-12-20 00:00:00';
 }
+
+
+function path_persyaratan($file)
+{
+    $path = 'doc/persyaratan/' . $file;
+    if (!file_exists($path)) {
+        $path = 'doc/persyaratan/migrasi/' . $file;
+    }
+
+    return base_url($path);
+}

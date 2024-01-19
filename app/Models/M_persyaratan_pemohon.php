@@ -15,6 +15,7 @@ class M_persyaratan_pemohon extends Model
     protected $dt;
     protected $allowedFilter  = [];
 
+
     protected $allowedFields  = [
         'tblpemohon_id',
         'tblizinpendaftaran_id',
@@ -46,16 +47,29 @@ class M_persyaratan_pemohon extends Model
     }
 
 
-    public function get_by_id_pemohon_and_persyaratan($id_pemohon, $id_persyaratan,$id_pendaftaran = null)
+    public function get_by_id_pemohon_and_persyaratan($id_pemohon, $id_persyaratan, $id_pendaftaran = null)
     {
-        $this->dt->where('tblpemohon_id', $id_pemohon);
-        $this->dt->where('tblpersyaratan_id', $id_persyaratan);
-        if($id_pendaftaran){
-            $this->dt->where('tblizinpendaftaran_id', $id_pendaftaran);
-        }else{
-            $this->dt->orderBy('tblpemohonpersyaratan_id','DESC');
+        $whr['tblpemohon_id'] = $id_pemohon;
+        $whr['tblpersyaratan_id'] = $id_persyaratan;
+
+
+        if ($id_pendaftaran) {
+            $whr['tblizinpendaftaran_id'] = $id_pendaftaran;
+            $this->dt->where($whr);
+            $row = $this->dt->get()->getRowArray();
+            if (!$row) {
+                unset($whr['tblizinpendaftaran_id']);
+                $this->dt->where($whr);
+                $this->dt->orderBy('tblpemohonpersyaratan_id', 'DESC');
+                $row = $this->dt->get()->getRowArray();
+            }
+        } else {
+            $this->dt->where($whr);
+            $this->dt->orderBy('tblpemohonpersyaratan_id', 'DESC');
+            $row = $this->dt->get()->getRowArray();
         }
-        return $this->dt->get()->getRowArray();
+
+        return $row;
     }
 
 
@@ -63,7 +77,7 @@ class M_persyaratan_pemohon extends Model
     {
         $this->dt->where('tblpemohon_id', $id);
         $this->dt->like('tblpersyaratan_nama', 'Pas Photo', 'both');
-        $this->dt->orderBy('tblpemohonpersyaratan_id','DESC');
+        $this->dt->orderBy('tblpemohonpersyaratan_id', 'DESC');
         return $this->dt->get()->getRowArray();
     }
 

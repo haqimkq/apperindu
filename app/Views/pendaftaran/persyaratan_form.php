@@ -36,11 +36,8 @@
                     </td>
 
                     <td> <?php if (isset($r['file'])) : ?>
-                        <?php $file =  base_url('doc/persyaratan/' . $r['file']) ?>
-                        <?php $file_real = 'doc/persyaratan/' . $r['file'] ?>
-                        <?php if (!file_exists($file_real)) {
-                                        $file = base_url('doc/persyaratan/migrasi/' . $r['file']);
-                                    } ?>
+                        <?php $file =  path_persyaratan($r['file']) ?>
+
                         <button type="button" onclick="review('<?= $file ?>')"
                             class="btn btn-block btn-outline-secondary btn-sm review  mb-2"><i
                                 class="fadeIn animated bx bx-file"></i>

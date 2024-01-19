@@ -71,7 +71,7 @@ class Dev extends BaseController
             $nr = $this->model_pendaftatan->get_by_pendaftaran_nomor_($r['tblizinpendaftaran_nomor']);
 
             if (!$nr) {
-                $in = $this->model_pendaftatan->insert($r);
+                $in = $this->model_pendaftatan->save($r);
                 if ($in) {
                     $i++;
                 }
@@ -94,7 +94,7 @@ class Dev extends BaseController
 
 
             if (!$nr) {
-                $in = $this->model_pemohon->insert($r);
+                $in = $this->db->table('tblpemohon')->insert($r);
                 if ($in) {
                     $i++;
                 }

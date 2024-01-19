@@ -18,7 +18,7 @@
             <a href="<?= site_url() ?>permohonan"><i class="bi bi-circle"></i>Permohonan</a>
         </li>
         <li class="<?= $url == 'persyaratan' ? 'mm-active' : '' ?>">
-            <a href="persyaratan"><i class="bi bi-circle"></i>Persyaratan</a>
+            <a href="<?= site_url() ?>persyaratan"><i class="bi bi-circle"></i>Persyaratan</a>
         </li>
         <li class="<?= $url == 'persyaratan_permohonan' ? 'mm-active' : '' ?>">
             <a href="<?= site_url() ?>persyaratan_permohonan"><i class="bi bi-circle"></i>Persyaratan
