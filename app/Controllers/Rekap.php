@@ -61,7 +61,7 @@ class Rekap extends BaseController
         $data['page'] = $this->page;
         $data['url'] = $this->url;
         $data['path'] = $this->path;
-        $data['izin'] = $this->model_kendali_proses->get_izin_by_blok_sistem();
+        $data['izin'] = $this->model_izin->get_izin_by_blok_sistem();
         // $data['kecamatan'] = $this->model_kecamatan->findAll();
 
 
@@ -77,7 +77,7 @@ class Rekap extends BaseController
         $data['page'] = $this->page . ' Per Tahun';
         $data['url'] = $this->url . '/per_tahun';
         $data['path'] = $this->path;
-        // $data['izin'] = $this->model_kendali_proses->get_izin_by_blok_sistem();
+        // $data['izin'] = $this->model_izin->get_izin_by_blok_sistem();
         // $data['kecamatan'] = $this->model_kecamatan->findAll();
 
 
@@ -94,7 +94,7 @@ class Rekap extends BaseController
         $data['page'] = $this->page . ' Per Kecamatan';
         $data['url'] = $this->url . '/per_kecamatan';
         $data['path'] = $this->path;
-        // $data['izin'] = $this->model_kendali_proses->get_izin_by_blok_sistem();
+        // $data['izin'] = $this->model_izin->get_izin_by_blok_sistem();
         // $data['kecamatan'] = $this->model_kecamatan->findAll();
 
 
@@ -111,7 +111,7 @@ class Rekap extends BaseController
         $data['page'] = $this->page . ' Per Kelurahan';
         $data['url'] = $this->url . '/per_kelurahan';
         $data['path'] = $this->path;
-        // $data['izin'] = $this->model_kendali_proses->get_izin_by_blok_sistem();
+        // $data['izin'] = $this->model_izin->get_izin_by_blok_sistem();
         $data['kecamatan'] = $this->model_kecamatan->findAll();
 
 
@@ -197,7 +197,7 @@ class Rekap extends BaseController
         $tahun = $this->request->getPost('tahun');
         $w['YEAR(tgl_daftar) ='] = $tahun;
         $w['tblizinpendaftaran_issign'] = 'T';
-        $izin =  $this->model_kendali_proses->get_izin_by_blok_sistem();
+        $izin =  $this->model_izin->get_izin_by_blok_sistem();
 
 
         $no = 1;
@@ -261,7 +261,7 @@ class Rekap extends BaseController
         $tahun = $this->request->getPost('tahun');
         $w['YEAR(tgl_daftar) ='] = $tahun;
         $w['tblizinpendaftaran_issign'] = 'T';
-        $izin =  $this->model_kendali_proses->get_izin_by_blok_sistem();
+        $izin =  $this->model_izin->get_izin_by_blok_sistem();
 
         $data = array();
 
@@ -291,7 +291,7 @@ class Rekap extends BaseController
         $w['tgl_daftar >=']  = $this->request->getPost('dari');
         $w['tgl_daftar <=']  = $this->request->getPost('sampai');
         $w['tblizinpendaftaran_issign'] = 'T';
-        $izin =  $this->model_kendali_proses->get_izin_by_blok_sistem();
+        $izin =  $this->model_izin->get_izin_by_blok_sistem();
         $kec = $this->model_kecamatan->findAll();
 
 
@@ -359,7 +359,7 @@ class Rekap extends BaseController
         $w['tgl_daftar >=']  = $this->request->getPost('dari');
         $w['tgl_daftar <=']  = $this->request->getPost('sampai');
         $w['tblizinpendaftaran_issign'] = 'T';
-        $izin =  $this->model_kendali_proses->get_izin_by_blok_sistem();
+        $izin =  $this->model_izin->get_izin_by_blok_sistem();
         $kec = $this->model_kecamatan->findAll();
         // dd($kec);
 
@@ -393,7 +393,7 @@ class Rekap extends BaseController
         $w['tgl_daftar >=']  = $this->request->getPost('dari');
         $w['tgl_daftar <=']  = $this->request->getPost('sampai');
         $w['tblizinpendaftaran_issign'] = 'T';
-        $izin =  $this->model_kendali_proses->get_izin_by_blok_sistem();
+        $izin =  $this->model_izin->get_izin_by_blok_sistem();
         $kel = $this->model_kelurahan->where('tblkecamatan_id', $id_kec)->find();
 
         $no = 1;
@@ -462,7 +462,7 @@ class Rekap extends BaseController
         $w['tgl_daftar >=']  = $this->request->getPost('dari');
         $w['tgl_daftar <=']  = $this->request->getPost('sampai');
         $w['tblizinpendaftaran_issign'] = 'T';
-        $izin =  $this->model_kendali_proses->get_izin_by_blok_sistem();
+        $izin =  $this->model_izin->get_izin_by_blok_sistem();
         $kel = $this->model_kelurahan->where('tblkecamatan_id', $id_kec)->find();
 
         $data = array();

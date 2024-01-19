@@ -19,6 +19,7 @@ class M_pemohon extends Model
     protected $allowedFilter  = [];
 
     protected $allowedFields  = [
+
         'tblpemohon_nama',
         'tblpemohon_alamat',
         'refjenisidentitas_id',

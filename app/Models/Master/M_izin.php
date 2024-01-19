@@ -78,6 +78,31 @@ class M_izin extends Model
         return $this->allowedFields;
     }
 
+    public function get_izin_by_blok_sistem()
+    {
+
+        $this->dt->where('tblizin_isaktif', 'T');
+        if (session()->blok_sistem_id != 99) {
+            $query = 'SELECT tblizin_id FROM v_kendali_proses WHERE tblkendalibloksistem_idasal = ' . session()->blok_sistem_id;
+
+            $rows = $this->db->query($query)->getResultArray();
+            $id = array();
+            foreach ($rows as $r) {
+                $id[] = $r['tblizin_id'];
+            }
+
+            if (!$id) {
+                $id = [0];
+            }
+
+            $this->dt->whereIn($this->primaryKey, $id);
+        }
+
+        return  $this->dt->get()->getResultArray();
+    }
+
+
+
 
     public function get_data()
     {

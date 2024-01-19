@@ -50,7 +50,7 @@ class Rekap_rekomendasi extends BaseController
         $data['page'] = $this->page;
         $data['url'] = $this->url;
         $data['path'] = $this->path;
-        $data['izin'] = $this->model_kendali_proses->get_izin_by_blok_sistem();
+        $data['izin'] = $this->model_izin->get_izin_by_blok_sistem();
 
 
 

@@ -12,7 +12,7 @@ class M_pendaftaran extends Model
     protected $primaryKey = 'tblizinpendaftaran_id';
     protected $column_order = [];
     protected $column_search = ['tblizinpendaftaran_nomor', 'tblizinpendaftaran_namapemohon', 'tblizinpendaftaran_usaha'];
-    protected $order = ['tgl_daftar' => 'DESC'];
+    protected $order = ['tgl_daftar' => 'DESC', 'tblizinpendaftaran_id' => 'DESC'];
     protected $request;
     protected $db;
     protected $dt;
@@ -113,8 +113,8 @@ class M_pendaftaran extends Model
         }
 
 
-        $this->dt->where('status_online', 3);
-        $this->dt->orWhere('status_online', 4);
+        $this->dt->where('status_online !=', 1);
+        $this->dt->where('status_online !=', 2);
 
         $this->getDatatablesQuery();
         return $this->dt->countAllResults();
@@ -129,8 +129,8 @@ class M_pendaftaran extends Model
             $this->dt->where($this->filter());
         }
 
-        $this->dt->where('status_online', 3);
-        $this->dt->orWhere('status_online', 4);
+        $this->dt->where('status_online !=', 1);
+        $this->dt->where('status_online !=', 2);
         return $this->dt->countAllResults();
     }
 
@@ -220,6 +220,12 @@ class M_pendaftaran extends Model
     {
         $this->dt->where('tblizinpendaftaran_nomor', $id);
         return $this->dt->get()->getRowArray();
+    }
+
+    public function get_by_pendaftaran_nomor_($id)
+    {
+        $this->where('tblizinpendaftaran_nomor', $id);
+        return $this->first();
     }
 
     public function get_by_id_pemohon($id)

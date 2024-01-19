@@ -464,7 +464,7 @@ class Permohonan extends ResourceController
 
         $id = $this->request->getVar('id_permohonan');
         $id_pemohon = $this->request->getVar('id_pemohon');
-
+        $id_pendaftaran = $this->request->getVar('id_pendaftaran');
         $rules = [
             'id_permohonan' => 'required',
 
@@ -486,7 +486,7 @@ class Permohonan extends ResourceController
         foreach ($rows as $r) {
             $r['file'] = null;
             if ($id_pemohon) {
-                $r['file'] = $this->get_persyaratan_pemohon($id_pemohon, $r['tblpersyaratan_id']);
+                $r['file'] = $this->get_persyaratan_pemohon($id_pemohon, $r['tblpersyaratan_id'],$id_pendaftaran);
             }
 
             $arr[] = $r;
@@ -513,10 +513,10 @@ class Permohonan extends ResourceController
         return $this->response->setJSON($response);
     }
 
-    private function get_persyaratan_pemohon($id_pemohon, $id_persyaratan)
+    private function get_persyaratan_pemohon($id_pemohon, $id_persyaratan,$id_pendaftaran)
     {
 
-        $row = $this->model_persyaratan_pemohon->get_by_id_pemohon_and_persyaratan($id_pemohon, $id_persyaratan);
+        $row = $this->model_persyaratan_pemohon->get_by_id_pemohon_and_persyaratan($id_pemohon, $id_persyaratan,$id_pendaftaran);
 
         if ($row) {
             return $row['tblpemohonpersyaratan_file'];

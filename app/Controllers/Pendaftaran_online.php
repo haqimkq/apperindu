@@ -128,30 +128,30 @@ class Pendaftaran_online extends BaseController
         $data['page'] = 'Review Pendaftaran Online';
         $data['url'] = $this->url;
         $data['path'] = $this->path;
-        $data['persyaratan'] = $this->persyaratan($r['tblizinpermohonan_id'], $r['tblpemohon_id']);
+        $data['persyaratan'] = $this->persyaratan($r['tblizinpermohonan_id'], $r['tblpemohon_id'],$id);
 
 
         return view($this->path . '/review', $data);
     }
 
 
-    public function persyaratan($id, $id_pemohon)
+    public function persyaratan($id, $id_pemohon,$id_pendaftaran)
     {
         $rows =   $this->model_persyaratan->get_persyaratan_by_id_permohonan($id)->get()->getResultArray();
         $arr = array();
         foreach ($rows as $r) {
 
-            $r['file'] = $this->get_persyaratan_pemohon($id_pemohon, $r['tblpersyaratan_id']);
+            $r['file'] = $this->get_persyaratan_pemohon($id_pemohon, $r['tblpersyaratan_id'],$id_pendaftaran);
             $arr[] = $r;
         }
 
         return $arr;
     }
 
-    public function get_persyaratan_pemohon($id_pemohon, $id_persyaratan)
+    public function get_persyaratan_pemohon($id_pemohon, $id_persyaratan,$id_pendaftaran)
     {
 
-        $row = $this->model_persyaratan_pemohon->get_by_id_pemohon_and_persyaratan($id_pemohon, $id_persyaratan);
+        $row = $this->model_persyaratan_pemohon->get_by_id_pemohon_and_persyaratan($id_pemohon, $id_persyaratan,$id_pendaftaran);
 
         if ($row) {
             return $row['tblpemohonpersyaratan_file'];

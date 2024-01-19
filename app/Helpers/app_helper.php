@@ -510,3 +510,8 @@ function bulan()
 
     return $bulanArray;
 }
+
+function tanggal_terakhir()
+{
+    return '2023-12-20 00:00:00';
+}

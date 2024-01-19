@@ -1,0 +1,134 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.0
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Waktu pembuatan: 19 Jan 2024 pada 06.44
+-- Versi server: 10.4.25-MariaDB
+-- Versi PHP: 7.4.30
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `ptsp`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `tblizinpendaftaran_migrasi`
+--
+
+CREATE TABLE `tblizinpendaftaran_migrasi` (
+  `tblizinpendaftaran_id` bigint(19) NOT NULL,
+  `tblpemohon_id` int(10) DEFAULT NULL,
+  `tblizinpermohonan_id` int(10) UNSIGNED DEFAULT NULL,
+  `tblizin_id` int(10) UNSIGNED DEFAULT NULL,
+  `tblizinpendaftaran_nomor` varchar(35) DEFAULT NULL,
+  `tblizinpendaftaran_idpemohon` varchar(25) DEFAULT NULL,
+  `tblizinpendaftaran_npwp` varchar(30) DEFAULT NULL,
+  `tblizinpendaftaran_namapemohon` varchar(150) DEFAULT NULL,
+  `tblizinpendaftaran_almtpemohon` text DEFAULT NULL,
+  `tblizinpendaftaran_usaha` varchar(100) DEFAULT NULL,
+  `tblizinpendaftaran_lokasiizin` varchar(100) DEFAULT NULL,
+  `tblkelurahan_id` varchar(3) DEFAULT NULL,
+  `tblkecamatan_id` varchar(2) DEFAULT NULL,
+  `tblpengguna_id` varchar(15) NOT NULL DEFAULT 'pendaftaran1',
+  `tblizinpendaftaran_tgljam` datetime DEFAULT NULL,
+  `tblizinpendaftaran_keterangan` text DEFAULT NULL,
+  `tblizinpendaftaran_tglbataslambat` datetime DEFAULT NULL,
+  `tblizinpendaftaran_telponpemohon` varchar(50) DEFAULT NULL,
+  `tblizinpendaftaran_multi` text DEFAULT NULL,
+  `tblizinpendaftaran_isaktif` char(1) NOT NULL DEFAULT 'T',
+  `tblizinpendaftaran_status` char(1) DEFAULT NULL,
+  `tblizinpendaftaran_iskecamatan` enum('T','F') NOT NULL DEFAULT 'F',
+  `tblizinpendaftaran_isperpanjangan` enum('L','P','B') DEFAULT 'B',
+  `tblizinpendaftaran_file` varchar(500) DEFAULT NULL,
+  `tblizinpendaftaran_idlama` bigint(19) DEFAULT NULL,
+  `tblizinpendaftaran_idonline` bigint(19) UNSIGNED DEFAULT 0,
+  `tblizinpendaftaran_issign` enum('T','F') DEFAULT 'F',
+  `tblizinpendaftaran_tglsign` datetime DEFAULT NULL,
+  `tblizinpendaftaran_props` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
+
+--
+-- Dumping data untuk tabel `tblizinpendaftaran_migrasi`
+--
+
+INSERT INTO `tblizinpendaftaran_migrasi` (`tblizinpendaftaran_id`, `tblpemohon_id`, `tblizinpermohonan_id`, `tblizin_id`, `tblizinpendaftaran_nomor`, `tblizinpendaftaran_idpemohon`, `tblizinpendaftaran_npwp`, `tblizinpendaftaran_namapemohon`, `tblizinpendaftaran_almtpemohon`, `tblizinpendaftaran_usaha`, `tblizinpendaftaran_lokasiizin`, `tblkelurahan_id`, `tblkecamatan_id`, `tblpengguna_id`, `tblizinpendaftaran_tgljam`, `tblizinpendaftaran_keterangan`, `tblizinpendaftaran_tglbataslambat`, `tblizinpendaftaran_telponpemohon`, `tblizinpendaftaran_multi`, `tblizinpendaftaran_isaktif`, `tblizinpendaftaran_status`, `tblizinpendaftaran_iskecamatan`, `tblizinpendaftaran_isperpanjangan`, `tblizinpendaftaran_file`, `tblizinpendaftaran_idlama`, `tblizinpendaftaran_idonline`, `tblizinpendaftaran_issign`, `tblizinpendaftaran_tglsign`, `tblizinpendaftaran_props`) VALUES
+(36112, 7532, 13, 5, '1988/629/5/12/2023', '6301034701910003', '82.221.936.6-732.000', 'DINA ANGGRAINI', 'JL. KH. MANSYUR GANG KENANGA RT. 004 RW. 005 KEL. ANGSAU KEC. PELAIHARI', 'DINA ANGGRAINI', 'JL. KH. MANSYUR GANG KENANGA RT. 004 RW. 005 KEL. ANGSAU KEC. PELAIHARI', '85', '7', 'pendaftaran3', '2023-12-20 08:47:22', '-', '2023-12-27 08:47:22', '085251920854', 'F', 'T', NULL, 'F', 'B', NULL, NULL, 0, 'F', NULL, NULL),
+(36113, 11794, 199, 80, '1989/190/80/12/2023', '6301011407810002', '-', 'Syahrul Hasani', 'Jalan waduk RT 06 Desa Benua Tengah Kecamatan Takisung', 'psc 119', 'jlh hadji boejasin pelaihari', '85', '7', 'online', '2023-12-20 10:55:39', '-', '2023-12-27 10:55:39', '081348438043', 'F', 'T', NULL, 'F', 'B', NULL, NULL, 3730, 'F', NULL, NULL),
+(36114, 11795, 239, 104, '1990/26/104/12/2023', '6371050100800012', '-', 'SYAIFUL KOHAR', 'JL. A. TILAM RT. 006 RW. 003 DESA KUNYIT KEC. BAJUIN', 'SYAIFUL KOHAR', 'JL. ATILAM RT. 06 RW. 03 DESA KUNYIT KEC. BAJUIN', '94', '11', 'pendaftaran3', '2023-12-20 14:52:45', '-', '2023-12-21 14:52:45', '081349580149', 'F', 'T', NULL, 'F', 'B', NULL, NULL, 0, 'F', NULL, NULL),
+(36115, 11795, 239, 104, '1991/27/104/12/2023', '6371050100800012', '-', 'SYAIFUL KOHAR', 'JL. A. TILAM RT. 006 RW. 003 DESA KUNYIT KEC. BAJUIN', 'SYAIFUL KOHAR', 'JL. A. TILAM RT. 006 RW. 003 DESA KUNYIT KEC. BAJUIN', '94', '11', 'pendaftaran3', '2023-12-20 15:01:02', '-', '2023-12-21 15:01:02', '081349580149', 'F', 'T', NULL, 'F', 'B', NULL, NULL, 0, 'F', NULL, NULL),
+(36116, 11796, 195, 79, '1992/163/79/12/2023', '6371046910900006', '-', 'HERDA ARIYANI', 'JL. SEI MIAI DALAM NO. 19 RT. 006 RW. 001 KEC. SUNGAI MIAI KEC. BANJARMASIN UTARA', '-', 'KEL. PELAIHARI KEC. PELAIHARI ', '100', '7', 'pendaftaran3', '2023-12-20 15:09:08', '-', '2023-12-22 15:09:08', '-', 'F', 'T', NULL, 'F', 'B', NULL, NULL, 0, 'F', NULL, NULL),
+(36117, 11797, 29, 16, '1993/132/16/12/2023', '6301030112950002', '-', 'AKHMAD JUNAIDI', 'JL. KARANG JAWA RT. 002 RW. 001 KEL. KARANG TARUNA', 'YAYASAN PONDOK PESANTREN SY-SYUHADA', 'JL. A. YANI KM.2 KEL. ANGSAU', '85', '7', 'pendaftaran3', '2023-12-20 15:16:58', '-', '2023-12-20 15:16:58', '081254974572', 'F', 'T', NULL, 'F', 'B', NULL, NULL, 0, 'F', NULL, NULL),
+(36118, 7627, 220, 91, '1994/180/91/12/2023', '6371021511860006', '-', 'Ir. GUSTI NOVIAR KUSUMA, ST. MT', 'JL. PRAMUKA KOMP. CITRA PURI NO.23 RT. 007 RW. 001 KEL. PEMURUS LUAR KEC. BANJARMASIN TIMUR KOTA BANJARMASIN', 'DINAS PEKERJAAN UMUM', 'JL. A. SYAIRANI', '85', '7', 'pendaftaran3', '2023-12-20 15:18:39', '-', '2023-12-20 15:18:39', '051221065 / 051221157', 'F', 'T', NULL, 'F', 'B', NULL, NULL, 0, 'F', NULL, NULL),
+(36119, 7127, 220, 91, '1995/181/91/12/2023', '6371021511860006', '-', 'Ir. GUSTI NOVIAR KUSUMA, ST, MT', 'JL. PRAMUKA KOMP. CITRA PURI NO.23 RT. 007 RW. 001 KEL. PEMURUS LUAR KEC. BANJARMASIN TIMUR KAB. TANAH LAUT', 'DINAS PEKERJAAN UMUM', 'JL. A. SYAIRANI', '85', '7', 'pendaftaran3', '2023-12-20 15:19:55', '-', '2023-12-20 15:19:55', '081349464653', 'F', 'T', NULL, 'F', 'B', NULL, NULL, 0, 'F', NULL, NULL),
+(36120, 10006, 200, 80, '1996/191/80/12/2023', '6301054712940001', '-', 'Fitriyah', '-', 'UPT. PUSKESMAS PADANG LUAS', 'Jl. Swadaya no.101 rt 03 Desa Padang Luas, kecamatan Kurau', '66', '5', 'online', '2023-12-20 15:42:15', 'Pembuatan SIP ditempat kerja baru', '2023-12-20 15:42:15', '083141584279', 'F', 'T', NULL, 'F', 'B', NULL, NULL, 3111, 'F', NULL, NULL),
+(36121, 9060, 203, 83, '1997/160/83/12/2023', '6301035801930001', '-', 'dr. Arian Rizki Amalia', 'Jl. Purnawirawan, RT/RW 003/001, No.5, Kel.Angsau, Kec.Pelaihari, Kab.Tanah Laut, Kalsel (70814)', 'UPT PUSKESMAS PANGGUNG', 'JL.A.YANI, KM.6, RT.18, RW.04, DESA PANGGUNG, KECAMATAN PELAIHARI, KABUPATEN TANAH LAUT', '97', '7', 'online', '2023-12-21 09:20:31', 'PEMBUATAN BARU SIP DOKTER UMUM, DIKARENAKAN STR (SURAT TANDA REGISTRASI) DOKTER PADA SIP SEBELUMNYA HABIS MASA BERLAKU PADA BULAN JANUARI 2024. MOHON BANTUAN UNTUK PEMBUATANNYA. TERIMAKASIH.', '2023-12-21 09:20:31', '081348494969', 'F', 'T', NULL, 'F', 'B', NULL, NULL, 3731, 'F', NULL, NULL),
+(36122, 10822, 13, 5, '1998/630/5/12/2023', '63010710008860007', '61.950.485.5.732.000', 'BUDI HARTONO', 'JL. A. YANI KM. 121 RT. 12 RW. 002 DESA SIMPANG 4 SEI. BARU KEC.KINTAP', 'CV. TIGA JAYA ARTHA', 'JL. A. YANI RT. 007 RW. 001 DESA PANDAN SARI KEC. KINTAP', '45', '4', 'pendaftaran1', '2023-12-21 09:23:09', '-', '2023-12-28 09:23:09', '08225022555', 'F', 'T', NULL, 'F', 'B', NULL, NULL, 0, 'F', NULL, NULL),
+(36123, 10854, 195, 79, '1999/164/79/12/2023', '6371020504910007', '-', 'MUHAMMAD FIRDAUS', 'JL. BIDURI RT. 012 KEL. SUNGAI DANAU KEC. SATUI KAB. TANAH BUMBU', 'KOPERASI MINA SEJAHTERA', 'JL. PPI PERIKANAN RT. 004 RW. 001 DESA MUARA KINTAP KEC. KINTAP', '44', '4', 'pendaftaran2', '2023-12-21 10:11:12', '-', '2023-12-23 10:11:12', '081251523844', 'F', 'T', NULL, 'F', 'B', NULL, NULL, 0, 'F', NULL, NULL),
+(36124, 10854, 29, 16, '2000/133/16/12/2023', '6371020504910007', '-', 'MUHAMMAD FIRDAUS', 'JL. BIDURI RT. 012 KEL. SUNGAI DANAU KEC. SATUI KAB. TANAH BUMBU', 'KOPERASI MINA SEJAHTERA', 'JL. PPI PERIKANAN RT. 004 RW. 001 DESA MUARA KINTAP KEC. KINTAP', '44', '4', 'pendaftaran2', '2023-12-21 10:15:51', '-', '2023-12-21 10:15:51', '081251523844', 'F', 'T', NULL, 'F', 'B', NULL, NULL, 0, 'F', NULL, NULL),
+(36125, 8113, 13, 5, '2001/631/5/12/2023', '6301031604800001', '96.568.304.8-732.000', 'CHAIRUL ANWAR', 'JL. A. YANI RT. 003 RW. 001 DESA PANGGUNG KEC. PELAIHARI KAB. TANAH LAUT', 'PANGKALAN LPG 3 KG CHAIRUL ANWAR', 'JL. A. YANI RT. 003 RW. 001 DESA PANGGUNG KEC. PELAIHARI KAB. TANAH LAUT', '97', '7', 'pendaftaran2', '2023-12-21 11:20:14', '-', '2023-12-28 11:20:14', '08115506626', 'F', 'T', NULL, 'F', 'B', NULL, NULL, 0, 'F', NULL, NULL),
+(36126, 10093, 13, 5, '2002/632/5/12/2023', '6301036910750001', '5.358.007.1.732.000', 'NELLY ROSANA', 'KOMP. GRIYA HAMPARAN BLOK B NO. 04B RT. 11 RW. 002 DESA ATU ATU KEC. PELAIHARI', 'NELLY', 'DESA MALUKA BAULIN RT. 006 RW. 003 KEC. KURAU', '65', '5', 'pendaftaran1', '2023-12-21 13:59:49', '-', '2023-12-28 13:59:49', '081350037150', 'F', 'T', NULL, 'F', 'B', NULL, NULL, 0, 'F', NULL, NULL),
+(36127, 9756, 13, 5, '2003/633/5/12/2023', '6303027108840001', '03.018.392.5.732.000', 'SELVI CHRISINDA', 'JL. BUMI LARAS BARAT I NO.7 KOMP. PERSADA MAS A RT. 010 RW. 003 KEL. MANARAP LAMA KEC. KERTAK HANYAR KAB. BANJAR', 'PT. SINAR NUSANTARA INDUSTRIES', 'JL. A. YANI KM. 31 RT. 003 DESA LIANG ANGGANG KEC. BATI-BATI', '7', '1', 'pendaftaran1', '2023-12-22 09:24:40', '-', '2023-12-29 09:24:40', '081224530161', 'F', 'T', NULL, 'F', 'B', NULL, NULL, 0, 'F', NULL, NULL),
+(36128, 11273, 218, 90, '2004/37/90/12/2023', '6301015310970002', '-', 'Siti Munawwaroh', 'Jl. Raya Pagatan Besar RT 003 RW 001 Kec. Takisung Kab. Tanah Laut', 'Apotek Al-Munawwaroh', 'Jl. Raya Pagatan Besar RT 003 RW 001', '118', '8', 'online', '2023-12-22 09:50:06', 'Surat Izin Praktek Apoteker', '2023-12-22 09:50:06', '085156423322', 'F', 'T', NULL, 'F', 'B', NULL, NULL, 3722, 'F', NULL, NULL),
+(36129, 11798, 199, 80, '2005/192/80/12/2023', '6301032710890012', '-', 'Heri susilo wibowo', 'Jl padat karya / rt 03 / rw 02 / kec pelaihari / desa kampung baru.', 'RSUD HADJI BOEJASIN PELAIHARI', 'JL. A. YANI KM 68 KEL. SARANG HALANG KEC. PELAIHARI KAB. TANAH LAUT', '102', '7', 'online', '2023-12-22 09:51:57', 'SIPP BARU', '2023-12-29 09:51:57', '082351937064', 'F', 'T', NULL, 'F', 'B', NULL, NULL, 3733, 'F', NULL, NULL),
+(36130, 7361, 13, 5, '2006/634/5/12/2023', '6301060105750001', '15.548.641.8-732.000', 'AKHMAD HULYANI', 'DESA KANDANGAN LAMA RT. 006 RW. 003 KEC. PANYIPATAN KAB. TANAH LAUT', 'AKHMAD HULYANI', 'DESA KANDANGAN LAMA RT. 006 RW. 003 KEC. PANYIPATAN KAB. TANAH LAUT', '79', '6', 'pendaftaran1', '2023-12-22 10:47:42', '-', '2023-12-29 10:47:42', '085248479184', 'F', 'T', NULL, 'F', 'B', NULL, NULL, 0, 'F', NULL, NULL),
+(36131, 5134, 13, 5, '2007/635/5/12/2023', '630105140770000', '98.570.951.8.732.000', 'H. AHMAD ZAINI', 'JL. MURUNG EMBANG RT. 006 RW. 003 DESA BENUA RAYA KEC. BATI - BATI', 'UD. H. SYARIF', 'JL. A. YANI RT. 003 RW. 001 DESA BANUA RAYA KEC. BATI - BATI', '1', '1', 'pendaftaran2', '2023-12-27 09:47:14', '-', '2024-01-03 09:47:14', '-', 'F', 'T', NULL, 'F', 'B', NULL, NULL, 0, 'F', NULL, NULL),
+(36132, 3051, 13, 5, '2008/636/5/12/2023', '6301070309770002', '70.971.874.6-732.000', 'SUNATUR', 'JL. MANGGA RT.004 RW.001 DESA MEKAR SARI KEC. KINTAP KAB. TANAH LAUT', 'KIOS BAROKAH', 'JL. MANGGA RT.004 RW.001 DESA MEKAR SARI KEC. KINTAP KAB. TANAH LAUT', '135', '4', 'pendaftaran2', '2023-12-27 10:14:50', '-', '2024-01-03 10:14:50', '081352785799', 'F', 'T', NULL, 'F', 'B', NULL, NULL, 0, 'F', NULL, NULL),
+(36133, 10978, 197, 82, '2009/185/82/12/2023', '6301036811960001', '-', 'Erma Novitasari', 'Desa pemuda Rt 1 Rw 1 jl.Mekar Sari kecamatan Pelaihari kabupaten tanah laut', 'UPT PUSKESMAS PANGGUNG', 'Jalan A.Yani Km 6 Rt 16 Rw 4 Desa Panggung Kecamatan Pelaihari', '97', '7', 'online', '2023-12-27 10:46:39', '-', '2023-12-27 10:46:39', '082251411264', 'F', 'T', NULL, 'F', 'B', NULL, NULL, 3737, 'F', NULL, NULL),
+(36134, 9238, 13, 5, '2010/637/5/12/2023', '6301034503940001', '82.101.079.0.732.000', 'HELDA HERLISA', 'JL. MANGGA BESAR KOMP. MANGGA PERMAI RESIDENCE RT. 009 RW. 005 KEL. SARANG HALANG KEC. PELAIHARI', 'CV. SMARTDEVTALA', 'JL. MANGGA BESAR KOMP. MANGGA PERMAI RESIDENCE RT. 009 RW. 005 KEL. SARANG HALANG KEC. PELAIHARI', '102', '7', 'pendaftaran2', '2023-12-27 10:47:26', '-', '2024-01-03 10:47:26', '083159236892', 'F', 'T', NULL, 'F', 'B', NULL, NULL, 0, 'F', NULL, NULL),
+(36135, 8981, 201, 81, '2011/57/81/12/2023', '6301034911970001', '-', 'Yusmalina', 'Jl. Pusara Rt 3/Rw 1/Kec. Pelaihari/Kel. Pelaihari', 'RSUD Hadjie Boejasin Pelaihari', 'Jl.A.Yani No.68 RT.006 RW.003', '102', '7', 'online', '2023-12-27 10:47:50', 'Surat izin praktik tenaga teknis kefarmasian baru', '2023-12-27 10:47:50', '0895700518497', 'F', 'T', NULL, 'F', 'B', NULL, NULL, 1026, 'F', NULL, NULL),
+(36136, 9272, 199, 80, '2012/193/80/12/2023', '6301015904900001', '-', 'Fitriani', 'Jln. Jendral Sudirman Rt.08 Rw.04 Desa Gunung Makmur Kec. Takisung Kab. Tanah Laut', 'RSUD H.BOEJASIN PELAIHARI', 'Jln. A.Yani KM 68 RT 06 RW 03, Kel. Sarang Halang Kec. Pelaihari Kab.Tanah Laut', '102', '7', 'online', '2023-12-27 10:49:43', '-', '2024-01-03 10:49:43', '082351730158', 'F', 'T', NULL, 'F', 'B', NULL, NULL, 3732, 'F', NULL, NULL),
+(36137, 11799, 24, 11, '2013/1/11/12/2023', '6301100903840001', '-', 'SUPRIANTO', 'JL. WISATA AIR TEJUN RT.003 RW. 001 DESA SUNGAI BAKAR KEC. BAJUIN', 'AIR TERJUN BAJUIN', 'JL. WISATA AIR TEJUN RT.003 RW. 001 DESA SUNGAI BAKAR KEC. BAJUIN', '103', '11', 'pendaftaran2', '2023-12-27 10:56:12', '-', '2023-12-27 10:56:12', '083862158617 - 082155549556', 'F', 'T', NULL, 'F', 'B', NULL, NULL, 0, 'F', NULL, NULL),
+(36138, 2728, 13, 5, '2014/638/5/12/2023', '6301031207720009', '03.122.923.0.732.000', 'GAZALI RAHMAN', 'JL. A. YANI RT. 002 RW. 001 KEL. PABAHANAN KEC. PELAIHARI KAB. TANAH LAUT', 'CV. BERKAT SAUDARA', 'JL. A. YANI RT. 002 RW. 001 KEL. PABAHANAN KEC. PELAIHARI KAB. TANAH LAUT', '95', '7', 'pendaftaran2', '2023-12-27 11:01:27', '-', '2024-01-03 11:01:27', '081251321753', 'F', 'T', NULL, 'F', 'B', NULL, NULL, 0, 'F', NULL, NULL),
+(36139, 7653, 13, 5, '2015/639/5/12/2023', '6301024207830001', '31.673.005.0-732.000', 'SUSILO', 'JL. A. YANI KM. 124 RT. 001 RW. 001 DESA SIMPANG EMPAT SUNGAI BARU KEC. JORONG', 'PT. AWLIYA RAKHMAD', 'JL. A. YANI KM. 122 RT. 016 RW. 003 DESA SIMPANG EMPAT SUNGAI BARU KEC. JORONG', '134', '3', 'pendaftaran2', '2023-12-27 11:18:37', '-', '2024-01-03 11:18:37', '0852 4868 6669', 'F', 'T', NULL, 'F', 'B', NULL, NULL, 0, 'F', NULL, NULL),
+(36140, 2725, 13, 5, '2016/640/5/12/2023', '6301024207630001', '02.575.952.3-731.000', 'EKO SUSILOWATI', 'JL. A. YANI KM. 122 RT. 016 RW. 003 DESA SIMPANG EMPAT ASAM-ASAM KEC. JORONG KAB. TANAH LAUT', 'CV. BERKAH ALFAMART', 'JL. A. YANI KM. 98 RT. 004 RW. 001 DESA JORONG KEC. JORONG', '33', '3', 'pendaftaran2', '2023-12-27 11:21:08', '', '2024-01-03 11:21:08', '081349731283', 'F', 'T', NULL, 'F', 'B', NULL, NULL, 0, 'F', NULL, NULL),
+(36141, 11269, 13, 5, '2017/641/5/12/2023', '6301020409910003', '66.169.973.6-732.000', 'SUSILO', 'JL. A. YANI KM. 124 RT. 001 RW. 001 DESA SIMPANG EMPAI SUNGAI BARU KEC. JORONG', 'CV. BERKAH GUNUNG BELANDA', 'JL. H. BOEJASIN RT. 002 RW. 001 KEL. ANGSAU KEC.PELAIHARI', '85', '7', 'pendaftaran2', '2023-12-27 11:24:05', '-', '2024-01-03 11:24:05', '08115450814', 'F', 'T', NULL, 'F', 'B', NULL, NULL, 0, 'F', NULL, NULL),
+(36142, 7653, 13, 5, '2018/642/5/12/2023', '6301024207830001', '31.673.005.0-732.000', 'EKO SUSILOWATI', 'JL. A. YANI KM. 122 RT. 016 RW. 003 DESA SIMPANG EMPAT SUNGAI BARU KEC. JORONG', 'CV. BERKAH ALFAMART', 'JL. A. YANI KM. 122 DESA SIMPANG EMPAT SUNGAI BARU KEC. JORONG', '134', '3', 'pendaftaran2', '2023-12-27 11:33:28', '-', '2024-01-03 11:33:28', '0852 4868 6669', 'F', 'T', NULL, 'F', 'B', NULL, NULL, 0, 'F', NULL, NULL),
+(36143, 6117, 13, 5, '2019/643/5/12/2023', '6301033107640001', '79.768.649.0.732.000', 'CHAIRIL', 'JL. A. SYAIRANI KOMP. KIJANG MAS NO. 29 RT. 11 RW. 004 KEL. SARANG HALANG KEC. PELAIHARI', 'ARIL BERKAH', 'JL. PANGERAN ANTASARI RT. 003 RW. 001 DESA BUMI JAYA KEC. PELAIHARI', '89', '7', 'pendaftaran2', '2023-12-27 11:47:16', '-', '2024-01-03 11:47:16', '082153083564', 'F', 'T', NULL, 'F', 'B', NULL, NULL, 0, 'F', NULL, NULL),
+(36144, 7251, 13, 5, '2020/644/5/12/2023', '6301044606610018', '81.802.189.1-732.000', 'Hj. NOOR AIDA', 'DESA MALUKA BAULIN RT. 002 RW. 001 KEC. KURAU KAB. TANAH LAUT', 'PANGKALAN Hj. AIDA', 'DESA MALUKA BAULIN RT. 002 RW. 001 KEC. KURAU KAB. TANAH LAUT', '65', '5', 'pendaftaran2', '2023-12-27 13:57:21', '-', '2024-01-03 13:57:21', '081349677570', 'F', 'T', NULL, 'F', 'B', NULL, NULL, 0, 'F', NULL, NULL),
+(36145, 11800, 220, 91, '2021/182/91/12/2023', '6371040503710006', '406047332732000', 'SAMSUDDIN NOOR, ST', 'JL. SIMPANG GUSTI VI NO. 47 RT. 031 RW. 003 KEL. ALALAK UTARA KEC. BANJARMASIN UTARA', 'CV. SINAR KEMUNING ABADI', 'DESA MARTADAH BARU KEC. TAMBANG ULANG', '129', '9', 'pendaftaran2', '2023-12-27 14:10:56', '-', '2023-12-27 14:10:56', '087746066752', 'F', 'T', NULL, 'F', 'B', NULL, NULL, 0, 'F', NULL, NULL),
+(36146, 11801, 198, 82, '2022/186/82/12/2023', '6301075901920001', '-', 'Wahidah', 'Jl.Pusaka RT.002 RW.001 Desa Kintap Kec Kintap Kab.Tanah Laut', 'UPT Puskesmas Kintap', 'Jl.Pusaka Desa Kintap Kec Kintap', '40', '4', 'online', '2023-12-28 08:26:57', 'Syarat Perpanjangan Surat Izin Praktik Bidan (SIPB)', '2023-12-28 08:26:57', '085248060777', 'F', 'T', NULL, 'F', 'B', NULL, NULL, 3738, 'F', NULL, NULL),
+(36147, 11802, 199, 80, '2023/194/80/12/2023', '6212015010960001', '-', 'Okta viana ulandari', 'Jln raya kandangan baru Rt 08 ,Kec Panyipatan', 'Rumah sakit Borneo Citra medika', 'Jalan A yani RT 7B Rw 03 kelurahan Angsau Kecamatan Pelaihari Kab Tanah Laut Kalimantan selatan', '85', '7', 'online', '2023-12-28 10:40:57', 'Rumah sakit Borneo citra medika', '2024-01-04 10:40:57', '083141335491', 'F', 'T', NULL, 'F', 'B', NULL, NULL, 3739, 'F', NULL, NULL),
+(36148, 7357, 13, 5, '2024/645/5/12/2023', '6301071305700001', '15.042..073.5-732.000', 'SYAIFUL', 'JL. A. YANI RT. 007 RW. 003 DESA MUARA KINTAP KEC. KINTAP', 'SINAR BARU', 'JL. A. YANI RT. 007 RW. 003 DESA MUARA KINTAP KEC. KINTAP', '44', '4', 'pendaftaran2', '2023-12-28 11:45:11', '-', '2024-01-04 11:45:11', '082252934217', 'F', 'T', NULL, 'F', 'B', NULL, NULL, 0, 'F', NULL, NULL),
+(36149, 6664, 13, 5, '2025/646/5/12/2023', '6301070504900004', '644.17.696.1.732.000', 'FERY APRIADI', 'JL. MAWAR RT. 006 RW. 002 DESA BUKIT MULIA KEC. KINTAP', 'FERY APRIADI', 'JL. MAWAR RT. 006 RW. 002 DESA BUKIT MULIA KEC. KINTAP', '38', '4', 'pendaftaran1', '2023-12-28 11:47:23', '-', '2024-01-04 11:47:23', '081348184749', 'F', 'T', NULL, 'F', 'B', NULL, NULL, 0, 'F', NULL, NULL),
+(36150, 7505, 13, 5, '2026/647/5/12/2023', '6301040507920002', '92.863.438.5-732.000', 'HADERI', 'DESA KALI BESAR RT. 003 RW. 001 KEC. KURAU KAB. TANAH LAUT', 'PANGKALAN HADERI', 'DESA KALI BESAR RT. 003 RW. 001 KEC. KURAU KAB. TANAH LAUT', '62', '5', 'pendaftaran1', '2023-12-28 11:52:29', '-', '2024-01-04 11:52:29', '082255778003', 'F', 'T', NULL, 'F', 'B', NULL, NULL, 0, 'F', NULL, NULL),
+(36151, 10666, 13, 5, '2027/648/5/12/2023', '6301042106770001', '61.162.810.8.732.000', 'JOHANSYAH', 'DESA SUNGAI BAKAU RT. 001 RW. 001 KEC. KURAU ', 'JAINI', 'DESA SUNGAI BAKAU RT. 001 RW. 001 KEC. KURAU ', '00', '5', 'pendaftaran2', '2023-12-28 12:13:08', '-', '2024-01-04 12:13:08', '082151935599', 'F', 'T', NULL, 'F', 'B', NULL, NULL, 0, 'F', NULL, NULL),
+(36152, 11803, 12, 5, '2028/649/5/12/2023', '6301071604960005', '994571701732000', 'MUHAMMAD YUNUS', 'JL. BATU ANTING RT. 001 RW. 001 DESA KINTAP KECIL KEC. KINTAP', 'CV. RIZKY PUTRA BORNEO', 'JL. BATU ANTING RT. 001 RW. 001 DESA KINTAP KECIL KEC. KINTAP', '41', '4', 'pendaftaran2', '2023-12-28 12:22:10', '-', '2024-01-01 18:22:10', '082147555060', 'F', 'T', NULL, 'F', 'B', NULL, NULL, 0, 'F', NULL, NULL),
+(36153, 9498, 198, 82, '2029/187/82/12/2023', '6301015412710001', '-', 'Siti Ngatminah', 'Jln. Raya Takisung Desa Gunung Makmur RT 8 Kecamatan Takisung', 'BPM ANANDA', 'JL. JENDRAL SUDIRMAN DESA GUNUNG MAKMUR RT.8', '116', '8', 'online', '2023-12-29 08:11:29', 'SIPB BPM ANANDA', '2023-12-29 08:11:29', '081349403403', 'F', 'T', NULL, 'F', 'B', NULL, NULL, 3740, 'F', NULL, NULL),
+(36154, 11804, 197, 82, '2030/188/82/12/2023', '6301034509910001', '-', 'NUR SETYA WISRI', 'KOMP. KIJANG MAS NO 27 RT.014 KEL.SARANG HALANG KEC.PELAIHARI KAB.TANAH LAUT', 'PUSKESMAS TIRTA JAYA', 'JL.KERAMAT RT.03/001 DESA TIRTA JAYA KEC.BAJUIN KAB.TANAH LAUT', '88', '11', 'online', '2023-12-29 08:13:09', 'SURAT IZIN PRAKTIK BIDAN', '2023-12-29 08:13:09', '082153702447', 'F', 'T', NULL, 'F', 'B', NULL, NULL, 3719, 'F', NULL, NULL);
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indeks untuk tabel `tblizinpendaftaran_migrasi`
+--
+ALTER TABLE `tblizinpendaftaran_migrasi`
+  ADD PRIMARY KEY (`tblizinpendaftaran_id`) USING BTREE;
+
+--
+-- AUTO_INCREMENT untuk tabel yang dibuang
+--
+
+--
+-- AUTO_INCREMENT untuk tabel `tblizinpendaftaran_migrasi`
+--
+ALTER TABLE `tblizinpendaftaran_migrasi`
+  MODIFY `tblizinpendaftaran_id` bigint(19) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36170;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

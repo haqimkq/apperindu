@@ -61,7 +61,7 @@ class Cetak_sk extends BaseController
         $data['page'] = $this->page;
         $data['url'] = $this->url;
         $data['path'] = $this->path;
-        $data['izin'] = $this->model_izin->get_data();
+        $data['izin'] = $this->model_izin->get_izin_by_blok_sistem();
         $data['permohonan'] = $this->model_permohonan->get_data();
         return view($this->path . '/view', $data);
     }

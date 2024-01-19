@@ -63,6 +63,7 @@ class M_persyaratan_pemohon extends Model
     {
         $this->dt->where('tblpemohon_id', $id);
         $this->dt->like('tblpersyaratan_nama', 'Pas Photo', 'both');
+        $this->dt->orderBy('tblpemohonpersyaratan_id','DESC');
         return $this->dt->get()->getRowArray();
     }
 

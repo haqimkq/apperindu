@@ -176,6 +176,7 @@ class M_kendali_proses extends Model
             $this->dt->where('tblkendalibloksistem_idkirim', session()->blok_sistem_id);
             $this->dt->where('tblkendaliproses_status', 4);
             $this->dt->where('tblizinpendaftaran_issign', 'F');
+            $this->dt->where('tblizinpendaftaran_tgljam >=', tanggal_terakhir());
             $this->dt->groupBy('tblizinpendaftaran_nomor');
             // if (session()->blok_sistem_id == 5 || session()->blok_sistem_id == 6 || session()->blok_sistem_id == 7 || session()->blok_sistem_id == 8) {
 
@@ -216,6 +217,8 @@ class M_kendali_proses extends Model
         if ($this->request->getPost('str') == 'cetak_sk') {
             $this->dt->where('tblkendalibloksistem_idkirim', session()->blok_sistem_id);
             $this->dt->where('tblkendaliproses_status', 4);
+            $this->dt->where('tblizinpendaftaran_tgljam >=', tanggal_terakhir());
+            $this->dt->groupBy('tblizinpendaftaran_nomor');
             // if (session()->blok_sistem_id == 5 || session()->blok_sistem_id == 6 || session()->blok_sistem_id == 7 || session()->blok_sistem_id == 8) {
 
             //     $arr = $this->get_izin_id();
@@ -228,7 +231,7 @@ class M_kendali_proses extends Model
             $this->dt->where('tblkendalibloksistem_idkirim', session()->blok_sistem_id);
             $this->dt->where('tblkendaliproses_status', 4);
             $this->dt->where('tblizinpendaftaran_issign', 'F');
-            $this->dt->where('tblizinpendaftaran_tgljam >=', '2019-01-01 00:00:00');
+            $this->dt->where('tblizinpendaftaran_tgljam >=', tanggal_terakhir());
             $this->dt->groupBy('tblizinpendaftaran_nomor');
         }
 
@@ -237,7 +240,7 @@ class M_kendali_proses extends Model
             $this->dt->where('tblkendaliproses_status', 4);
             $this->dt->where('tblizinpendaftaran_issign', 'F');
             $this->dt->where('tblizin_ismandiri', 'T');
-            $this->dt->where('tblizinpendaftaran_tgljam >=', '2019-01-01 00:00:00');
+            $this->dt->where('tblizinpendaftaran_tgljam >=', tanggal_terakhir());
             $this->dt->groupBy('tblizinpendaftaran_nomor');
         }
 
@@ -311,18 +314,20 @@ class M_kendali_proses extends Model
 
     public function get_izin_by_blok_sistem()
     {
-        if (session()->blok_sistem_id != 99){
+        if (session()->blok_sistem_id != 99) {
             $this->dt->where('tblkendalibloksistem_idasal', session()->blok_sistem_id);
         }
-        
+
         $this->dt->groupBy('tblizin_id');
         return $this->dt->get()->getResultArray();
     }
 
-    public function jml_validasi_berkas(){
+    public function jml_validasi_berkas()
+    {
         $this->dt->where('tblkendalibloksistem_idkirim', session()->blok_sistem_id);
         $this->dt->where('tblkendaliproses_status', 4);
         $this->dt->where('tblizinpendaftaran_issign', 'F');
+        $this->dt->where('tblizinpendaftaran_tgljam >=', tanggal_terakhir());
         $this->dt->groupBy('tblizinpendaftaran_nomor');
         return $this->dt->get()->getNumRows();
     }

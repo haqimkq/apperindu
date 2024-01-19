@@ -17,6 +17,9 @@ $(document).ready(function() {
     // if (!$('#tblizinpendaftaran_id').val()) {
     //     datatable(true);
     // }
+
+
+    datatable(true);
 });
 
 function downloadFile(url, name) {
