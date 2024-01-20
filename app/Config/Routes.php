@@ -123,7 +123,7 @@ $routes->post('permohonan/update_pemohon', 'Api\Permohonan::update_pemohon', ['f
 $routes->post('permohonan/kirim_otp', 'Api\Permohonan::kirim_otp', ['filter' => 'auth_api']);
 $routes->post('permohonan/verifikasi_otp', 'Api\Permohonan::verifikasi_otp', ['filter' => 'auth_api']);
 $routes->post('permohonan/ganti_password', 'Api\Permohonan::ganti_password', ['filter' => 'auth_api']);
-$routes->get('permohonan/dokumen/(:any)', 'Tte::download/$1');
+$routes->get('permohonan/dokumen/(:any)', 'Download::public/$1');
 
 /*
  * --------------------------------------------------------------------

@@ -560,26 +560,4 @@ class Tte extends BaseController
             echo 'File PDF tidak ditemukan.';
         }
     }
-
-    public function download($str)
-    {
-
-
-        $id = $this->model_doc->decrypt($str, key_secret());
-
-        $row  = $this->model_pendaftaran->get_by_id($id);
-
-
-
-        $name = $row['tblizin_nama'] . ' - ' . $row['tblizinpendaftaran_namapemohon'] . '.pdf';
-
-        $path = sign($id . '.pdf');
-        if (file_exists($path)) {
-            $response = service('response');
-            return $response->download($path, null)->setFileName($name);
-        } else {
-
-            echo 'File PDF tidak ditemukan.';
-        }
-    }
 }

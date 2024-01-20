@@ -34,7 +34,7 @@ class Download extends BaseController
         $file_path = sign($id . '.pdf'); // Replace this with the actual path to your file
         $r = $this->model_pendaftaran->get_by_id($id);
 
-        $name = $r['tblizinpendaftaran_namapemohon'] . '_' . $r['tblizin_nama'] . '.pdf';
+        $name = $r['tblizinpendaftaran_namapemohon'] . ' - ' . $r['tblizin_nama'] . '.pdf';
         // Check if the file exists and is readable
         if (file_exists($file_path) && is_readable($file_path)) {
             // Set the headers for file download
