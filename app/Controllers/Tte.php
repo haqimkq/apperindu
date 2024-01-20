@@ -180,8 +180,6 @@ class Tte extends BaseController
                     $res = array('status' => false, 'msg' => 'Pas Foto tidak ada');
                     return $this->response->setJSON($res);
                 }
-
-             
             }
 
             $pas_foto = $this->model_doc->get_img($dir, array('width' => 3, 'height' => 4));
@@ -252,7 +250,7 @@ class Tte extends BaseController
         if (file_exists('doc/sign/' . $id_pendaftaran . '.pdf')) {
             unlink('doc/sign/' . $id_pendaftaran . '.pdf');
         }
-        
+
         // ketika berhasil
         file_put_contents(sign($id_pendaftaran . '.pdf'), $res_tte);
 
@@ -559,6 +557,28 @@ class Tte extends BaseController
             return view($this->path . '/pdf_view', $data);
         } else {
             // Menampilkan pesan jika file PDF tidak ditemukan
+            echo 'File PDF tidak ditemukan.';
+        }
+    }
+
+    public function download($str)
+    {
+
+
+        $id = $this->model_doc->decrypt($str, key_secret());
+
+        $row  = $this->model_pendaftaran->get_by_id($id);
+
+
+
+        $name = $row['tblizin_nama'] . ' - ' . $row['tblizinpendaftaran_namapemohon'] . '.pdf';
+
+        $path = sign($id . '.pdf');
+        if (file_exists($path)) {
+            $response = service('response');
+            return $response->download($path, null)->setFileName($name);
+        } else {
+
             echo 'File PDF tidak ditemukan.';
         }
     }
