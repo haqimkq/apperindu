@@ -173,7 +173,9 @@ class Tte extends BaseController
         $per = $this->model_persyaratan_pemohon->get_pas_foto($r['tblpemohon_id']);
 
         if ($per) {
+
             $dir =  'doc/persyaratan/' . $per['tblpemohonpersyaratan_file'];
+
             if (!file_exists($dir)) {
                 $dir =  'doc/persyaratan/migrasi/' . $per['tblpemohonpersyaratan_file'];
                 if (!file_exists($dir)) {
@@ -184,6 +186,20 @@ class Tte extends BaseController
 
             $pas_foto = $this->model_doc->get_img($dir, array('width' => 3, 'height' => 4));
             $variable['pas_foto'] = $pas_foto;
+        } else {
+            $per =   $this->model_persyaratan_pemohon->get_pas_foto_2($r['tblpemohon_id']);
+
+            if ($per) {
+                $dir =  'doc/persyaratan/' . $per['tblpemohonpersyaratan_file'];
+
+                if (!file_exists($dir)) {
+                    $res = array('status' => false, 'msg' => 'Pas Foto tidak ada');
+                    return $this->response->setJSON($res);
+                }
+
+                $pas_foto = $this->model_doc->get_img($dir, array('width' => 3, 'height' => 4));
+                $variable['pas_foto'] = $pas_foto;
+            }
         }
 
         $id_permohonan = $variable['tblizinpermohonan_id'];

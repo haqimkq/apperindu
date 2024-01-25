@@ -81,6 +81,13 @@ class M_persyaratan_pemohon extends Model
         return $this->dt->get()->getRowArray();
     }
 
+    public function get_pas_foto_2($id)
+    {
+        $this->dt->where('tblpemohon_id', $id);
+        $this->dt->like('tblpersyaratan_nama', 'Pas Foto', 'both');
+        $this->dt->orderBy('tblpemohonpersyaratan_id', 'DESC');
+        return $this->dt->get()->getRowArray();
+    }
 
     public function get_persyaratan_pemohon($w)
     {

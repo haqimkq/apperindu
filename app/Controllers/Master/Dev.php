@@ -7,6 +7,7 @@ use App\Controllers\BaseController;
 use App\Models\M_pendaftaran;
 use App\Models\M_persyaratan_pemohon;
 use App\Models\M_pemohon;
+use App\Models\Master\M_persyaratan_permohonan;
 use PhpOffice\PhpWord\TemplateProcessor;
 
 class Dev extends BaseController
@@ -18,6 +19,7 @@ class Dev extends BaseController
     protected $model_persyaratan_pemohon;
     protected $model_pendaftatan;
     protected $model_pemohon;
+    protected $model_persyaratan;
 
 
     public function __construct()
@@ -27,6 +29,7 @@ class Dev extends BaseController
         $this->model_persyaratan_pemohon = new  M_persyaratan_pemohon($this->request);
         $this->model_pendaftatan = new M_pendaftaran($this->request);
         $this->model_pemohon =  new M_pemohon($this->request);
+        $this->model_persyaratan = new M_persyaratan_permohonan($this->request);
     }
 
 
@@ -100,6 +103,30 @@ class Dev extends BaseController
                 }
             }
         }
+        echo 'Terinput ' . $i . ' data';
+    }
+
+    public function persyaratan_sik()
+    {
+        $id = 241;
+        $id_permohonan = array(289);
+        $rows = $this->model_persyaratan->get_persyaratan_by_id_permohonan($id)->get()->getResultArray();
+        $i = 0;
+        foreach ($id_permohonan as $ip) {
+
+            foreach ($rows as $row) {
+                $data['tblizin_id'] = $row['tblizin_id'];
+                $data['tblizinpermohonan_id'] = $ip;
+                $data['tblizinpersyaratan_urut'] = $row['tblizinpersyaratan_urut'];
+                $data['tblpersyaratan_id'] = $row['tblpersyaratan_id'];
+                $data['tblizinpersyaratan_isaktif'] = $row['tblizinpersyaratan_isaktif'];
+                $in =   $this->model_persyaratan->save($data);
+                if ($in) {
+                    $i++;
+                }
+            }
+        }
+
         echo 'Terinput ' . $i . ' data';
     }
 }
